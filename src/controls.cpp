@@ -1,0 +1,77 @@
+#include "controls.hpp"
+pros::controller_digital_e_t WillScheme(Action action){
+    switch (action){
+    case Action::TOPINTAKE:
+        return pros::E_CONTROLLER_DIGITAL_R1;
+    case Action::OUTTAKE:
+        return pros::E_CONTROLLER_DIGITAL_R2;
+    case Action::FLAP:
+        return pros::E_CONTROLLER_DIGITAL_L1;
+    case Action::PIVOT:
+        return pros::E_CONTROLLER_DIGITAL_L2;
+    case Action::SCRAPER:
+        return pros::E_CONTROLLER_DIGITAL_X;
+    case Action::BOTTOMINTAKE:
+        return pros::E_CONTROLLER_DIGITAL_Y;
+    case Action::WING:
+        return pros::E_CONTROLLER_DIGITAL_A;
+    case Action::PARK:
+        return pros::E_CONTROLLER_DIGITAL_B;
+    case Action::SNAPUP:
+        return pros::E_CONTROLLER_DIGITAL_UP;
+    case Action::SNAPDOWN:
+        return pros::E_CONTROLLER_DIGITAL_DOWN;
+    case Action::SNAPLEFT:
+        return pros::E_CONTROLLER_DIGITAL_LEFT;
+    case Action::SNAPRIGHT:
+        return pros::E_CONTROLLER_DIGITAL_RIGHT;
+   
+    default:
+        return NO_BUTTON;
+    }
+}
+
+pros::controller_digital_e_t DavidScheme(Action action){
+    switch (action){
+    case Action::TOPINTAKE:
+        return pros::E_CONTROLLER_DIGITAL_R2;
+    case Action::OUTTAKE:
+        return pros::E_CONTROLLER_DIGITAL_L2;
+    case Action::FLAP:
+        return pros::E_CONTROLLER_DIGITAL_Y;
+    case Action::PIVOT:
+        return pros::E_CONTROLLER_DIGITAL_A;
+    case Action::SCRAPER:
+        return pros::E_CONTROLLER_DIGITAL_B;
+    case Action::BOTTOMINTAKE:
+        return pros::E_CONTROLLER_DIGITAL_R1;
+    case Action::WING:
+        return pros::E_CONTROLLER_DIGITAL_X;
+    case Action::PARK:
+        return pros::E_CONTROLLER_DIGITAL_RIGHT;
+    case Action::SNAPUP:
+        return pros::E_CONTROLLER_DIGITAL_UP;
+    case Action::SNAPDOWN:
+        return pros::E_CONTROLLER_DIGITAL_DOWN;
+    case Action::SLOWBOT:
+        return pros::E_CONTROLLER_DIGITAL_L1;
+    case Action::REVIVE:
+        return pros::E_CONTROLLER_DIGITAL_LEFT;
+    default:
+        return NO_BUTTON;
+    }
+}
+
+//This is Set to David, But will Get Overwritten by a Function in initialize()
+//The actual default value is at the beggining of initialize() in main.cpp
+pros::controller_digital_e_t (*currentButtons )(Action) = WillScheme;
+int robotDriver = 1;
+
+void determineDriver(){
+    if (robotDriver == 0){
+        currentButtons = DavidScheme;
+    }
+    else if (robotDriver == 1){
+        currentButtons = WillScheme;
+    }
+}
