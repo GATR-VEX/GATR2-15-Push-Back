@@ -1,5 +1,6 @@
 #include "main.h"
 #include "controls.hpp"
+#include "X-Drive/xDrive.hpp"
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
@@ -14,6 +15,8 @@ ez::Drive chassis(
     21,      // IMU Port
     4.125,   // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     420.0);  // Wheel RPM = cartridge * (motor gear / wheel gear)
+
+XDrive xdriveChassis(chassis);
 
 // Uncomment the trackers you're using here!
 // - `8` and `9` are smart ports (making these negative will reverse the sensor)
@@ -30,9 +33,6 @@ ez::Drive chassis(
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-
-
-
   // Print our branding over your terminal :D
   ez::ez_template_print();
 
@@ -249,17 +249,14 @@ void opcontrol() {
   //Default Driver Value but Also Can Be Changed in Autonomous
   resetPistons();
  
-
   while (true) {
     // Gives you some extras to make EZ-Template ezier
 
     ez_template_extras();
 
-    chassis.opcontrol_tank();  // Tank control
-    // chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
-    // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
-    // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
-    // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
+    // Start X-Drive Driver Control
+    xdriveChassis.DriverControl();
+    xdriveChassis.XDriveMove();
 
     // . . .
     // Put more user control code here!

@@ -154,6 +154,8 @@ class Drive {
    */
   void slew_swing_constants_set(okapi::QLength distance, int min_speed);
 
+  double new_turn_target_compute(double target, double current, ez::e_angle_behavior behavior);
+
   /**
    * Sets constants for slew for forward swing movements.
    *
@@ -3438,7 +3440,6 @@ class Drive {
   double turn_is_toleranced(double target, double current, double input, double longest, double shortest);
   double turn_short(double target, double current, bool print = false);
   double turn_long(double target, double current, bool print = false);
-  double new_turn_target_compute(double target, double current, ez::e_angle_behavior behavior);
   double turn_left(double target, double current, bool print = false);
   double turn_right(double target, double current, bool print = false);
   bool imu_calibration_complete = false;
