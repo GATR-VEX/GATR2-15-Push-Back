@@ -247,9 +247,8 @@ void opcontrol() {
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
 
   //Default Driver Value but Also Can Be Changed in Autonomous
-  int robotDriver = 0;
   resetPistons();
-  determineDriver();
+ 
 
   while (true) {
     // Gives you some extras to make EZ-Template ezier

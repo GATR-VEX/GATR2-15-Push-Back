@@ -1,4 +1,5 @@
 #include "controls.hpp"
+
 pros::controller_digital_e_t WillScheme(Action action){
     switch (action){
     case Action::TOPINTAKE:
@@ -62,16 +63,6 @@ pros::controller_digital_e_t DavidScheme(Action action){
     }
 }
 
-//This is Set to David, But will Get Overwritten by a Function in initialize()
-//The actual default value is at the beggining of initialize() in main.cpp
-pros::controller_digital_e_t (*currentButtons )(Action) = WillScheme;
-int robotDriver = 1;
 
-void determineDriver(){
-    if (robotDriver == 0){
-        currentButtons = DavidScheme;
-    }
-    else if (robotDriver == 1){
-        currentButtons = WillScheme;
-    }
-}
+//This is the Current Default Value
+pros::controller_digital_e_t (*currentButtons )(Action) = WillScheme;
