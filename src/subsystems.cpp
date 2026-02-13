@@ -47,7 +47,7 @@ void resetPistons(){
 void intakeControl(){
 
 
-    if(master.get_digital(currentButtons(Action::TOPINTAKE)))
+    if(master.get_digital(currentButtons(Action::OUTTAKE)))
     {
         outake(); //This Means Score Balls
     }
@@ -55,7 +55,7 @@ void intakeControl(){
         stopOutake(); //Stop Outake Motors
     }
 
-    if(master.get_digital(currentButtons(Action::BOTTOMINTAKE)))
+    if(master.get_digital(currentButtons(Action::INTAKE)))
     {
         intake(); //This Means Intake From The Bottom
     }
@@ -63,7 +63,7 @@ void intakeControl(){
         stopIntake(); //Stop Intaking
     }
     // Outake controls
-    if(master.get_digital(currentButtons(Action::OUTTAKE)))
+    if(master.get_digital(currentButtons(Action::REVERSE)))
     {
         reverseOutake();//Reverses Motors at Top of Bot
         reverseIntake();//Reverses Intake

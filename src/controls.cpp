@@ -2,9 +2,9 @@
 
 pros::controller_digital_e_t WillScheme(Action action){
     switch (action){
-    case Action::TOPINTAKE:
-        return pros::E_CONTROLLER_DIGITAL_R1;
     case Action::OUTTAKE:
+        return pros::E_CONTROLLER_DIGITAL_R1;
+    case Action::REVERSE:
         return pros::E_CONTROLLER_DIGITAL_R2;
     case Action::FLAP:
         return pros::E_CONTROLLER_DIGITAL_L1;
@@ -12,7 +12,7 @@ pros::controller_digital_e_t WillScheme(Action action){
         return pros::E_CONTROLLER_DIGITAL_L2;
     case Action::SCRAPER:
         return pros::E_CONTROLLER_DIGITAL_X;
-    case Action::BOTTOMINTAKE:
+    case Action::INTAKE:
         return pros::E_CONTROLLER_DIGITAL_Y;
     case Action::WING:
         return pros::E_CONTROLLER_DIGITAL_A;
@@ -34,9 +34,9 @@ pros::controller_digital_e_t WillScheme(Action action){
 
 pros::controller_digital_e_t DavidScheme(Action action){
     switch (action){
-    case Action::TOPINTAKE:
-        return pros::E_CONTROLLER_DIGITAL_R2;
     case Action::OUTTAKE:
+        return pros::E_CONTROLLER_DIGITAL_R2;
+    case Action::REVERSE:
         return pros::E_CONTROLLER_DIGITAL_L2;
     case Action::FLAP:
         return pros::E_CONTROLLER_DIGITAL_Y;
@@ -44,7 +44,7 @@ pros::controller_digital_e_t DavidScheme(Action action){
         return pros::E_CONTROLLER_DIGITAL_A;
     case Action::SCRAPER:
         return pros::E_CONTROLLER_DIGITAL_B;
-    case Action::BOTTOMINTAKE:
+    case Action::INTAKE:
         return pros::E_CONTROLLER_DIGITAL_R1;
     case Action::WING:
         return pros::E_CONTROLLER_DIGITAL_X;
@@ -66,3 +66,5 @@ pros::controller_digital_e_t DavidScheme(Action action){
 
 //This is the Current Default Value
 pros::controller_digital_e_t (*currentButtons )(Action) = WillScheme;
+
+//When Determining Driver in Auton, use the sytnax currentButtons = DavidScheme or currentButtons = WillScheme

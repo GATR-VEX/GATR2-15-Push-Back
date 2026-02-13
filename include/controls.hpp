@@ -3,12 +3,12 @@
 #include <string>
 
 enum class Action {
-    TOPINTAKE,
     OUTTAKE,
+    REVERSE,
     FLAP,
     PIVOT,
     SCRAPER,
-    BOTTOMINTAKE,
+    INTAKE,
     WING,
     PARK,
     SNAPUP,
