@@ -6,7 +6,7 @@ void XDrive::DriverControl(){
     double INPUT_Left_X = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)/127.0;
     double INPUT_Left_Y = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)/127.0;
 
-    // PROCESSOR: Driver Control Deadband
+    // PROCESSOR: Driver Control Deadband (or Deadzone)
     // | Help the bot stay still when not touching the sticks
     double DEADBAND_LIMIT = 0.1;
     if (abs(INPUT_Right_X) < DEADBAND_LIMIT) INPUT_Right_X = 0;
@@ -34,10 +34,13 @@ void XDrive::XDriveMove(){
 
     // PROCESSOR: Field Oriented
     // | does what it says lollll
-    if(isFieldOriented){
+    if(isFieldOriented){ 
+        double initialStrafe = strafe;
+        double initialForward = forward;
+
         double heading = GetHeading();
-        strafe = strafe * cos(heading) - forward * sin(heading);
-        forward = strafe * sin(heading) + forward * cos(heading);
+        strafe = initialStrafe * cos(heading) - initialForward * sin(heading);
+        forward = initialStrafe * sin(heading) + initialForward * cos(heading);
     }    
 
     // Build motor commands
@@ -48,6 +51,7 @@ void XDrive::XDriveMove(){
 
     // PROCESSOR: Motor Oversaturation Protection
     // | Preserves differene between motors when goes over
+    //Not sure if using integer divison would lose preciseness rather than calculating a scale of type double and multiplying everything by it
     int maxEffort = std::max({abs(fl), abs(fr), abs(bl), abs(br)});
     if(maxEffort > 127){
         fl = fl/maxEffort * 127;
@@ -113,6 +117,7 @@ void XDrive::AutonExecute(){
         pros::delay(util::DELAY_TIME);
 
         // Wait for the PID to be within a certain threshold of the target before moving on
+        //What if just X exists but we havent made it to our y coordinate yet?
         bool xExited = xPID.exit_condition() != ez::exit_output::RUNNING;
         bool yExited = yPID.exit_condition() != ez::exit_output::RUNNING;
         bool turnExited = turnPID.exit_condition() != ez::exit_output::RUNNING;

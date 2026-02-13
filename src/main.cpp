@@ -54,7 +54,8 @@ void initialize() {
 
   // Set the drive to your own constants from autons.cpp!
   default_constants();
-
+  //Set Pistons To Default Values
+  resetPistons();
   // These are already defaulted to these buttons, but you can change the left/right curve buttons here!
   // chassis.opcontrol_curve_buttons_left_set(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);  // If using tank, only the left side is used.
   // chassis.opcontrol_curve_buttons_right_set(pros::E_CONTROLLER_DIGITAL_Y, pros::E_CONTROLLER_DIGITAL_A);
@@ -252,7 +253,9 @@ void opcontrol() {
   while (true) {
     // Gives you some extras to make EZ-Template ezier
 
-    ez_template_extras();
+    //Turned EZ_Template Extras Off because of worries about interfering with our subsystem buttons
+    //If you want to press down and b to run auton, re-enable ez_template extras
+    //ez_template_extras();
 
     // Start X-Drive Driver Control
     xdriveChassis.DriverControl();

@@ -26,5 +26,3 @@ pros::controller_digital_e_t WillScheme(Action action);
 pros::controller_digital_e_t DavidScheme(Action action);
 
 extern pros::controller_digital_e_t (*currentButtons)(Action);
-
-void determineDriver();
