@@ -10,8 +10,8 @@ class XDrive{
         pros::MotorGroup BL;
         pros::MotorGroup BR;
         
-        ez::tracking_wheel x_tracker;  // This tracking wheel is perpendicular to the drive wheels
-        ez::tracking_wheel y_tracker;   // This tracking wheel is parallel to the drive wheels
+        pros::Rotation x_tracker;  // This tracking wheel is perpendicular to the drive wheels
+        pros::Rotation y_tracker;   // This tracking wheel is parallel to the drive wheels
 
         ez::Drive chassis;
 
@@ -43,8 +43,8 @@ class XDrive{
             FR({3,-4}), 
             BL({6,-5}), 
             BR({8,-7}), 
-            x_tracker(9, 2, 0), 
-            y_tracker(10, 2, 0), 
+            x_tracker(9), 
+            y_tracker(20), 
             chassis(chassis),
             xPID(),
             yPID(),
@@ -69,6 +69,9 @@ class XDrive{
 
                 backwardHeadingPID.constants_set(6.35, 0.0, 0.0);
                 backwardHeadingPID.target_set(0);
+
+                x_tracker.reset_position();
+                y_tracker.reset_position();
             }
 
         void DriverControl();
@@ -77,10 +80,10 @@ class XDrive{
             return (int)chassis.drive_imu_get() * M_PI/180.0;
         }
         inline double GetX(){
-            return x_tracker.get();
+            return x_tracker.get_position()*100;
         }
         inline double GetY(){
-            return y_tracker.get();
+            return y_tracker.get_position()*100;
         }
         void ZeroDriverInput();
         void ZeroAutonInput();

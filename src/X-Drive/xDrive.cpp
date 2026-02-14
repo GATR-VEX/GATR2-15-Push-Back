@@ -117,22 +117,22 @@ void XDrive::Pose_Set(double xTarget, double yTarget, double angleTarget, double
     turnPID.target_set(angleTarget);
 
     // Set Slew
-    AUTON_xSlew.initialize(true, forwardSpeed, 0, 0); // Slew will be enabled later in AutonExecute
-    AUTON_ySlew.initialize(true, forwardSpeed, 0, 0);
-    AUTON_turnSlew.initialize(true, turnSpeed, 0, 0);
+    AUTON_xSlew.initialize(true, forwardSpeed, xTarget, GetX()); // Slew will be enabled later in AutonExecute
+    AUTON_ySlew.initialize(true, forwardSpeed, yTarget, GetY());
+    AUTON_turnSlew.initialize(true, turnSpeed, angleTarget, GetHeading());
 }
 
 void XDrive::AutonExecute(){
     while (true) {
         // Compute PID outputs
-        double x_current = x_tracker.get();
-        double y_current = y_tracker.get();
+        double x_current = GetX();
+        double y_current = GetY();
         double theta_current = GetHeading(); // degrees
 
         // Apply slew to the PID outputs
-        AUTON_Strafe = AUTON_xSlew.iterate(xPID.compute(x_current));
-        AUTON_Forward = AUTON_ySlew.iterate(xPID.compute(x_current));
-        AUTON_Turn = AUTON_turnSlew.iterate(xPID.compute(x_current));
+        AUTON_Strafe = clamp(AUTON_xSlew.iterate(xPID.compute(x_current)), -127.0, 127.0);
+        AUTON_Forward = clamp(AUTON_ySlew.iterate(xPID.compute(y_current)), -127.0, 127.0);
+        AUTON_Turn = clamp(AUTON_turnSlew.iterate(xPID.compute(theta_current)), -127.0, 127.0);
 
         // Execute Move
         XDrive::XDriveMove();
@@ -144,7 +144,7 @@ void XDrive::AutonExecute(){
         bool xExited = xPID.exit_condition() != ez::exit_output::RUNNING;
         bool yExited = yPID.exit_condition() != ez::exit_output::RUNNING;
         bool turnExited = turnPID.exit_condition() != ez::exit_output::RUNNING;
-        if(xExited == false || yExited == false || turnExited == false){
+        if(xExited == false && yExited == false && turnExited == false){
             return;
         }
 

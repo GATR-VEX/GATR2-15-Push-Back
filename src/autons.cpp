@@ -52,7 +52,7 @@ void XDriveAutonTest(){
   xdriveChassis.ZeroAutonInput();
   xdriveChassis.ZeroDriverInput();
 
-  xdriveChassis.Move_Set(50, 0, 0);
+  xdriveChassis.Move_Set(5, 0, 0);
   xdriveChassis.AutonExecute();
 }
 
