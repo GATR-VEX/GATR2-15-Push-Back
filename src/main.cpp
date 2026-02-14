@@ -258,6 +258,7 @@ void opcontrol() {
     //ez_template_extras();
 
     // Start X-Drive Driver Control
+    xdriveChassis.ZeroAutonInput();
     xdriveChassis.DriverControl();
     xdriveChassis.XDriveMove();
 
