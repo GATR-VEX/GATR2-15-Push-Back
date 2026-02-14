@@ -32,7 +32,8 @@ class XDrive{
         ez::slew AUTON_xSlew; // strafe
         ez::slew AUTON_turnSlew;   // turn
 
-        ez::PID headingPID;
+        ez::PID forwardHeadingPID;
+        ez::PID backwardHeadingPID;
     
     public:
         bool isFieldOriented = false;
@@ -63,8 +64,11 @@ class XDrive{
                 yPID.exit_condition_set(100, 0.5, 100, 0.5, 100, 100);
                 AUTON_ySlew.speed_max_set(5.0);
 
-                headingPID.constants_set(0.05, 0.0, 0.0);
-                headingPID.target_set(0);
+                forwardHeadingPID.constants_set(6.35, 0.0, 0.0);
+                forwardHeadingPID.target_set(0);
+
+                backwardHeadingPID.constants_set(6.35, 0.0, 0.0);
+                backwardHeadingPID.target_set(0);
             }
 
         void DriverControl();

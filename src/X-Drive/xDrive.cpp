@@ -4,18 +4,24 @@
 double headingControlTarget = 0;
 
 bool startedMovement = false;
-SimpleSlew INPUT_Right_X(5);
-SimpleSlew INPUT_Left_X(5);
-SimpleSlew INPUT_Left_Y(5);
+SimpleSlew INPUT_Left_X(1.0);
+SimpleSlew INPUT_Left_Y(1.0);
 void XDrive::DriverControl(){
     // Input Catching
-    double INPUT_Right_X = master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)/127.0;
-    double INPUT_Left_X = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)/127.0;
-    double INPUT_Left_Y = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)/127.0;
+    double INPUT_Right_X = (double) master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+    INPUT_Left_X.Set((double)master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X));
+    INPUT_Left_Y.Set((double)master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y));
 
     // Heading Control
-    if(abs(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) > 0.1) headingPID.target_set(GetHeading());
-    else INPUT_Right_X += headingPID.compute(GetHeading());
+    if(abs(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) > 10){
+        forwardHeadingPID.target_set(GetHeading());
+        backwardHeadingPID.target_set(GetHeading());
+    }
+    else{
+        if(INPUT_Left_Y.Get()>=0) INPUT_Right_X += forwardHeadingPID.compute(GetHeading());
+        else INPUT_Right_X += backwardHeadingPID.compute(GetHeading());
+    }
+
 
     // PROCESSOR: Driver Control Deadband (or Deadzone)
     // | Help the bot stay still when not touching the sticks
@@ -33,8 +39,8 @@ void XDrive::DriverControl(){
 
     // Building the movement components  
     DRIVER_Turn = INPUT_Right_X;        
-    DRIVER_Strafe = INPUT_Left_X;
-    DRIVER_Forward = INPUT_Left_Y;
+    DRIVER_Strafe = INPUT_Left_X.Get();
+    DRIVER_Forward = INPUT_Left_Y.Get();
 }
 
 void XDrive::XDriveMove(){
@@ -56,10 +62,10 @@ void XDrive::XDriveMove(){
     }    
 
     // Build motor commands
-    int fl = (-strafe - forward + turn)*127;
-    int fr = (+forward - strafe + turn)*127;
-    int bl = (-forward + strafe + turn)*127;
-    int br = (strafe + forward + turn)*127;
+    int fl = (-strafe - forward + turn);
+    int fr = (+forward - strafe + turn);
+    int bl = (-forward + strafe + turn);
+    int br = (strafe + forward + turn);
 
     // PROCESSOR: Motor Oversaturation Protection
     // | Preserves differene between motors when goes over
