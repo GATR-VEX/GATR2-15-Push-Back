@@ -15,11 +15,11 @@ void XDrive::DriverControl(){
     // Heading Control
     if(abs(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) > 10){
         forwardHeadingPID.target_set(GetHeading());
-        backwardHeadingPID.target_set(GetHeading());
+        // backwardHeadingPID.target_set(GetHeading());
     }
     else{
-        if(INPUT_Left_Y.Get()>=0) INPUT_Right_X += forwardHeadingPID.compute(GetHeading());
-        else INPUT_Right_X += backwardHeadingPID.compute(GetHeading());
+        INPUT_Right_X += forwardHeadingPID.compute(GetHeading());
+        // else INPUT_Right_X += backwardHeadingPID.compute(GetHeading());
     }
 
 

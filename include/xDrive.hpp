@@ -36,7 +36,7 @@ class XDrive{
         ez::PID backwardHeadingPID;
     
     public:
-        bool isFieldOriented = false;
+        bool isFieldOriented = true;
 
         XDrive(ez::Drive chassis): 
             FL({1,-18}), 
