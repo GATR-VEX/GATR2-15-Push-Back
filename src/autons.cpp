@@ -48,6 +48,19 @@ void default_constants() {
   chassis.pid_angle_behavior_set(ez::shortest);  // Changes the default behavior for turning, this defaults it to the shortest path there
 }
 
+void XDriveAutonTest(){
+  xdriveChassis.ZeroAutonInput();
+  xdriveChassis.ZeroDriverInput();
+
+  xdriveChassis.Move_Set(50, 0, 0);
+  xdriveChassis.AutonExecute();
+}
+
+
+
+
+
+
 ///
 // Drive Example
 ///

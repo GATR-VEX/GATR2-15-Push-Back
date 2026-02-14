@@ -9,7 +9,7 @@ class XDrive{
         pros::MotorGroup FR;
         pros::MotorGroup BL;
         pros::MotorGroup BR;
-
+        
         ez::tracking_wheel x_tracker;  // This tracking wheel is perpendicular to the drive wheels
         ez::tracking_wheel y_tracker;   // This tracking wheel is parallel to the drive wheels
 
@@ -28,13 +28,14 @@ class XDrive{
         double AUTON_Turn = 0;
 
         // Declare a slew limiter for one motor or axis
-        ez::slew ySlew;   // forward
-        ez::slew xSlew; // strafe
-        ez::slew turnSlew;   // turn
+        ez::slew AUTON_ySlew;   // forward
+        ez::slew AUTON_xSlew; // strafe
+        ez::slew AUTON_turnSlew;   // turn
 
+        ez::PID headingPID;
     
     public:
-        bool isFieldOriented = true;
+        bool isFieldOriented = false;
 
         XDrive(ez::Drive chassis): 
             FL({1,-18}), 
@@ -47,20 +48,23 @@ class XDrive{
             xPID(),
             yPID(),
             turnPID(),
-            xSlew(),
-            ySlew(),
-            turnSlew(){
+            AUTON_xSlew(),
+            AUTON_ySlew(),
+            AUTON_turnSlew(){
                 turnPID.constants_set(5, 0.0, 0.0);
                 turnPID.exit_condition_set(100, 2, 100, 2, 100, 100); 
-                turnSlew.speed_max_set(5.0);
+                AUTON_turnSlew.speed_max_set(5.0);
 
                 xPID.constants_set(5, 0.0, 0.0);
                 xPID.exit_condition_set(100, 0.5, 100, 0.5, 100, 100);
-                xSlew.speed_max_set(5.0);
+                AUTON_xSlew.speed_max_set(5.0);
 
                 yPID.constants_set(5, 0.0, 0.0);
                 yPID.exit_condition_set(100, 0.5, 100, 0.5, 100, 100);
-                ySlew.speed_max_set(5.0);
+                AUTON_ySlew.speed_max_set(5.0);
+
+                headingPID.constants_set(0.05, 0.0, 0.0);
+                headingPID.target_set(0);
             }
 
         void DriverControl();

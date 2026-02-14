@@ -46,6 +46,7 @@
 // More includes here...
 #include "autons.hpp"
 #include "subsystems.hpp"
+#include "xDrive.hpp"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do
@@ -70,6 +71,7 @@ using namespace okapi::literals;
 #ifdef __cplusplus
 extern "C" {
 #endif
+extern XDrive xdriveChassis;
 void autonomous(void);
 void initialize(void);
 void disabled(void);
