@@ -34,7 +34,7 @@ class XDrive{
 
     
     public:
-        bool isFieldOriented = false;
+        bool isFieldOriented = true;
 
         XDrive(ez::Drive chassis): 
             FL({1,-18}), 

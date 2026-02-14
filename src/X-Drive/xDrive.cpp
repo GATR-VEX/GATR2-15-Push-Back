@@ -8,17 +8,17 @@ void XDrive::DriverControl(){
 
     // PROCESSOR: Driver Control Deadband (or Deadzone)
     // | Help the bot stay still when not touching the sticks
-    // double DEADBAND_LIMIT = 0.1;
-    // if (abs(INPUT_Right_X) < DEADBAND_LIMIT) INPUT_Right_X = 0;
-    // if (abs(INPUT_Left_X) < DEADBAND_LIMIT) INPUT_Left_X = 0;
-    // if (abs(INPUT_Left_Y) < DEADBAND_LIMIT) INPUT_Left_Y = 0;
+    double DEADBAND_LIMIT = 0.1;
+    if (abs(INPUT_Right_X) < DEADBAND_LIMIT) INPUT_Right_X = 0;
+    if (abs(INPUT_Left_X) < DEADBAND_LIMIT) INPUT_Left_X = 0;
+    if (abs(INPUT_Left_Y) < DEADBAND_LIMIT) INPUT_Left_Y = 0;
 
     // PROCESSOR: Input Smoothing
     // | Smooths out inputs and dedicates more of the stick to lower velocities, improving accuracy
-    double SMOOTHING_FACTOR = 1; // Higher values dedicate more stick space to fine low speeds
-    // INPUT_Right_X = pow(INPUT_Right_X, SMOOTHING_FACTOR);
-    // INPUT_Left_X = pow(INPUT_Left_X, SMOOTHING_FACTOR);
-    // INPUT_Left_Y = pow(INPUT_Left_Y, SMOOTHING_FACTOR);
+    double SMOOTHING_FACTOR = 3; // Higher values dedicate more stick space to fine low speeds
+    INPUT_Right_X = pow(INPUT_Right_X, SMOOTHING_FACTOR);
+    INPUT_Left_X = pow(INPUT_Left_X, SMOOTHING_FACTOR);
+    INPUT_Left_Y = pow(INPUT_Left_Y, SMOOTHING_FACTOR);
 
     // Building the movement components  
     DRIVER_Turn = INPUT_Right_X;        
@@ -28,8 +28,8 @@ void XDrive::DriverControl(){
 
 void XDrive::XDriveMove(){
     // Build the Combined Movements
-    double forward = DRIVER_Forward + AUTON_Forward;
-    double strafe = DRIVER_Strafe + AUTON_Strafe;
+    double forward = -(DRIVER_Forward + AUTON_Forward);
+    double strafe = -(DRIVER_Strafe + AUTON_Strafe);
     double turn = DRIVER_Turn + AUTON_Turn;
 
     // PROCESSOR: Field Oriented
@@ -39,15 +39,16 @@ void XDrive::XDriveMove(){
         double initialForward = forward;
 
         double heading = GetHeading();
+
         strafe = initialStrafe * cos(heading) - initialForward * sin(heading);
         forward = initialStrafe * sin(heading) + initialForward * cos(heading);
     }    
 
     // Build motor commands
-    int fl = (strafe + forward + turn)*127;
-    int fr = (forward + strafe + turn)*127;
-    int bl = (forward - strafe + turn)*127;
-    int br = (-strafe - forward + turn)*127;
+    int fl = (-strafe - forward + turn)*127;
+    int fr = (+forward - strafe + turn)*127;
+    int bl = (-forward + strafe + turn)*127;
+    int br = (strafe + forward + turn)*127;
 
     // PROCESSOR: Motor Oversaturation Protection
     // | Preserves differene between motors when goes over
@@ -61,10 +62,15 @@ void XDrive::XDriveMove(){
     }
 
     // Move Motors
-    FL.move(fl);
-    FR.move(fr);
-    BL.move(bl);
-    BR.move(br);
+    fl *= (600/127);
+    fr *= (600/127);
+    bl *= (600/127);
+    br *= (600/127);
+
+    FL.move_velocity(fl);
+    FR.move_velocity(fr);
+    BL.move_velocity(bl);
+    BR.move_velocity(br);
 }
 
 //
