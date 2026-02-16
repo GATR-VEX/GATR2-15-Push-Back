@@ -8,12 +8,12 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-21, -21, -21, -21},  // Left Chassis Ports (negative port will reverse it!)
-    {21, 21, 21, 21},  // Right Chassis Ports (negative port will reverse it!)
+    {1, -18, 6, -5},  // Left Chassis Ports (negative port will reverse it!)
+    {-3, 4, -8, 7},  // Right Chassis Ports (negative port will reverse it!)
 
     21,      // IMU Port
-    4.125,   // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-    420.0);  // Wheel RPM = cartridge * (motor gear / wheel gear)
+    0,   // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
+    600.0);  // Wheel RPM = cartridge * (motor gear / wheel gear)
 
 XDrive xdriveChassis(chassis);
 
@@ -22,8 +22,8 @@ XDrive xdriveChassis(chassis);
 //  - you should get positive values on the encoders going FORWARD and RIGHT
 // - `2.75` is the wheel diameter
 // - `4.0` is the distance from the center of the wheel to the center of the robot
-ez::tracking_wheel horiz_tracker(9, 2.75, 4.0);  // This tracking wheel is perpendicular to the drive wheels
-ez::tracking_wheel vert_tracker(20, 2.75, 4.0);   // This tracking wheel is parallel to the drive wheels
+ez::tracking_wheel horiz_tracker(-9, 2.75*2.0/3.0, -5.12);  // This tracking wheel is perpendicular to the drive wheels
+ez::tracking_wheel vert_tracker(-10, 2.75*2.0/3.0, -0.32);   // This tracking wheel is parallel to the drive wheels
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -40,11 +40,11 @@ void initialize() {
   // Look at your horizontal tracking wheel and decide if it's in front of the midline of your robot or behind it
   //  - change `back` to `front` if the tracking wheel is in front of the midline
   //  - ignore this if you aren't using a horizontal tracker
-  // chassis.odom_tracker_back_set(&horiz_tracker);
+  chassis.odom_tracker_back_set(&horiz_tracker);
   // Look at your vertical tracking wheel and decide if it's to the left or right of the center of the robot
   //  - change `left` to `right` if the tracking wheel is to the right of the centerline
   //  - ignore this if you aren't using a vertical tracker
-  // chassis.odom_tracker_left_set(&vert_tracker);
+  chassis.odom_tracker_left_set(&vert_tracker);
 
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(true);   // Enables modifying the controller curve with buttons on the joysticks
@@ -61,7 +61,7 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"Test Auton\n\nI hope this works!!!", XDriveAutonTest},
+      {"Tank Test\n\nI hope this works!!!", measure_offsets},
   });
 
   // Initialize chassis and auton selector
@@ -190,7 +190,7 @@ void ez_template_extras() {
   if (!pros::competition::is_connected()) {
     // PID Tuner
     // - after you find values that you're happy with, you'll have to set them in auton.cpp
-
+    
     // Enable / Disable PID Tuner
     //  When enabled:
     //  * use A and Y to increment / decrement the constants
@@ -235,18 +235,14 @@ void opcontrol() {
 
   //Default Driver Value but Also Can Be Changed in Autonomous
   resetPistons();
- 
+  // This is preference to what you like to drive on
+  chassis.drive_brake_set(MOTOR_BRAKE_COAST);
+
   while (true) {
     // Gives you some extras to make EZ-Template ezier
-
-    //Turned EZ_Template Extras Off because of worries about interfering with our subsystem buttons
-    //If you want to press down and b to run auton, re-enable ez_template extras
     ez_template_extras();
 
-    // Start X-Drive Driver Control
-    xdriveChassis.ZeroAutonInput();
-    xdriveChassis.DriverControl();
-    xdriveChassis.XDriveMove();
+    chassis.opcontrol_arcade_standard(SPLIT);  // Tank control
 
     master.print(0, 0, "X:%f Y:%f t:%f   ", xdriveChassis.GetX(),xdriveChassis.GetY(),xdriveChassis.GetHeading());
 

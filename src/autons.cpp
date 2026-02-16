@@ -70,14 +70,34 @@ void drive_example() {
   // The third parameter is a boolean (true or false) for enabling/disabling a slew at the start of drive motions
   // for slew, only enable it when the drive distance is greater than the slew distance + a few inches
 
-  chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
+  // chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
+  // chassis.pid_wait();
+
+  chassis.pid_turn_set(180_deg,TURN_SPEED/2);
   chassis.pid_wait();
 
-  chassis.pid_drive_set(-12_in, DRIVE_SPEED);
-  chassis.pid_wait();
+  // chassis.pid_turn_set(360_deg,TURN_SPEED/2);
+  // chassis.pid_wait();
 
-  chassis.pid_drive_set(-12_in, DRIVE_SPEED);
-  chassis.pid_wait();
+  // chassis.pid_drive_set(-1_in, DRIVE_SPEED, true);
+  // chassis.pid_wait();
+
+  // chassis.pid_odom_set({{0_in, 24_in}, rev, DRIVE_SPEED},true);
+  // chassis.pid_wait();
+
+  // chassis.pid_drive_set(-24_in, DRIVE_SPEED);
+  // chassis.pid_wait();
+  
+
+  // chassis.pid_odom_set({{0_in, 0_in, 0_deg}, rev, DRIVE_SPEED},
+  //                      true);
+  // chassis.pid_wait();
+
+  // chassis.pid_drive_set(-12_in, DRIVE_SPEED);
+  // chassis.pid_wait();
+
+  // chassis.pid_drive_set(-12_in, DRIVE_SPEED);
+  // chassis.pid_wait();
 }
 
 ///
@@ -331,7 +351,7 @@ void odom_boomerang_injected_pure_pursuit_example() {
 ///
 void measure_offsets() {
   // Number of times to test
-  int iterations = 10;
+  int iterations = 50;
 
   // Our final offsets
   double l_offset = 0.0, r_offset = 0.0, b_offset = 0.0, f_offset = 0.0;
