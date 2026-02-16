@@ -56,6 +56,64 @@ void XDriveAutonTest(){
   xdriveChassis.AutonExecute();
 }
 
+void matchAutonRed(){
+  default_constants();
+  //intake();
+  
+  chassis.pid_odom_set(-9_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(90, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  // scraperToggle();
+  chassis.pid_odom_set(45_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(45, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_odom_set(12_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(90, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  //outake();
+  //intake();
+  chassis.pid_odom_set(18_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(1000);
+  stopIntake();
+  stopOutake();
+  chassis.pid_odom_set(-5_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(180, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_odom_set(52_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(270, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  outake();
+  intake();
+  chassis.pid_odom_set(20_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  stopIntake();
+  stopOutake();
+  chassis.pid_turn_set(315, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_odom_set(32_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(225, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_odom_set(7_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  intake();
+  outake();
+
+  pros::delay(3000);
+
+
+
+  stopIntake();
+  stopOutake();
+
+}
+
 
 
 

@@ -220,6 +220,7 @@ void parkerToggle(){
 void scraperToggle(){
     currentScraper = !currentScraper;
     scraperPiston.set_value(currentScraper);
+    printf("Attempting to set piston");
 }
 
 //Makes Wing Mirror Pivot Value
