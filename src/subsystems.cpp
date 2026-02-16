@@ -34,11 +34,11 @@ void resetPistons(){
     pivotPiston.set_value(initialPivot);
     wingPiston.set_value(initialWing);
     
-    bool currentFlap = initialFlap;
-    bool currentParker = initialParker;
-    bool currentScraper = initialScraper;
-    bool currentPivot = initialPivot;
-    bool currentWing = initialWing;
+    currentFlap = initialFlap;
+    currentParker = initialParker;
+    currentScraper = initialScraper;
+    currentPivot = initialPivot;
+    currentWing = initialWing;
 }
 
 //Repeats During OPControl and Handles All Intake/Outake Motors
