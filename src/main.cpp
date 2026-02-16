@@ -237,6 +237,8 @@ void opcontrol() {
   resetPistons();
   // This is preference to what you like to drive on
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
+  int count = 0;
+
 
   while (true) {
     // Gives you some extras to make EZ-Template ezier
@@ -251,6 +253,8 @@ void opcontrol() {
     // . . .
     intakeControl();
     pistonControl();
+    jamControl();
+    
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }

@@ -7,6 +7,7 @@ extern Drive chassis;
 void resetPistons();
 void pistonControl();
 void intakeControl();
+void jamControl();
 
 void flapToggle();
 void parkerToggle();
@@ -21,6 +22,7 @@ void stopIntake();
 void outake();
 void reverseOutake();
 void stopOutake();
+
 
 // Your motors, sensors, etc. should go here.  Below are examples
 
