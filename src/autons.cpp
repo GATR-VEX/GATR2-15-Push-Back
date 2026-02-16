@@ -56,7 +56,7 @@ void XDriveAutonTest(){
   xdriveChassis.AutonExecute();
 }
 
-void matchAutonOrangeScraperDavid(){
+void skillsAutonOrangeScraperDavid(){
   default_constants();
   //intake();
   
@@ -114,7 +114,7 @@ void matchAutonOrangeScraperDavid(){
 
 }
 
-void matchAutonOrangeScraperWill(){
+void skillsAutonBlackScraperWill(){
 
 }
 
