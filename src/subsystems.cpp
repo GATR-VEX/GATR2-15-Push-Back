@@ -9,10 +9,8 @@ pros::adi::DigitalOut pivotPiston ('D');
 pros::adi::DigitalOut wingPiston ('E');
 
 //Motor Port Definitions
-pros::Motor IntakeLeft(-14, pros::MotorGearset::blue);
-pros::Motor IntakeRight(15, pros::MotorGearset::blue);
-pros::Motor OutakeLeft(-16, pros::MotorGearset::blue);
-pros::Motor OutakeRight(17, pros::MotorGearset::blue);
+pros::MotorGroup Intake({-14, 15});
+pros::MotorGroup Outtake({-16, 17});
 
 //Define Initial States
 bool initialFlap = false;
@@ -51,7 +49,7 @@ void intakeControl(){
     {
         outake(); //This Means Score Balls
     }
-    else{
+    else if (!master.get_digital(currentButtons(Action::REVERSE))){
         stopOutake(); //Stop Outake Motors
     }
 
@@ -59,10 +57,10 @@ void intakeControl(){
     {
         intake(); //This Means Intake From The Bottom
     }
-    else{
-        stopIntake(); //Stop Intaking
+    else if (!master.get_digital(currentButtons(Action::REVERSE))){
+        stopIntake(); //Stop intake Motors
     }
-    // Outake controls
+
     if(master.get_digital(currentButtons(Action::REVERSE)))
     {
         reverseOutake();//Reverses Motors at Top of Bot
@@ -71,33 +69,27 @@ void intakeControl(){
 }
 
 void outake(){
-    OutakeLeft.move(127);
-    OutakeRight.move(127);
+    Outtake.move(127);
 }
 
 void reverseOutake(){
-    OutakeLeft.move(-127);
-    OutakeRight.move(-127);
+    Outtake.move(-127);
 }
 
 void stopOutake(){
-    OutakeLeft.move(0);
-    OutakeRight.move(0);
+    Outtake.move(0);
 }
 
 void intake(){
-    IntakeLeft.move(127);
-    IntakeRight.move(127);
+    Intake.move(127);
 }
 
 void reverseIntake(){
-    IntakeLeft.move(-127);
-    IntakeRight.move(-127);
+    Intake.move(-127);
 }
 
 void stopIntake(){
-    IntakeLeft.move(0);
-    IntakeRight.move(0);
+    Intake.move(0);
 }
 //Repeats During OPControl and Handles All Pistons
 void pistonControl(){

@@ -246,7 +246,6 @@ void opcontrol() {
 
     master.print(0, 0, "X:%f Y:%f t:%f   ", xdriveChassis.GetX(),xdriveChassis.GetY(),xdriveChassis.GetHeading());
 
-
     // . . .
     // Put more user control code here!
     // . . .

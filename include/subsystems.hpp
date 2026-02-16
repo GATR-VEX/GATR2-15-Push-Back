@@ -30,7 +30,5 @@ extern pros::adi::DigitalOut scraperPiston;
 extern pros::adi::DigitalOut pivotPiston;
 extern pros::adi::DigitalOut wingPiston;
 
-extern pros::Motor IntakeLeft;
-extern pros::Motor IntakeRight;
-extern pros::Motor OutakeLeft;
-extern pros::Motor OutakeRight;
+extern pros::MotorGroup Intake;
+extern pros::MotorGroup Outtake;
