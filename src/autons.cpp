@@ -115,7 +115,16 @@ void skillsAutonOrangeScraperDavid(){
 }
 
 void skillsAutonBlackScraperWill(){
+default_constants();
 
+  chassis.pid_odom_set(16_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(30, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_odom_set(48_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
 }
 
 
