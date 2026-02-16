@@ -56,7 +56,7 @@ void XDriveAutonTest(){
   xdriveChassis.AutonExecute();
 }
 
-void matchAutonRed(){
+void matchAutonOrangeScraperDavid(){
   default_constants();
   //intake();
   
@@ -114,7 +114,9 @@ void matchAutonRed(){
 
 }
 
+void matchAutonOrangeScraperWill(){
 
+}
 
 
 

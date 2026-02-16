@@ -123,7 +123,9 @@ void autonomous() {
   to be consistent
   */
 
-  matchAutonRed();
+  //Comment Out the One You Aren't Testing
+   matchAutonOrangeScraperWill();
+  //matchAutonBlackScraperDavid();
 
   //ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }

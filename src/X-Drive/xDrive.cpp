@@ -13,14 +13,14 @@ void XDrive::DriverControl(){
     INPUT_Left_Y.Set((double)master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y));
 
     // Heading Control
-    if(abs(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) > 10){
-        forwardHeadingPID.target_set(GetHeading());
+    //if(abs(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) > 10){
+      //  forwardHeadingPID.target_set(GetHeading());
         // backwardHeadingPID.target_set(GetHeading());
-    }
-    else{
-        INPUT_Right_X += forwardHeadingPID.compute(GetHeading());
+    //}
+    //else{
+      //  INPUT_Right_X += forwardHeadingPID.compute(GetHeading());
         // else INPUT_Right_X += backwardHeadingPID.compute(GetHeading());
-    }
+    //}
 
 
     // PROCESSOR: Driver Control Deadband (or Deadzone)
