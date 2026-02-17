@@ -7,6 +7,7 @@
 
 // These are out of 127
 const int DRIVE_SPEED = 110;
+const int SLOW_DRIVE_SPEED = 50;
 const int TURN_SPEED = 90;
 const int SWING_SPEED = 110;
 
@@ -117,14 +118,66 @@ void skillsAutonOrangeScraperDavid(){
 void skillsAutonBlackScraperWill(){
 default_constants();
 
-  chassis.pid_odom_set(16_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(24_in, DRIVE_SPEED, true);
   chassis.pid_wait();
 
-  chassis.pid_turn_set(30, DRIVE_SPEED, true);
+  chassis.pid_turn_set(90, DRIVE_SPEED, true);
   chassis.pid_wait();
 
-  chassis.pid_odom_set(48_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(42_in, DRIVE_SPEED, true);
   chassis.pid_wait();
+
+  chassis.pid_turn_set(0, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+
+  chassis.pid_odom_set(24_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+
+  chassis.pid_turn_set(315, -DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  intake();
+
+  chassis.pid_odom_set(10_in, SLOW_DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_odom_set(-10_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  stopIntake();
+
+  chassis.pid_turn_set(0, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_odom_set(50_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(315, -DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+
+  chassis.pid_odom_set(22_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+
+  chassis.pid_turn_set(90, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+
+  chassis.pid_odom_set(15_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  intake();
+
+  chassis.pid_odom_set(10_in, SLOW_DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_odom_set(-10_in, SLOW_DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  stopIntake();
 }
 
 
