@@ -57,7 +57,10 @@ void XDriveAutonTest(){
   xdriveChassis.AutonExecute();
 }
 
-void skillsAutonOrangeScraperDavid(){
+void matchAutonOrangeScraper(){
+}
+
+void skillsAutonOrangeScraper(){
   default_constants();
   //intake();
   
@@ -115,7 +118,10 @@ void skillsAutonOrangeScraperDavid(){
 
 }
 
-void skillsAutonBlackScraperWill(){
+void matchAutonBlackScraper(){
+}
+
+void skillsAutonBlackScraper(){
 default_constants();
 
   chassis.pid_odom_set(24_in, DRIVE_SPEED, true);
