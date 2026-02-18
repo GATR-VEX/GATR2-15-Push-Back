@@ -19,7 +19,7 @@ void intake();
 void reverseIntake();
 void stopIntake();
 
-void outake();
+void outake(int speed = 127);
 void reverseOutake();
 void stopOutake();
 

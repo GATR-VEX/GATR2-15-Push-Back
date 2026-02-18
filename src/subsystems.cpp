@@ -71,11 +71,6 @@ void resetPistons(){
 //Repeats During OPControl and Handles All Intake/Outake Motors
 void intakeControl(){
 
-    iterations++;
-
-    if (iterations % 50 == 0){
-        printf("current: %.2f AND %.2f\n", double(Intake.get_current_draw(0)), double(Intake.get_current_draw(1)));
-    }
     if(master.get_digital(currentButtons(Action::OUTTAKE)) && !antiJamOuttake) {
         outake(); //This Means Score Balls
     } else if (!master.get_digital(currentButtons(Action::REVERSE)) && !master.get_digital(currentButtons(Action::OUTTAKE))){
@@ -144,9 +139,9 @@ void jamControl(){
 }
 
 
-void outake(){
+void outake(int speed){
     outtakingDirection = 1;
-    Outtake.move(127);
+    Outtake.move(speed);
 }
 
 void reverseOutake(){
@@ -200,7 +195,7 @@ if (master.get_digital(currentButtons(Action::WING)) && currentPivot) {
         wingPiston.set_value(false);
     }
 else if(currentPivot){
-        wingPiston.set_value(true);
+       // wingPiston.set_value(true);
     }
 
 }
@@ -228,8 +223,8 @@ void pivotToggle(){
     currentPivot = !currentPivot;
     pivotPiston.set_value(currentPivot);
     
-    wingPiston.set_value(currentPivot);
-    currentWing = currentPivot;
+    //wingPiston.set_value(currentPivot);
+    //currentWing = currentPivot;
 }
 
 

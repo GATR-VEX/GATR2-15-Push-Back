@@ -21,3 +21,5 @@ void skillsAutonOrangeScraperLeft();
 void matchAutonOrangeScraperLeft();
 void skillsAutonBlackScraperRight();
 void matchAutonBlackScraperRight();
+void skillsAutonRight();
+void skillsAutonRightConstants();

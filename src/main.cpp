@@ -12,7 +12,7 @@ ez::Drive chassis(
     {-3, 4, -8, 7},  // Right Chassis Ports (negative port will reverse it!)
 
     21,      // IMU Port
-    0,   // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
+    2,   // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     600.0);  // Wheel RPM = cartridge * (motor gear / wheel gear)
 
 XDrive xdriveChassis(chassis);
@@ -23,7 +23,7 @@ XDrive xdriveChassis(chassis);
 // - `2.75` is the wheel diameter
 // - `4.0` is the distance from the center of the wheel to the center of the robot
 ez::tracking_wheel horiz_tracker(-9, 2.75*2.0/3.0, -5.12);  // This tracking wheel is perpendicular to the drive wheels
-ez::tracking_wheel vert_tracker(-10, 2.75*2.0/3.0, -0.32);   // This tracking wheel is parallel to the drive wheels
+ez::tracking_wheel vert_tracker(20, 2.75*2.0/3.0, -0.32);   // This tracking wheel is parallel to the drive wheels
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -32,8 +32,12 @@ ez::tracking_wheel vert_tracker(-10, 2.75*2.0/3.0, -0.32);   // This tracking wh
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+
+
   // Print our branding over your terminal :D
   ez::ez_template_print();
+  horiz_tracker.reset();
+  vert_tracker.reset();
 
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
@@ -107,6 +111,9 @@ void autonomous() {
   chassis.pid_targets_reset();                // Resets PID targets to 0
   chassis.drive_imu_reset();                  // Reset gyro position to 0
   chassis.drive_sensor_reset();               // Reset drive sensors to 0
+
+  pros::delay(200);                 // give IMU/odom task a moment
+
   chassis.odom_xyt_set(0_in, 0_in, 0_deg);    // Set the current position, you can start at a specific position with this
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
 
@@ -124,8 +131,8 @@ void autonomous() {
   */
 
   //Comment Out the One You Aren't Testing
-   //skillsAutonOrangeScraperLeft();
-  skillsAutonBlackScraperRight();
+  skillsAutonRight();
+  //skillsAutonBlackScraperRight();
 
   //ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
@@ -248,17 +255,25 @@ void opcontrol() {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
 
+    if (count % 300 == 0){
+      printf("x: %.2f, y: %.2f, heading: %.2f\n", chassis.odom_x_get(), chassis.odom_y_get(), chassis.odom_theta_get());
+    }
+
+    count++;
+
     chassis.opcontrol_arcade_standard(SPLIT);  // Tank control
 
     master.print(0, 0, "X:%f Y:%f t:%f   ", xdriveChassis.GetX(),xdriveChassis.GetY(),xdriveChassis.GetHeading());
+    //intake();
 
-    // . . .
-    // Put more user control code here!
-    // . . .
-    intakeControl();
-    pistonControl();
-    //jamControl();
+  //   // . . .
+  //   // Put more user control code here!
+  //   // . . .
+     intakeControl();
+     pistonControl();
+     //jamControl();
     
-    pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
-  }
+     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
+   }
+
 }
