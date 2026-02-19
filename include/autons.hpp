@@ -23,3 +23,5 @@ void skillsAutonBlackScraperRight();
 void matchAutonBlackScraperRight();
 void skillsAutonRight();
 void skillsAutonRightConstants();
+void secondPart();
+void clearParkingConstants();
