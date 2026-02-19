@@ -59,8 +59,11 @@ void XDriveAutonTest(){
 
 
 
-void matchAutonOrangeScraperLeft(){
+void matchAutonLeft(){
 
+}
+
+void matchAutonRight(){
 }
 
 void skillsAutonRightConstants(){
@@ -303,7 +306,7 @@ void secondPart(){
 
 
 
-void skillsAutonOrangeScraperLeft(){
+void skillsAutonLeft(){
   default_constants();
   //intake();
   
@@ -359,73 +362,6 @@ void skillsAutonOrangeScraperLeft(){
 
 }
 
-void matchAutonBlackScraperRight(){
-}
-
-void skillsAutonBlackScraperRight(){
-default_constants();
-
-  chassis.pid_odom_set(24_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-  chassis.pid_turn_set(90, DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-  chassis.pid_odom_set(42_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-  chassis.pid_turn_set(0, DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-
-  chassis.pid_odom_set(24_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-
-  chassis.pid_turn_set(315, -DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-  intake();
-
-  chassis.pid_odom_set(10_in, SLOW_DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-  chassis.pid_odom_set(-10_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-  stopIntake();
-
-  chassis.pid_turn_set(0, DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-  chassis.pid_odom_set(50_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-  chassis.pid_turn_set(315, -DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-
-  chassis.pid_odom_set(22_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-
-  chassis.pid_turn_set(90, DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-
-  chassis.pid_odom_set(15_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-  intake();
-
-  chassis.pid_odom_set(10_in, SLOW_DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-  chassis.pid_odom_set(-10_in, SLOW_DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-  stopIntake();
-}
 
 
 

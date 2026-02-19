@@ -132,7 +132,6 @@ void autonomous() {
 
   //Comment Out the One You Aren't Testing
   skillsAutonRight();
-  //skillsAutonBlackScraperRight();
 
   //ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }

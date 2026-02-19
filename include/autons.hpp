@@ -17,10 +17,12 @@ void odom_boomerang_example();
 void odom_boomerang_injected_pure_pursuit_example();
 void measure_offsets();
 void XDriveAutonTest();
-void skillsAutonOrangeScraperLeft();
-void matchAutonOrangeScraperLeft();
-void skillsAutonBlackScraperRight();
-void matchAutonBlackScraperRight();
+
+
+void matchAutonLeft();
+void matchAutonRight();
+
+void skillsAutonLeft();
 void skillsAutonRight();
 void skillsAutonRightConstants();
 void secondPart();
