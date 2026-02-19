@@ -15,12 +15,12 @@ void scraperToggle();
 void pivotToggle();
 void wingHold();
 
-void intake();
-void reverseIntake();
+void intake(int speed = 127.);
+void reverseIntake(int speed = 127);
 void stopIntake();
 
 void outake(int speed = 127);
-void reverseOutake();
+void reverseOutake(int speed = 127);
 void stopOutake();
 
 

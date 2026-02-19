@@ -144,9 +144,9 @@ void outake(int speed){
     Outtake.move(speed);
 }
 
-void reverseOutake(){
+void reverseOutake(int speed){
     outtakingDirection = -1;
-    Outtake.move(-127);
+    Outtake.move(-1 * speed);
 }
 
 void stopOutake(){
@@ -154,14 +154,14 @@ void stopOutake(){
     Outtake.move(0);
 }
 
-void intake(){
+void intake(int speed){
     intakingDirection = 1;
-    Intake.move(127);
+    Intake.move(speed);
 }
 
-void reverseIntake(){
+void reverseIntake(int speed){
     intakingDirection = -1;
-    Intake.move(-127);
+    Intake.move(-1 * speed);
 }
 
 void stopIntake(){
@@ -195,7 +195,7 @@ if (master.get_digital(currentButtons(Action::WING)) && currentPivot) {
         wingPiston.set_value(false);
     }
 else if(currentPivot){
-       // wingPiston.set_value(true);
+       wingPiston.set_value(true);
     }
 
 }
@@ -223,8 +223,8 @@ void pivotToggle(){
     currentPivot = !currentPivot;
     pivotPiston.set_value(currentPivot);
     
-    //wingPiston.set_value(currentPivot);
-    //currentWing = currentPivot;
+    wingPiston.set_value(currentPivot);
+    currentWing = currentPivot;
 }
 
 

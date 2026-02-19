@@ -101,6 +101,8 @@ void skillsAutonRightConstants(){
 void skillsAutonRight(){
   skillsAutonRightConstants();
 
+  pivotToggle();
+
   chassis.pid_odom_set(28_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   scraperToggle();
@@ -114,9 +116,9 @@ void skillsAutonRight(){
   //pros::delay(10000);
   
   for (int i = 0; i < 6; i++){
-      chassis.pid_odom_set(-3_in, DRIVE_SPEED, true);
+      chassis.pid_odom_set(-3_in, DRIVE_SPEED, false);
       chassis.pid_wait();
-      chassis.pid_odom_set(3_in, DRIVE_SPEED, true);
+      chassis.pid_odom_set(3_in, DRIVE_SPEED, false);
       chassis.pid_wait();
 
       // once balls fill up more of the top stop running outtake 
@@ -130,11 +132,14 @@ void skillsAutonRight(){
     scraperToggle();
     chassis.pid_turn_set(0, DRIVE_SPEED, true);
     chassis.pid_wait_quick();
-    chassis.pid_odom_set(14_in, DRIVE_SPEED, true);
+    chassis.pid_odom_set(14_in, DRIVE_SPEED, false);
     chassis.pid_wait_quick();
     chassis.pid_turn_set(270, DRIVE_SPEED, true);
-    chassis.pid_wait();
-    chassis.pid_odom_set(84, DRIVE_SPEED, true);
+    chassis.pid_wait_quick();
+    chassis.pid_odom_set(84_in, DRIVE_SPEED, true);
+    chassis.pid_wait_until(40_in);
+    stopIntake();
+    stopOutake();
     chassis.pid_wait_quick();
     chassis.pid_turn_set(180, DRIVE_SPEED, true);
     chassis.pid_wait_quick();
@@ -145,6 +150,7 @@ void skillsAutonRight(){
     chassis.pid_odom_set(9_in, DRIVE_SPEED, true);
     chassis.pid_wait();
     outake();
+    intake();
     flapToggle();
     pros::delay(10000);
 
