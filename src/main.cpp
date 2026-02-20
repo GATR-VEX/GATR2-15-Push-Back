@@ -9,7 +9,7 @@
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
     {1, -18, 6, -5},  // Left Chassis Ports (negative port will reverse it!)
-    {-3, 4, -8, 7},  // Right Chassis Ports (negative port will reverse it!)
+    {-3, 4, -8, 19},  // Right Chassis Ports (negative port will reverse it!)
 
     21,      // IMU Port
     2,   // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -23,7 +23,7 @@ XDrive xdriveChassis(chassis);
 // - `2.75` is the wheel diameter
 // - `4.0` is the distance from the center of the wheel to the center of the robot
 ez::tracking_wheel horiz_tracker(-9, 2.75*2.0/3.0, -5.12);  // This tracking wheel is perpendicular to the drive wheels
-ez::tracking_wheel vert_tracker(20, 2.75*2.0/3.0, -0.32);   // This tracking wheel is parallel to the drive wheels
+ez::tracking_wheel vert_tracker(10, 2.75*2.0/3.0, -0.32);   // This tracking wheel is parallel to the drive wheels
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -65,7 +65,10 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"Tank Test\n\nI hope this works!!!", measure_offsets},
+      {"Skills Auton Right\n\n", skillsAutonRight},
+      {"Skills Auton Left\n\n", skillsAutonLeft},
+      {"Match Auton Right\n\nUses David Control Scheme", matchAutonRight},
+      {"Match Auton Left\n\nUses Will Control Scheme", matchAutonLeft},
   });
 
   // Initialize chassis and auton selector
@@ -131,8 +134,8 @@ void autonomous() {
   */
 
   //Comment Out the One You Aren't Testing
-  skillsAutonRight();
 
+  skillsAutonRight();
   //ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
 
