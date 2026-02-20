@@ -148,6 +148,7 @@ void skillsAutonRight(){
 
   pivotPiston.set_value(true);
 
+  
   // initial straight line towards match loader
   chassis.pid_odom_set(26.5_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
@@ -170,7 +171,7 @@ void skillsAutonRight(){
   //pros::delay(10000);
   
   // cracking the match loader
-  for (int i = 0; i < 5; i++){
+  for (int i = 0; i < 4; i++){
       chassis.pid_odom_set(-3_in, DRIVE_SPEED, false);
       chassis.pid_wait();
       chassis.pid_odom_set(3.5_in, DRIVE_SPEED, false);
@@ -228,7 +229,7 @@ void skillsAutonRight(){
     chassis.pid_wait();
 
     // drive towards long goal
-    chassis.pid_odom_set(8_in, DRIVE_SPEED, true);
+    chassis.pid_odom_set(8.5_in, DRIVE_SPEED, true);
     chassis.pid_wait();
 
     //drive ever so slightly away
@@ -236,9 +237,10 @@ void skillsAutonRight(){
     chassis.pid_wait();
 
     // intake/outake
-    outake(-127);
+    /*outake(-127);
     intake(-127);
-    pros::delay(500);
+    pros::delay(500); */
+
     outake();
     intake();
     flapToggle();
@@ -279,22 +281,30 @@ void skillsAutonRight(){
     chassis.pid_odom_set(-6_in, DRIVE_SPEED, false);
     chassis.pid_wait();
     scraperToggle();
-    chassis.pid_turn_set(90, -DRIVE_SPEED/2, true);
+    
+    chassis.pid_turn_set(88, -DRIVE_SPEED/2, true);
     chassis.pid_wait();
     chassis.pid_odom_set(21_in, DRIVE_SPEED/2, true);
     chassis.pid_wait();
 
+    
+
      //drive ever so slightly away
-    chassis.pid_odom_set(-1_in, DRIVE_SPEED, false);
+    chassis.pid_odom_set(-1.5_in, DRIVE_SPEED, false);
     chassis.pid_wait();
 
-    outake(-127);
+    
+
+    /* outake(-127);
     intake(-127);
-    pros::delay(500);
+
+    pros::delay(500); */
+    
+    flapToggle();
     outake();
     intake();
 
-    flapToggle();
+    
     pros::delay(5000);
     flapToggle();
     stopIntake();
@@ -306,8 +316,7 @@ void skillsAutonRight(){
 void secondPart(){
   clearParkingConstants();
 
-  //pivotToggle();
-  //wingPiston.set_value(false);
+
 
   chassis.pid_odom_set(-5_in, DRIVE_SPEED/1.5, false);
   chassis.pid_wait();
@@ -317,7 +326,7 @@ void secondPart(){
   chassis.pid_wait();
   chassis.pid_turn_set(270, DRIVE_SPEED/2, true);
   chassis.pid_wait();
-  chassis.pid_odom_set(17_in, DRIVE_SPEED/3, true);
+  chassis.pid_odom_set(16.5_in, DRIVE_SPEED/3, true);
   chassis.pid_wait_quick();
   scraperToggle();
   pros::delay(500);
@@ -338,7 +347,7 @@ void secondPart(){
   chassis.pid_wait_quick();
   chassis.pid_turn_set(160, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
-  chassis.pid_odom_set(20_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(14_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   stopIntake();
   stopOutake();
