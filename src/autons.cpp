@@ -65,25 +65,25 @@ void XDriveAutonTest(){
 void skillsAutonRightConstants(){
   // P, I, D, and Start I
   chassis.pid_drive_constants_set(20.0, 0.0, 100.0);         // Fwd/rev constants, used for odom and non odom motions
-  chassis.pid_heading_constants_set(11.0, 0.0, 20.0);        // Holds the robot straight while going forward without odom
+  chassis.pid_heading_constants_set(10.0, 0.01, 8.0);     // Holds the robot straight while going forward without odom
   chassis.pid_turn_constants_set(3.5, 0.05, 20.0, 15.0);     // Turn in place constants
   chassis.pid_swing_constants_set(6.0, 0.0, 65.0);           // Swing constants
   chassis.pid_odom_angular_constants_set(6.5, 0.0, 52.5);    // Angular control for odom motions
   chassis.pid_odom_boomerang_constants_set(5.8, 0.0, 32.5);  // Angular control for boomerang motions
 
   // Exit conditions
-  chassis.pid_turn_exit_condition_set(90_ms, 3_deg, 250_ms, 7_deg, 500_ms, 500_ms);
+  chassis.pid_turn_exit_condition_set(90_ms, 3_deg, 250_ms, 7_deg, 500_ms, 5000000_ms);
   chassis.pid_swing_exit_condition_set(90_ms, 3_deg, 250_ms, 7_deg, 500_ms, 500_ms);
   chassis.pid_drive_exit_condition_set(90_ms, 1_in, 250_ms, 3_in, 500_ms, 500_ms);
-  chassis.pid_odom_turn_exit_condition_set(90_ms, 3_deg, 250_ms, 7_deg, 500_ms, 750_ms);
-  chassis.pid_odom_drive_exit_condition_set(90_ms, 1_in, 250_ms, 3_in, 500_ms, 750_ms);
+  chassis.pid_odom_turn_exit_condition_set(90_ms, 1_deg, 90_ms, 1_deg, 500_ms, 750_ms);
+  chassis.pid_odom_drive_exit_condition_set(90_ms, 1_in, 90_ms, 1_in, 500_ms, 750_ms);
   chassis.pid_turn_chain_constant_set(3_deg);
   chassis.pid_swing_chain_constant_set(5_deg);
-  chassis.pid_drive_chain_constant_set(3_in);
+  chassis.pid_drive_chain_constant_set(0.1_in);
 
   // Slew constants
-  chassis.slew_turn_constants_set(3_deg, 70);
-  chassis.slew_drive_constants_set(3_in, 70);
+  chassis.slew_turn_constants_set(30_deg, 40);
+  chassis.slew_drive_constants_set(8_in, 40);
   chassis.slew_swing_constants_set(3_in, 80);
 
   // The amount that turns are prioritized over driving in odom motions
@@ -137,21 +137,78 @@ void clearParkingConstants() {
 }
 
 void matchAutonLeft(){
+  skillsAutonRightConstants();
+
+  chassis.pid_odom_set(80.0_in, DRIVE_SPEED/1.5, true);
+  chassis.pid_wait();
+chassis.pid_odom_set(-80.0_in, DRIVE_SPEED/1.5, true);
+  chassis.pid_wait();
   currentButtons = WillScheme;
 }
 
 void matchAutonRight(){
   skillsAutonRightConstants();
   currentButtons = DavidScheme;
+  pivotPiston.set_value(true);
+
+
+  chassis.pid_odom_set(20.0_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(90, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  scraperToggle();
+  chassis.pid_odom_set(14.0_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  intake();
+  outake();
+
+  for (int i = 0; i < 4; i++){
+      chassis.pid_odom_set(-3_in, DRIVE_SPEED, false);
+      chassis.pid_wait();
+      chassis.pid_odom_set(3.5_in, DRIVE_SPEED, false);
+      chassis.pid_wait();
+
+      // once balls fill up more of the top stop running outtake 
+      //if (i == 1){
+        //outake(127);
+     // }
+    }
+
+  stopIntake();
+  stopOutake();
+
+  chassis.pid_odom_set(-5.0_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(45, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  scraperToggle();
+  reverseIntake();
+  reverseOutake();
+  pros::delay(1500);
 
   chassis.pid_turn_set(90, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_turn_set(90, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_turn_set(90, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_turn_set(90, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
+  chassis.pid_wait();
+  scraperToggle();
+  chassis.pid_odom_set(5.0_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  intake();
+  outake();
+
+  for (int i = 0; i < 4; i++){
+      chassis.pid_odom_set(-3_in, DRIVE_SPEED, false);
+      chassis.pid_wait();
+      chassis.pid_odom_set(3.5_in, DRIVE_SPEED, false);
+      chassis.pid_wait();
+
+      // once balls fill up more of the top stop running outtake 
+      //if (i == 1){
+        //outake(127);
+     // }
+    }
+
+  chassis.pid_odom_set(-8.0_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  
 }
 
 //SKILLS AUTON RIGHT
@@ -177,13 +234,13 @@ void skillsAutonRight(){
   outake();
 
   // go towards match loader
-  chassis.pid_odom_set(8_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(8.5_in, DRIVE_SPEED, true);
   chassis.pid_wait();
 
-  //pros::delay(10000);
+  pros::delay(2000);
   
   // cracking the match loader
-  for (int i = 0; i < 4; i++){
+  for (int i = 0; i < 2; i++){
       chassis.pid_odom_set(-3_in, DRIVE_SPEED, false);
       chassis.pid_wait();
       chassis.pid_odom_set(3.5_in, DRIVE_SPEED, false);
@@ -207,7 +264,7 @@ void skillsAutonRight(){
     chassis.pid_wait_quick();
 
     // go towards ball on wall
-    chassis.pid_odom_set(14_in, DRIVE_SPEED, false);
+    chassis.pid_odom_set(14_in, DRIVE_SPEED/2, false);
     chassis.pid_wait_quick();
 
     // back up from balls on wall
@@ -223,17 +280,18 @@ void skillsAutonRight(){
     chassis.pid_odom_set(84_in, DRIVE_SPEED, true);
 
     // optional if you want to stop running intake in the middle
-    chassis.pid_wait_until(40_in);
+    /* chassis.pid_wait_until(55_in);
     stopIntake();
-    stopOutake();
+    stopOutake(); */
     chassis.pid_wait();
+    pros::delay(250);
 
     // aligining with long goal
-    chassis.pid_turn_set(180, DRIVE_SPEED, true);
+    chassis.pid_turn_set(180, DRIVE_SPEED/2, true);
     chassis.pid_wait();
 
     // drive forward
-    chassis.pid_odom_set(13_in, DRIVE_SPEED, true);
+    chassis.pid_odom_set(12.5_in, DRIVE_SPEED, true);
     chassis.pid_wait();
 
     // align with long goal
@@ -241,7 +299,7 @@ void skillsAutonRight(){
     chassis.pid_wait();
 
     // drive towards long goal
-    chassis.pid_odom_set(8.5_in, DRIVE_SPEED, true);
+    chassis.pid_odom_set(9.5_in, DRIVE_SPEED, true);
     chassis.pid_wait();
 
     //drive ever so slightly away
@@ -274,13 +332,15 @@ void skillsAutonRight(){
     scraperToggle();
     intake();
     outake();
-    chassis.pid_odom_set(22_in, DRIVE_SPEED/1.5, true);
+    chassis.pid_odom_set(23_in, DRIVE_SPEED/1.5, true);
     chassis.pid_wait();
 
-    for (int i = 0; i < 5; i++){
+    pros::delay(2000);
+
+    for (int i = 0; i < 2; i++){
       chassis.pid_odom_set(-3_in, DRIVE_SPEED, false);
       chassis.pid_wait();
-      chassis.pid_odom_set(3.5_in, DRIVE_SPEED, false);
+      chassis.pid_odom_set(4_in, DRIVE_SPEED, false);
       chassis.pid_wait();
 
       // once balls fill up more of the top stop running outtake 
@@ -294,9 +354,13 @@ void skillsAutonRight(){
     chassis.pid_wait();
     scraperToggle();
     
-    chassis.pid_turn_set(95, -DRIVE_SPEED/2, true);
+    chassis.pid_turn_set(110, -DRIVE_SPEED/2, true);
     chassis.pid_wait();
-    chassis.pid_odom_set(21_in, DRIVE_SPEED/2, true);
+    chassis.pid_odom_set(4.0_in, DRIVE_SPEED/2, true);
+    chassis.pid_wait();
+    chassis.pid_turn_set(90, -DRIVE_SPEED/2, true);
+    chassis.pid_wait();
+    chassis.pid_odom_set(16_in, DRIVE_SPEED/2, true);
     chassis.pid_wait();
 
     
@@ -334,11 +398,11 @@ void secondPart(){
   chassis.pid_wait();
   chassis.pid_turn_set(180, DRIVE_SPEED/2, true);
   chassis.pid_wait();
-  chassis.pid_odom_set(48_in, DRIVE_SPEED/2, true);
+  chassis.pid_odom_set(46_in, DRIVE_SPEED/2, true);
   chassis.pid_wait();
   chassis.pid_turn_set(270, DRIVE_SPEED/2, true);
   chassis.pid_wait();
-  chassis.pid_odom_set(16.5_in, DRIVE_SPEED/3, true);
+  chassis.pid_odom_set(16.5_in, DRIVE_SPEED/2, true);
   chassis.pid_wait_quick();
   scraperToggle();
   pros::delay(500);
@@ -355,11 +419,11 @@ void secondPart(){
   chassis.pid_wait();
   intake();
   outake(60);
-  chassis.pid_odom_set(96_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(92_in, 127, true);
   chassis.pid_wait_quick();
   chassis.pid_turn_set(160, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
-  chassis.pid_odom_set(14_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(10_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   stopIntake();
   stopOutake();
@@ -372,6 +436,11 @@ void secondPart(){
 
 
 void skillsAutonLeft(){
+  ez::tracking_wheel vert_tracker(-10, 2.75*2.0/3.0, -0.32); 
+  chassis.odom_tracker_left_set(&vert_tracker);
+  chassis.initialize();
+  vert_tracker.reset();
+
   skillsAutonRightConstants();
   
   chassis.pid_odom_set(-9_in, DRIVE_SPEED, true);
