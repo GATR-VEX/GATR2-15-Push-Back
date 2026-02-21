@@ -60,19 +60,13 @@ void XDriveAutonTest(){
 
 
 
-void matchAutonLeft(){
-  currentButtons = WillScheme;
-}
 
-void matchAutonRight(){
-  currentButtons = DavidScheme;
-}
 
 void skillsAutonRightConstants(){
   // P, I, D, and Start I
   chassis.pid_drive_constants_set(20.0, 0.0, 100.0);         // Fwd/rev constants, used for odom and non odom motions
   chassis.pid_heading_constants_set(11.0, 0.0, 20.0);        // Holds the robot straight while going forward without odom
-  chassis.pid_turn_constants_set(3.0, 0.05, 20.0, 15.0);     // Turn in place constants
+  chassis.pid_turn_constants_set(3.5, 0.05, 20.0, 15.0);     // Turn in place constants
   chassis.pid_swing_constants_set(6.0, 0.0, 65.0);           // Swing constants
   chassis.pid_odom_angular_constants_set(6.5, 0.0, 52.5);    // Angular control for odom motions
   chassis.pid_odom_boomerang_constants_set(5.8, 0.0, 32.5);  // Angular control for boomerang motions
@@ -142,6 +136,24 @@ void clearParkingConstants() {
   chassis.pid_angle_behavior_set(ez::shortest);
 }
 
+void matchAutonLeft(){
+  currentButtons = WillScheme;
+}
+
+void matchAutonRight(){
+  skillsAutonRightConstants();
+  currentButtons = DavidScheme;
+
+  chassis.pid_turn_set(90, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  chassis.pid_turn_set(90, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  chassis.pid_turn_set(90, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  chassis.pid_turn_set(90, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+}
+
 //SKILLS AUTON RIGHT
 void skillsAutonRight(){
   skillsAutonRightConstants();
@@ -165,7 +177,7 @@ void skillsAutonRight(){
   outake();
 
   // go towards match loader
-  chassis.pid_odom_set(8.5_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(8_in, DRIVE_SPEED, true);
   chassis.pid_wait();
 
   //pros::delay(10000);
@@ -221,7 +233,7 @@ void skillsAutonRight(){
     chassis.pid_wait();
 
     // drive forward
-    chassis.pid_odom_set(11_in, DRIVE_SPEED, true);
+    chassis.pid_odom_set(13_in, DRIVE_SPEED, true);
     chassis.pid_wait();
 
     // align with long goal
@@ -282,7 +294,7 @@ void skillsAutonRight(){
     chassis.pid_wait();
     scraperToggle();
     
-    chassis.pid_turn_set(88, -DRIVE_SPEED/2, true);
+    chassis.pid_turn_set(95, -DRIVE_SPEED/2, true);
     chassis.pid_wait();
     chassis.pid_odom_set(21_in, DRIVE_SPEED/2, true);
     chassis.pid_wait();
@@ -402,7 +414,7 @@ void skillsAutonLeft(){
     chassis.pid_wait_quick();
 
     // go towards ball on wall
-    chassis.pid_odom_set(14_in, DRIVE_SPEED, false);
+    chassis.pid_odom_set(14_in, DRIVE_SPEED/2, false);
     chassis.pid_wait_quick();
 
     // back up from balls on wall
@@ -436,7 +448,7 @@ void skillsAutonLeft(){
     chassis.pid_wait();
 
     // drive towards long goal
-    chassis.pid_odom_set(8_in, DRIVE_SPEED, true);
+    chassis.pid_odom_set(8.5_in, DRIVE_SPEED, true);
     chassis.pid_wait();
 
     //drive ever so slightly away
@@ -484,9 +496,13 @@ void skillsAutonLeft(){
     chassis.pid_odom_set(-6_in, DRIVE_SPEED, false);
     chassis.pid_wait();
     scraperToggle();
-    chassis.pid_turn_set(0, -DRIVE_SPEED/2, true);
+    chassis.pid_turn_set(110, -DRIVE_SPEED/2, true);
     chassis.pid_wait();
-    chassis.pid_odom_set(21_in, DRIVE_SPEED/2, true);
+    chassis.pid_odom_set(5_in, DRIVE_SPEED/2, true);
+    chassis.pid_wait();
+    chassis.pid_turn_set(90, -DRIVE_SPEED/2, true);
+    chassis.pid_wait();
+    chassis.pid_odom_set(16_in, DRIVE_SPEED/2, true);
     chassis.pid_wait();
 
      //drive ever so slightly away
@@ -517,11 +533,11 @@ void skillsAutonLeft(){
     chassis.pid_wait();
     intake();
     outake(60);
-    chassis.pid_odom_set(96_in, DRIVE_SPEED, true);
+    chassis.pid_odom_set(88_in, DRIVE_SPEED, true);
     chassis.pid_wait();
     chassis.pid_turn_set(340, DRIVE_SPEED, true);
     chassis.pid_wait_quick();
-    chassis.pid_odom_set(20_in, DRIVE_SPEED, true);
+    chassis.pid_odom_set(14_in, DRIVE_SPEED, true);
     chassis.pid_wait();
     stopIntake();
     stopOutake();

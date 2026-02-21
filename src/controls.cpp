@@ -41,15 +41,15 @@ pros::controller_digital_e_t DavidScheme(Action action){
     case Action::FLAP:
         return pros::E_CONTROLLER_DIGITAL_Y;
     case Action::PIVOT:
-        return pros::E_CONTROLLER_DIGITAL_A;
-    case Action::SCRAPER:
         return pros::E_CONTROLLER_DIGITAL_B;
+    case Action::SCRAPER:
+        return pros::E_CONTROLLER_DIGITAL_A;
     case Action::INTAKE:
         return pros::E_CONTROLLER_DIGITAL_R1;
     case Action::WING:
-        return pros::E_CONTROLLER_DIGITAL_X;
-    case Action::PARK:
         return pros::E_CONTROLLER_DIGITAL_RIGHT;
+    case Action::PARK:
+        return pros::E_CONTROLLER_DIGITAL_UP;
     case Action::SNAPUP:
         return pros::E_CONTROLLER_DIGITAL_UP;
     case Action::SNAPDOWN:
@@ -60,6 +60,7 @@ pros::controller_digital_e_t DavidScheme(Action action){
         return pros::E_CONTROLLER_DIGITAL_LEFT;
     default:
         return NO_BUTTON;
+    //Only Run Lower Half Intake Reverse Down Arrow
     }
 }
 
