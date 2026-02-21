@@ -27,3 +27,5 @@ void skillsAutonRight();
 void skillsAutonRightConstants();
 void secondPart();
 void clearParkingConstants();
+
+void skillsAutonLeftConstants();

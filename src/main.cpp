@@ -22,7 +22,7 @@ XDrive xdriveChassis(chassis);
 //  - you should get positive values on the encoders going FORWARD and RIGHT
 // - `2.75` is the wheel diameter
 // - `4.0` is the distance from the center of the wheel to the center of the robot
-ez::tracking_wheel horiz_tracker(-9, 2.75*2.0/3.0, -5.12);  // This tracking wheel is perpendicular to the drive wheels
+ez::tracking_wheel horiz_tracker(-9, 2.75*2.0/3.0, 5.12);  // This tracking wheel is perpendicular to the drive wheels
 ez::tracking_wheel vert_tracker(10, 2.75*2.0/3.0, -0.32);   // This tracking wheel is parallel to the drive wheels
 
 /**
@@ -135,7 +135,7 @@ void autonomous() {
 
   //Comment Out the One You Aren't Testing
 
-  skillsAutonRight();
+  skillsAutonLeft();
   //ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
 
@@ -208,8 +208,8 @@ void ez_template_extras() {
     //  When enabled:
     //  * use A and Y to increment / decrement the constants
     //  * use the arrow keys to navigate the constants
-    //if (master.get_digital_new_press(DIGITAL_X))
-     // chassis.pid_tuner_toggle();
+    if (master.get_digital_new_press(DIGITAL_X))
+     chassis.pid_tuner_toggle();
 
     // Trigger the selected autonomous routine
     if (master.get_digital(DIGITAL_B) && master.get_digital(DIGITAL_DOWN)) {
