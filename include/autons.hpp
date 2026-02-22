@@ -29,3 +29,4 @@ void secondPart();
 void clearParkingConstants();
 
 void skillsAutonLeftConstants();
+void simpleSkillsAutonLeft();

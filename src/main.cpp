@@ -22,8 +22,8 @@ XDrive xdriveChassis(chassis);
 //  - you should get positive values on the encoders going FORWARD and RIGHT
 // - `2.75` is the wheel diameter
 // - `4.0` is the distance from the center of the wheel to the center of the robot
-ez::tracking_wheel horiz_tracker(-9, 2.75*2.0/3.0, 5.12);  // This tracking wheel is perpendicular to the drive wheels
-ez::tracking_wheel vert_tracker(10, 2.75*2.0/3.0, -0.32);   // This tracking wheel is parallel to the drive wheels
+ez::tracking_wheel horiz_tracker(-9, 2.75*2.0/3.0, -5.12);  // This tracking wheel is perpendicular to the drive wheels
+//ez::tracking_wheel vert_tracker(10, 2.75*2.0/3.0, -0.32);   // This tracking wheel is parallel to the drive wheels
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -37,18 +37,18 @@ void initialize() {
   // Print our branding over your terminal :D
   ez::ez_template_print();
   horiz_tracker.reset();
-  vert_tracker.reset();
+  //vert_tracker.reset();
 
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
   // Look at your horizontal tracking wheel and decide if it's in front of the midline of your robot or behind it
   //  - change `back` to `front` if the tracking wheel is in front of the midline
   //  - ignore this if you aren't using a horizontal tracker
-  chassis.odom_tracker_back_set(&horiz_tracker);
+  chassis.odom_tracker_front_set(&horiz_tracker);
   // Look at your vertical tracking wheel and decide if it's to the left or right of the center of the robot
   //  - change `left` to `right` if the tracking wheel is to the right of the centerline
   //  - ignore this if you aren't using a vertical tracker
-  chassis.odom_tracker_left_set(&vert_tracker);
+  //chassis.odom_tracker_left_set(&vert_tracker);
 
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(true);   // Enables modifying the controller curve with buttons on the joysticks
@@ -66,6 +66,7 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
       {"Skills Auton Left\n\n", skillsAutonLeft},
+      {"ONLY RUN IF OTHER ROUTE FAILS\n\nSimple Skills Auton Left\n\n", simpleSkillsAutonLeft},
       {"Match Auton Left(Does Nothing)\n\nUses Will Control Scheme", matchAutonLeft},
   });
 
