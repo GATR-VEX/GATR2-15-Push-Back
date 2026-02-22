@@ -172,7 +172,7 @@ void clearParkingConstants() {
 void matchAutonLeft(){
   skillsAutonRightConstants();
 
-  currentButtons = WillScheme;
+  //currentButtons = WillScheme;
 }
 
 void matchAutonRight(){
@@ -472,6 +472,7 @@ void skillsAutonLeft(){
   chassis.pid_wait();
   // chassis.pid_odom_set({{0_in, -12.22_in}, rev, DRIVE_SPEED/2},true);
   // chassis.pid_wait();
+  intake();
 
   chassis.pid_turn_set(180_deg,TURN_SPEED);
   chassis.pid_wait();
@@ -487,6 +488,7 @@ void skillsAutonLeft(){
   pros::delay(1000);
   chassis.drive_set(0, 0);
   pros::delay(2000);
+  stopIntake();
 
   parkerToggle();
   
