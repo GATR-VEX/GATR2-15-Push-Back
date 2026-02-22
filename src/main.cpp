@@ -65,10 +65,8 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"Skills Auton Right\n\n", skillsAutonRight},
       {"Skills Auton Left\n\n", skillsAutonLeft},
-      {"Match Auton Right\n\nUses David Control Scheme", matchAutonRight},
-      {"Match Auton Left\n\nUses Will Control Scheme", matchAutonLeft},
+      {"Match Auton Left(Does Nothing)\n\nUses Will Control Scheme", matchAutonLeft},
   });
 
   // Initialize chassis and auton selector
@@ -135,8 +133,8 @@ void autonomous() {
 
   //Comment Out the One You Aren't Testing
 
-  skillsAutonLeft();
-  //ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
+  //skillsAutonLeft();
+  ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
 
 /**

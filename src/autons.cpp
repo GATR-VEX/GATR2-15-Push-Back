@@ -172,10 +172,6 @@ void clearParkingConstants() {
 void matchAutonLeft(){
   skillsAutonRightConstants();
 
-  chassis.pid_odom_set(80.0_in, DRIVE_SPEED/1.5, true);
-  chassis.pid_wait();
-chassis.pid_odom_set(-80.0_in, DRIVE_SPEED/1.5, true);
-  chassis.pid_wait();
   currentButtons = WillScheme;
 }
 
