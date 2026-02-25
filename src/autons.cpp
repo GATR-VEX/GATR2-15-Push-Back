@@ -468,32 +468,72 @@ void skillsAutonLeft(){
 
   default_constants();
   
-  chassis.pid_odom_set({{0_in, -12.22_in}, rev, DRIVE_SPEED/2},true);
+  chassis.pid_odom_set({{0_in, -12_in}, rev, DRIVE_SPEED/2},true);
   chassis.pid_wait();
   // chassis.pid_odom_set({{0_in, -12.22_in}, rev, DRIVE_SPEED/2},true);
   // chassis.pid_wait();
   intake();
 
-  chassis.pid_turn_set(180_deg,TURN_SPEED);
+  //chassis.pid_turn_set(180_deg,TURN_SPEED);
+  //chassis.pid_wait();
+
+  //scraperToggle();
+
+  // START OF SIMPLE AUTON
+  //chassis.pid_turn_set(0_deg,TURN_SPEED);
+  //chassis.pid_wait();
+
+  //chassis.drive_set(127/2, 127/2);
+  //pros::delay(1000);
+  //chassis.drive_set(0, 0);
+  //pros::delay(2000);
+  //stopIntake();
+
+ // parkerToggle();
+  // END OF SIMPLE AUTON
+
+  chassis.pid_turn_set(90, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_odom_set(38, DRIVE_SPEED/1.5, true);
+  chassis.pid_wait_until(10_in);
+  intake(-127);
+  outake(-127);
+  chassis.pid_wait_until(14_in);
+  intake();
+  outake();
+  chassis.pid_wait_until(18_in);
+  intake(-127);
+  outake(-127);
+  chassis.pid_wait_until(20_in);
+  intake();
+  outake();
+
   chassis.pid_wait();
 
   scraperToggle();
-
-  pros::delay(3000);
-
-  chassis.pid_turn_set(0_deg,TURN_SPEED);
+  chassis.pid_turn_set(180, DRIVE_SPEED/2, true);
   chassis.pid_wait();
-
-  chassis.drive_set(127/2, 127/2);
-  pros::delay(1000);
-  chassis.drive_set(0, 0);
+  pivotToggle();
+  chassis.pid_odom_set(6.5_in, DRIVE_SPEED/2, false);
+  chassis.pid_wait();
+  
+  flapToggle();
+  outake();
+  intake();
   pros::delay(2000);
-  stopIntake();
-
-  parkerToggle();
+  intake(-127);
+  outake(-127);
+  pros::delay(200);
+  intake();
+  outake();
+  pros::delay(2000);
+  intake(-127);
+  outake(-127);
+  pros::delay(200);
+  intake();
+  outake();
+  pros::delay(1000);
   
-  
-
   /*
   chassis.pid_odom_set(-9_in, DRIVE_SPEED, true);
   chassis.pid_wait();

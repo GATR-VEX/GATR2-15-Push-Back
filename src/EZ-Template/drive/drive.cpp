@@ -231,7 +231,7 @@ void Drive::private_drive_set(int left, int right) {
     if (!pto_check(i)) i.move_voltage(left * (12000.0 / 127.0));  // If the motor is in the pto list, don't do anything to the motor.
   }
   for (auto i : right_motors) {
-    if (!pto_check(i)) i.move_voltage(right * (12000.0 / 127.0));  // If the motor is in the pto list, don't do anything to the motor.
+    if (!pto_check(i)) i.move_voltage(0.75 * right * (12000.0 / 127.0));  // If the motor is in the pto list, don't do anything to the motor.
   }
 }
 
