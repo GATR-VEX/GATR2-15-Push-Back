@@ -63,15 +63,15 @@ void skillsAutonLeftConstants(){
   // P, I, D, and Start I
   chassis.pid_drive_constants_set(20.0, 0.0, 100.0);         // Fwd/rev constants, used for odom and non odom motions
   chassis.pid_heading_constants_set(10.0, 0.01, 8.0);     // Holds the robot straight while going forward without odom
-  chassis.pid_turn_constants_set(3.5, 0.05, 20.0, 15.0);     // Turn in place constants
+  chassis.pid_turn_constants_set(4.5, 0.05, 2, 15.0);     // Turn in place constants
   chassis.pid_swing_constants_set(6.0, 0.0, 65.0);           // Swing constants
   chassis.pid_odom_angular_constants_set(6.5, 0.0, 52.5);    // Angular control for odom motions
   chassis.pid_odom_boomerang_constants_set(5.8, 0.0, 32.5);  // Angular control for boomerang motions
 
   // Exit conditions
-  chassis.pid_turn_exit_condition_set(90_ms, 3_deg, 250_ms, 7_deg, 500_ms, 5000000_ms);
-  chassis.pid_swing_exit_condition_set(90_ms, 3_deg, 250_ms, 7_deg, 500_ms, 500_ms);
-  chassis.pid_drive_exit_condition_set(90_ms, 1_in, 250_ms, 3_in, 500_ms, 500_ms);
+  chassis.pid_turn_exit_condition_set(150_ms, 1_deg, 150_ms, 1_deg, 500_ms, 5000000_ms);
+  chassis.pid_swing_exit_condition_set(90_ms, 1_deg, 250_ms, 7_deg, 500_ms, 500_ms);
+  chassis.pid_drive_exit_condition_set(90_ms, 1_in, 90_ms, 1_in, 500_ms, 500_ms);
   chassis.pid_odom_turn_exit_condition_set(90_ms, 1_deg, 90_ms, 1_deg, 500_ms, 750_ms);
   chassis.pid_odom_drive_exit_condition_set(90_ms, 1_in, 90_ms, 1_in, 500_ms, 750_ms);
   chassis.pid_turn_chain_constant_set(3_deg);
@@ -494,17 +494,11 @@ void skillsAutonLeft(){
 
   chassis.pid_turn_set(90, DRIVE_SPEED, true);
   chassis.pid_wait();
-  chassis.pid_odom_set(38, DRIVE_SPEED/1.5, true);
+  chassis.pid_odom_set(39.45_in, DRIVE_SPEED/1.7, true);
   chassis.pid_wait_until(10_in);
-  intake(-127);
-  outake(-127);
+  intake(-60);
+  outake(-60);
   chassis.pid_wait_until(14_in);
-  intake();
-  outake();
-  chassis.pid_wait_until(18_in);
-  intake(-127);
-  outake(-127);
-  chassis.pid_wait_until(20_in);
   intake();
   outake();
 
@@ -516,23 +510,100 @@ void skillsAutonLeft(){
   pivotToggle();
   chassis.pid_odom_set(6.5_in, DRIVE_SPEED/2, false);
   chassis.pid_wait();
+  chassis.pid_odom_set(-1.2_in, DRIVE_SPEED, false);
+  chassis.pid_wait_quick();
+
   
   flapToggle();
   outake();
   intake();
-  pros::delay(2000);
-  intake(-127);
-  outake(-127);
-  pros::delay(200);
+  pros::delay(1500);
+  intake(-60);
+  outake(-60);
+  pros::delay(250);
   intake();
   outake();
+  pros::delay(1500);
+  
+  stopIntake();
+  stopOutake();
+
+
+
+  chassis.pid_odom_set(-8_in, DRIVE_SPEED/2, false);
+  chassis.pid_wait();
+  flapToggle();
+  pivotToggle();
+  chassis.pid_turn_set(20_deg, DRIVE_SPEED/2, true);
+  chassis.pid_wait();
+
+  skillsAutonLeftConstants();
+
+  chassis.pid_odom_set(8.3_in, DRIVE_SPEED, false);
+  chassis.pid_wait();
+  scraperToggle();
+  chassis.pid_turn_set(-1_deg, DRIVE_SPEED, false);
+  chassis.pid_wait();
+  intake();
+  outake();
+
+  default_constants();
+  
+
+  chassis.pid_odom_set(6.2_in, DRIVE_SPEED, false);
+  chassis.pid_wait();
   pros::delay(2000);
-  intake(-127);
-  outake(-127);
-  pros::delay(200);
+  intake(-60);
+  outake(-60);
+  pros::delay(150);
+  intake();
+  outake();
+
+
+
+  chassis.pid_odom_set(-3_in, DRIVE_SPEED, false);
+  chassis.pid_wait();
+
+  intake(-60);
+  outake(-60);
+  pros::delay(150);
+  intake();
+  outake();
+
+  chassis.pid_odom_set(3.5_in, DRIVE_SPEED, false);
+  chassis.pid_wait();
+  chassis.pid_odom_set(-8_in, DRIVE_SPEED, false);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(200_deg, DRIVE_SPEED/2, true);
+  pivotToggle();
+  scraperToggle();
+  chassis.pid_wait();
+  chassis.pid_odom_set(6_in, DRIVE_SPEED/2, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(180_deg, DRIVE_SPEED/2, false);
+  chassis.pid_wait();
+  chassis.pid_odom_set(9_in, DRIVE_SPEED/2, false);
+  chassis.pid_wait();
+  flapToggle();
   intake();
   outake();
   pros::delay(1000);
+  intake(-60);
+  outake(-60);
+  pros::delay(100);
+  intake();
+  outake();
+  pros::delay(1000);
+  intake(-60);
+  outake(-60);
+  pros::delay(100);
+  intake();
+  outake();
+  pros::delay(1000);
+  
+
+
   
   /*
   chassis.pid_odom_set(-9_in, DRIVE_SPEED, true);
