@@ -43,7 +43,7 @@ float antiJamIntakeTime = 250;
 float antiJamOuttakeTime = 250;
 
 // approx stall current in ms (tested using terminal to find actual stall current)
-float stallCurrent = 1.9 * 1000;
+float stallCurrent = 1.8 * 1000;
 // number of instances it needs to see stall current consecutively to avoid one spike trigger anti jam
 // in particular on motor start up current is high due to no back emf limiting current
 float spikeThreshold = 25; 

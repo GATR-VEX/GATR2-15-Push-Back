@@ -515,25 +515,35 @@ void skillsAutonLeft(){
 
   
   flapToggle();
-  outake();
-  intake();
-  pros::delay(1500);
+
+  int start = pros::millis();
+
+  while (pros::millis() - start < 4000){
+    outake();
+    intake();
+    jamControl();
+  }
+  
+
   intake(-60);
   outake(-60);
-  pros::delay(250);
-  intake();
-  outake();
-  pros::delay(1500);
+  pros::delay(750);
   
+  int start3 = pros::millis();
+
+  while (pros::millis() - start3 < 4000){
+    outake();
+    intake();
+    jamControl();
+  }
+
   stopIntake();
   stopOutake();
-
 
 
   chassis.pid_odom_set(-8_in, DRIVE_SPEED/2, false);
   chassis.pid_wait();
   flapToggle();
-  pivotToggle();
   chassis.pid_turn_set(20_deg, DRIVE_SPEED/2, true);
   chassis.pid_wait();
 
@@ -550,7 +560,7 @@ void skillsAutonLeft(){
   default_constants();
   
 
-  chassis.pid_odom_set(6.2_in, DRIVE_SPEED, false);
+  chassis.pid_odom_set(6.5_in, DRIVE_SPEED, false);
   chassis.pid_wait();
   pros::delay(2000);
   intake(-60);
@@ -572,11 +582,11 @@ void skillsAutonLeft(){
 
   chassis.pid_odom_set(3.5_in, DRIVE_SPEED, false);
   chassis.pid_wait();
+  pros::delay(1500);
   chassis.pid_odom_set(-8_in, DRIVE_SPEED, false);
   chassis.pid_wait();
 
   chassis.pid_turn_set(200_deg, DRIVE_SPEED/2, true);
-  pivotToggle();
   scraperToggle();
   chassis.pid_wait();
   chassis.pid_odom_set(6_in, DRIVE_SPEED/2, true);
@@ -586,24 +596,54 @@ void skillsAutonLeft(){
   chassis.pid_odom_set(9_in, DRIVE_SPEED/2, false);
   chassis.pid_wait();
   flapToggle();
-  intake();
-  outake();
-  pros::delay(1000);
+
+  int start2 = pros::millis();
+  while (pros::millis() - start2 < 4000){
+    outake();
+    intake();
+    jamControl();
+  }
+
+    intake(-60);
+    outake(-60);
+    pros::delay(750);
+
+ int start4 = pros::millis();
+  while (pros::millis() - start4 < 4000){
+    outake();
+    intake();
+    jamControl();
+  }
+
   intake(-60);
-  outake(-60);
-  pros::delay(100);
-  intake();
-  outake();
-  pros::delay(1000);
-  intake(-60);
-  outake(-60);
-  pros::delay(100);
-  intake();
-  outake();
-  pros::delay(1000);
+    outake(-60);
+    pros::delay(750);
+
+  int start5 = pros::millis();
+  while (pros::millis() - start5 < 4000){
+    outake();
+    intake();
+    jamControl();
+  }
+
+  stopOutake();
+  flapToggle();
   
 
+   chassis.pid_odom_set(-16_in, DRIVE_SPEED/2, false);
+   chassis.pid_wait();
+    chassis.pid_turn_set(300_deg, DRIVE_SPEED/2, false);
+    chassis.pid_wait();
+    chassis.pid_odom_set(30_in, DRIVE_SPEED/2, false);
+   chassis.pid_wait();
 
+
+
+   chassis.pid_turn_set(275_deg, DRIVE_SPEED, false);
+    chassis.pid_wait();
+    chassis.pid_odom_set(18_in, DRIVE_SPEED, false);
+   chassis.pid_wait();
+  parkerToggle();
   
   /*
   chassis.pid_odom_set(-9_in, DRIVE_SPEED, true);
