@@ -2,7 +2,7 @@
 
 void default_constants();
 
-void drive_example();
+void auton_test();
 void turn_example();
 void drive_and_turn();
 void wait_until_change_speed();
@@ -16,17 +16,3 @@ void odom_pure_pursuit_wait_until_example();
 void odom_boomerang_example();
 void odom_boomerang_injected_pure_pursuit_example();
 void measure_offsets();
-void XDriveAutonTest();
-
-
-void matchAutonLeft();
-void matchAutonRight();
-
-void skillsAutonLeft();
-void skillsAutonRight();
-void skillsAutonRightConstants();
-void secondPart();
-void clearParkingConstants();
-
-void skillsAutonLeftConstants();
-void simpleSkillsAutonLeft();

@@ -4,6 +4,24 @@
 #include "api.h"
 
 extern Drive chassis;
+
+void resetPistons();
+void pistonControl();
+
+
+void testToggle();
+void testState(bool state);
+extern pros::adi::DigitalOut pistonTest;
+
+//Here Lies the Code from Before Worlds
+/*
+
+#pragma once
+
+#include "EZ-Template/api.hpp"
+#include "api.h"
+
+extern Drive chassis;
 void resetPistons();
 void pistonControl();
 void intakeControl();
@@ -33,4 +51,4 @@ extern pros::adi::DigitalOut pivotPiston;
 extern pros::adi::DigitalOut wingPiston;
 
 extern pros::MotorGroup Intake;
-extern pros::MotorGroup Outtake;
+extern pros::MotorGroup Outtake; */

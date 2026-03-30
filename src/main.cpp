@@ -1,5 +1,5 @@
 #include "main.h"
-#include "controls.hpp"
+
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
@@ -8,22 +8,20 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {12, -18, 6, -5},  // Left Chassis Ports (negative port will reverse it!)
-    {-3, 4, -8, 19},  // Right Chassis Ports (negative port will reverse it!)
+    {-1, -2, 3, -4},     // Left Chassis Ports (negative port will reverse it!)
+    {5, 6, -7, 8},  // Right Chassis Ports (negative port will reverse it!)
 
-    21,      // IMU Port
-    2,   // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-    600.0);  // Wheel RPM = cartridge * (motor gear / wheel gear)
-
-XDrive xdriveChassis(chassis);
+    9,      // IMU Port
+    3.1,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
+    600);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
 // Uncomment the trackers you're using here!
 // - `8` and `9` are smart ports (making these negative will reverse the sensor)
 //  - you should get positive values on the encoders going FORWARD and RIGHT
 // - `2.75` is the wheel diameter
 // - `4.0` is the distance from the center of the wheel to the center of the robot
-ez::tracking_wheel horiz_tracker(-9, 2.75*2.0/3.0, -5.12);  // This tracking wheel is perpendicular to the drive wheels
-//ez::tracking_wheel vert_tracker(10, 2.75*2.0/3.0, -0.32);   // This tracking wheel is parallel to the drive wheels
+// ez::tracking_wheel horiz_tracker(8, 2.75, 4.0);  // This tracking wheel is perpendicular to the drive wheels
+// ez::tracking_wheel vert_tracker(9, 2.75, 4.0);   // This tracking wheel is parallel to the drive wheels
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -32,23 +30,19 @@ ez::tracking_wheel horiz_tracker(-9, 2.75*2.0/3.0, -5.12);  // This tracking whe
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-
-
   // Print our branding over your terminal :D
   ez::ez_template_print();
-  horiz_tracker.reset();
-  //vert_tracker.reset();
 
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
   // Look at your horizontal tracking wheel and decide if it's in front of the midline of your robot or behind it
   //  - change `back` to `front` if the tracking wheel is in front of the midline
   //  - ignore this if you aren't using a horizontal tracker
-  chassis.odom_tracker_front_set(&horiz_tracker);
+  // chassis.odom_tracker_back_set(&horiz_tracker);
   // Look at your vertical tracking wheel and decide if it's to the left or right of the center of the robot
   //  - change `left` to `right` if the tracking wheel is to the right of the centerline
   //  - ignore this if you aren't using a vertical tracker
-  //chassis.odom_tracker_left_set(&vert_tracker);
+  // chassis.odom_tracker_left_set(&vert_tracker);
 
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(true);   // Enables modifying the controller curve with buttons on the joysticks
@@ -57,23 +51,22 @@ void initialize() {
 
   // Set the drive to your own constants from autons.cpp!
   default_constants();
-  //Set Pistons To Default Values
-  resetPistons();
+
   // These are already defaulted to these buttons, but you can change the left/right curve buttons here!
   // chassis.opcontrol_curve_buttons_left_set(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);  // If using tank, only the left side is used.
   // chassis.opcontrol_curve_buttons_right_set(pros::E_CONTROLLER_DIGITAL_Y, pros::E_CONTROLLER_DIGITAL_A);
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"Skills Auton Left\n\n", skillsAutonLeft},
-      {"ONLY RUN IF OTHER ROUTE FAILS\n\nSimple Skills Auton Left\n\n", simpleSkillsAutonLeft},
-      {"Match Auton Left(Does Nothing)\n\nUses Will Control Scheme", matchAutonLeft},
+      {"Quickly Test Auton\n 4 90 Degree Turns, Drive Forward and Drive Backwards", auton_test}
   });
 
   // Initialize chassis and auton selector
   chassis.initialize();
   ez::as::initialize();
   master.rumble(chassis.drive_imu_calibrated() ? "." : "---");
+
+  resetPistons(); //Set Pistons to Default State When Robot Turns On
 }
 
 /**
@@ -113,9 +106,6 @@ void autonomous() {
   chassis.pid_targets_reset();                // Resets PID targets to 0
   chassis.drive_imu_reset();                  // Reset gyro position to 0
   chassis.drive_sensor_reset();               // Reset drive sensors to 0
-
-  pros::delay(200);                 // give IMU/odom task a moment
-
   chassis.odom_xyt_set(0_in, 0_in, 0_deg);    // Set the current position, you can start at a specific position with this
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
 
@@ -132,9 +122,6 @@ void autonomous() {
   to be consistent
   */
 
-  //Comment Out the One You Aren't Testing
-
-  //skillsAutonLeft();
   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
 
@@ -202,13 +189,13 @@ void ez_template_extras() {
   if (!pros::competition::is_connected()) {
     // PID Tuner
     // - after you find values that you're happy with, you'll have to set them in auton.cpp
-    
+
     // Enable / Disable PID Tuner
     //  When enabled:
     //  * use A and Y to increment / decrement the constants
     //  * use the arrow keys to navigate the constants
-   // if (master.get_digital_new_press(DIGITAL_X))
-     //chassis.pid_tuner_toggle();
+    if (master.get_digital_new_press(DIGITAL_X))
+      chassis.pid_tuner_toggle();
 
     // Trigger the selected autonomous routine
     if (master.get_digital(DIGITAL_B) && master.get_digital(DIGITAL_DOWN)) {
@@ -243,38 +230,22 @@ void ez_template_extras() {
  */
 void opcontrol() {
   // This is preference to what you like to drive on
-  // chassis.drive_brake_set(MOTOR_BRAKE_COAST);
-
-  //Default Driver Value but Also Can Be Changed in Autonomous
-  resetPistons();
-  // This is preference to what you like to drive on
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
-  int count = 0;
-
 
   while (true) {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
 
-    if (count % 300 == 0){
-      printf("x: %.2f, y: %.2f, heading: %.2f\n", chassis.odom_x_get(), chassis.odom_y_get(), chassis.odom_theta_get());
-    }
+    // chassis.opcontrol_tank();  // Tank control
+    chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
+    // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
+    // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
+    // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
-    count++;
+    // . . .
+    // Put more user control code here!
+    // . . .
 
-    chassis.opcontrol_arcade_standard(SPLIT);  // Tank control
-
-    master.print(0, 0, "X:%f Y:%f t:%f   ", xdriveChassis.GetX(),xdriveChassis.GetY(),xdriveChassis.GetHeading());
-    //intake();
-
-  //   // . . .
-  //   // Put more user control code here!
-  //   // . . .
-     intakeControl();
-     pistonControl();
-     //jamControl();
-    
-     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
-   }
-
+    pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
+  }
 }

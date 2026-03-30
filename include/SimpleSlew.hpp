@@ -1,3 +1,5 @@
+//Slew Code We Wrote Ourselves
+/*
 #include <cmath>
 
 
@@ -25,3 +27,4 @@ class SimpleSlew{
         return currentValue;
     }
 };
+*/
