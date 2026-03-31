@@ -13,7 +13,9 @@ ez::Drive chassis(
 
     9,      // IMU Port
     3.1,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-    600);   // Wheel RPM = cartridge * (motor gear / wheel gear)
+    600,  // Wheel RPM = cartridge * (motor gear / wheel gear)
+    (float) 0.95,
+    (float) 1.0);   
 
 // Uncomment the trackers you're using here!
 // - `8` and `9` are smart ports (making these negative will reverse the sensor)

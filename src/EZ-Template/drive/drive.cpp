@@ -15,13 +15,15 @@ using namespace ez;
 
 // Constructor for integrated encoders
 Drive::Drive(std::vector<int> left_motor_ports, std::vector<int> right_motor_ports,
-             int imu_port, double wheel_diameter, double ticks, double ratio)
+             int imu_port, double wheel_diameter, double ticks, float leftStrength_, float rightStrength_, double ratio)
     : imu(imu_port),
       left_tracker(-1, -1, false),   // Default value
       right_tracker(-1, -1, false),  // Default value
       left_rotation(-1),
       right_rotation(-1),
-      ez_auto([this] { this->ez_auto_task(); }) {
+      ez_auto([this] { this->ez_auto_task(); }),
+      leftStrength(leftStrength_),
+      rightStrength(rightStrength_) {
   is_tracker = DRIVE_INTEGRATED;
 
   // Set ports to a global vector
@@ -55,6 +57,7 @@ Drive::Drive(std::vector<int> left_motor_ports, std::vector<int> right_motor_por
       left_rotation(-1),
       right_rotation(-1),
       ez_auto([this] { this->ez_auto_task(); }) {
+
   is_tracker = DRIVE_ADI_ENCODER;
 
   // Set ports to a global vector
@@ -68,6 +71,7 @@ Drive::Drive(std::vector<int> left_motor_ports, std::vector<int> right_motor_por
     temp.set_reversed(util::reversed_active(i));
     right_motors.push_back(temp);
   }
+
 
   // Set constants for tick_per_inch calculation
   WHEEL_DIAMETER = wheel_diameter;
@@ -227,11 +231,12 @@ double Drive::drive_rpm_get() { return CARTRIDGE; }
 void Drive::private_drive_set(int left, int right) {
   if (pros::millis() < 1500) return;
 
+
   for (auto i : left_motors) {
-    if (!pto_check(i)) i.move_voltage(left * (12000.0 / 127.0));  // If the motor is in the pto list, don't do anything to the motor.
+    if (!pto_check(i)) i.move_voltage(leftStrength * left * (12000.0 / 127.0));  // If the motor is in the pto list, don't do anything to the motor.
   }
   for (auto i : right_motors) {
-    if (!pto_check(i)) i.move_voltage(right * (12000.0 / 127.0));  // If the motor is in the pto list, don't do anything to the motor.
+    if (!pto_check(i)) i.move_voltage(rightStrength * right * (12000.0 / 127.0));  // If the motor is in the pto list, don't do anything to the motor.
   }
 }
 

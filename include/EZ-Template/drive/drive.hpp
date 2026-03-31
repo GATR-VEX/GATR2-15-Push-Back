@@ -142,6 +142,10 @@ class Drive {
   ez::slew slew_swing_backward;
   ez::slew slew_swing;
 
+  // for fixing friction issues
+  float leftStrength;
+  float rightStrength;
+
   /**
    * Sets constants for slew for swing movements.
    *
@@ -404,7 +408,7 @@ class Drive {
    * \param ratio
    *        external gear ratio, wheel gear / motor gear
    */
-  Drive(std::vector<int> left_motor_ports, std::vector<int> right_motor_ports, int imu_port, double wheel_diameter, double ticks, double ratio = 1.0);
+  Drive(std::vector<int> left_motor_ports, std::vector<int> right_motor_ports, int imu_port, double wheel_diameter, double ticks, float leftStrength=1.0, float rightStrength=1.0, double ratio = 1.0);
 
   /**
    * Creates a Drive Controller using encoders plugged into the brain.
