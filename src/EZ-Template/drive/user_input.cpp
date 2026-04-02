@@ -11,6 +11,9 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 void Drive::opcontrol_arcade_scaling(bool enable) { arcade_vector_scaling = enable; }
 bool Drive::opcontrol_arcade_scaling_enabled() { return arcade_vector_scaling; }
 
+//This Turn Multiplier Changes the Turn Amount for Standard Arcade Drive (Line 315 is where it Starts)
+double turnMultiplier = .65;
+
 // Set curve defaults
 void Drive::opcontrol_curve_default_set(double left, double right) {
   left_curve_scale = left;
@@ -321,11 +324,11 @@ void Drive::opcontrol_arcade_standard(e_type stick_type) {
   if (stick_type == SPLIT) {
     // Put the joysticks through the curve function
     fwd_stick = opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)));
-    turn_stick = opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)));
+    turn_stick = turnMultiplier*opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)));
   } else if (stick_type == SINGLE) {
     // Put the joysticks through the curve function
     fwd_stick = opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)));
-    turn_stick = opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)));
+    turn_stick = turnMultiplier*opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)));
   }
 
   // Set robot to l_stick and r_stick, check joystick threshold, set active brake
@@ -345,11 +348,11 @@ void Drive::opcontrol_arcade_flipped(e_type stick_type) {
   if (stick_type == SPLIT) {
     // Put the joysticks through the curve function
     fwd_stick = opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)));
-    turn_stick = opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)));
+    turn_stick = turnMultiplier*opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)));
   } else if (stick_type == SINGLE) {
     // Put the joysticks through the curve function
     fwd_stick = opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)));
-    turn_stick = opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)));
+    turn_stick = turnMultiplier*opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)));
   }
 
   // Set robot to l_stick and r_stick, check joystick threshold, set active brake
