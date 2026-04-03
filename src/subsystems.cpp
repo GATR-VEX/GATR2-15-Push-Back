@@ -7,9 +7,23 @@ pros::adi::DigitalOut testPiston ('A');
 //Define Initial States
 bool testInitialState = false;
 
+double slowTurnMultiplier = 1.00;
+double slowDriveMultiplier = 1.00;
+
 //Ensure Piston Variables Start In Initial States
 bool testCurrent = testInitialState;
-
+void slowButton(){
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+    {
+        slowTurnMultiplier = .5;
+        slowDriveMultiplier = .35;
+    }
+    else
+    {
+        slowTurnMultiplier = 1.00;
+        slowDriveMultiplier = 1.00;
+    }
+}
 
 void resetPistons(){
     testState(testInitialState);

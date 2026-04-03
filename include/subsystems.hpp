@@ -8,6 +8,9 @@ extern Drive chassis;
 void resetPistons();
 void pistonControl();
 
+void slowButton();
+extern double slowTurnMultiplier;
+extern double slowDriveMultiplier;
 
 void testToggle();
 void testState(bool state);

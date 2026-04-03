@@ -7,12 +7,24 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #include "EZ-Template/PID.hpp"
 #include "EZ-Template/drive/drive.hpp"
 #include "pros/misc.h"
+#include "subsystems.hpp"
+#include <cmath>
+
 
 void Drive::opcontrol_arcade_scaling(bool enable) { arcade_vector_scaling = enable; }
 bool Drive::opcontrol_arcade_scaling_enabled() { return arcade_vector_scaling; }
 
 //This Turn Multiplier Changes the Turn Amount for Standard Arcade Drive (Line 315 is where it Starts)
-double turnMultiplier = .65;
+double turnMultiplier = 1.00;
+
+double logScale(double x, double k) {
+    if (x == 0) return 0;
+
+    double sign = (x > 0) ? 1.0 : -1.0;
+    double absx = std::fabs(x);
+
+    return sign * (std::log(1 + k * absx) / std::log(1 + k));
+}
 
 // Set curve defaults
 void Drive::opcontrol_curve_default_set(double left, double right) {
@@ -323,12 +335,14 @@ void Drive::opcontrol_arcade_standard(e_type stick_type) {
   // Check arcade type (split vs single, normal vs flipped)
   if (stick_type == SPLIT) {
     // Put the joysticks through the curve function
-    fwd_stick = opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)));
-    turn_stick = turnMultiplier*opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)));
+    fwd_stick = slowDriveMultiplier*opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)));
+    double turn_initial = opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)));
+    turn_stick = slowTurnMultiplier*turnMultiplier*turn_initial;
   } else if (stick_type == SINGLE) {
     // Put the joysticks through the curve function
-    fwd_stick = opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)));
-    turn_stick = turnMultiplier*opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)));
+    fwd_stick = slowDriveMultiplier*opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)));
+    double turn_initial = opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)));
+    turn_stick = slowTurnMultiplier*turnMultiplier*turn_initial;
   }
 
   // Set robot to l_stick and r_stick, check joystick threshold, set active brake
@@ -348,11 +362,13 @@ void Drive::opcontrol_arcade_flipped(e_type stick_type) {
   if (stick_type == SPLIT) {
     // Put the joysticks through the curve function
     fwd_stick = opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)));
-    turn_stick = turnMultiplier*opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)));
+    double turn_initial = opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)));
+    turn_stick = turnMultiplier*turn_initial;
   } else if (stick_type == SINGLE) {
     // Put the joysticks through the curve function
     fwd_stick = opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)));
-    turn_stick = turnMultiplier*opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)));
+    double turn_initial = opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)));
+    turn_stick = turnMultiplier*turn_initial;
   }
 
   // Set robot to l_stick and r_stick, check joystick threshold, set active brake
