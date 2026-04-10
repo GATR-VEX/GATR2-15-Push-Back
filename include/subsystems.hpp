@@ -4,9 +4,14 @@
 #include "api.h"
 
 extern Drive chassis;
+extern pros::MotorGroup intake;
+extern pros::MotorGroup lever;
 
 void resetPistons();
 void pistonControl();
+
+void intakeControl();
+void setIntakeSpeed(int speed);
 
 void slowButton();
 extern double slowTurnMultiplier;

@@ -1,21 +1,27 @@
 #include  "subsystems.hpp"
-//#include  "controls.hpp"
+#include  "controls.hpp"
 
 //Piston Port Definitions
 pros::adi::DigitalOut testPiston ('A');
 
+//Motor Definitions
+pros::MotorGroup intake({-9, 10}); //Left Intake Motor is 9, Right Intake Motor is 10
+pros::MotorGroup lever({13}); //Lever Motor is 13
+
 //Define Initial States
 bool testInitialState = false;
 
+//Multipliers for Slow Button
 double slowTurnMultiplier = 1.00;
 double slowDriveMultiplier = 1.00;
+int intakeSpeed = 127;
 
 //Ensure Piston Variables Start In Initial States
 bool testCurrent = testInitialState;
 void slowButton(){
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+    if (master.get_digital(currentButtons(Action::SLOWBOT)))
     {
-        slowTurnMultiplier = .5;
+        slowTurnMultiplier = .8;
         slowDriveMultiplier = .35;
     }
     else
@@ -45,6 +51,23 @@ void pistonControl(){
     }
 }
 
+void setIntakeSpeed(int speed){
+    intake.move(speed);
+}
+
+void intakeControl(){
+    if(master.get_digital(currentButtons(Action::INTAKE))) //Intake Forward
+    {
+        setIntakeSpeed(intakeSpeed);
+    }
+    else if(master.get_digital(currentButtons(Action::REVERSE))) //Reverse Intake
+    {
+        setIntakeSpeed(-intakeSpeed);
+    }
+    else{
+        setIntakeSpeed(0);
+    }
+}
 
 
 
@@ -54,7 +77,7 @@ void pistonControl(){
 //Here Lies the Code from Before Worlds
 /*
 #include  "subsystems.hpp"
-#include  "controls.hpp"
+
 
 //Piston Port Definitions
 pros::adi::DigitalOut flapPiston ('A');
