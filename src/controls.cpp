@@ -52,8 +52,6 @@ pros::controller_digital_e_t DavidScheme(Action action){
         return pros::E_CONTROLLER_DIGITAL_DOWN;
     case Action::SLOWBOT:
         return pros::E_CONTROLLER_DIGITAL_L1;
-    case Action::REVIVE:
-        return pros::E_CONTROLLER_DIGITAL_LEFT;
     default:
         return NO_BUTTON;
     //Only Run Lower Half Intake Reverse Down Arrow
