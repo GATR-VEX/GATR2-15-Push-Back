@@ -6,7 +6,8 @@ pros::adi::DigitalOut testPiston ('A');
 
 //Motor Definitions
 pros::MotorGroup intake({-9, 10}); //Left Intake Motor is 9, Right Intake Motor is 10
-pros::MotorGroup lever({13}); //Lever Motor is 13
+pros::MotorGroup lever({11, -12}); //Lever Motor is 13
+
 
 //Define Initial States
 bool testInitialState = false;
