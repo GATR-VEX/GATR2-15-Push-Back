@@ -69,6 +69,7 @@ void initialize() {
   master.rumble(chassis.drive_imu_calibrated() ? "." : "---");
 
   resetPistons(); //Set Pistons to Default State When Robot Turns On
+  pros::Task leverTask(lever_Function); //Begins Lever Task
 }
 
 /**
@@ -234,12 +235,13 @@ void opcontrol() {
   // This is preference to what you like to drive on
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
 
+
   while (true) {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
     pistonControl();
     slowButton();
-    intakeControl();
+    
     // chassis.opcontrol_tank();  // Tank control
     chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
     // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade

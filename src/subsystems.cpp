@@ -6,6 +6,7 @@ pros::adi::DigitalOut testPiston ('A');
 
 //Motor Definitions
 pros::MotorGroup intake({-9, 10}); //Left Intake Motor is 9, Right Intake Motor is 10
+pros::Motor trackingLever(11);
 pros::MotorGroup lever({11, -12}); //Lever Motor is 13
 
 
@@ -70,7 +71,30 @@ void intakeControl(){
     }
 }
 
+void lever_Function(){ 
+    lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    while(true)
+    {
+    if (master.get_digital_new_press(currentButtons(Action::MAXLEVER)))
+    {
+        trackingLever.tare_position();
+        while(abs(trackingLever.get_position())<550 && trackingLever.get_current_draw() < 1800)
+        {
+            lever.move(127);
+        }
+        lever.move(0); 
+        pros::delay(500);
+        while(trackingLever.get_current_draw() < 1800)
+        {
+            lever.move(-40);
+        }
 
+        lever.move(0); 
+        trackingLever.tare_position();
+    }
+    pros::delay(10);
+    }
+}
 
 
 

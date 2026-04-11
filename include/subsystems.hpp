@@ -6,6 +6,7 @@
 extern Drive chassis;
 extern pros::MotorGroup intake;
 extern pros::MotorGroup lever;
+extern pros::Motor trackingLever;
 
 void resetPistons();
 void pistonControl();
@@ -17,6 +18,7 @@ void slowButton();
 extern double slowTurnMultiplier;
 extern double slowDriveMultiplier;
 
+void lever_Function();
 void testToggle();
 void testState(bool state);
 extern pros::adi::DigitalOut pistonTest;
