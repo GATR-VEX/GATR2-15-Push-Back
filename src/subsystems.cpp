@@ -84,7 +84,8 @@ void lever_Function(){
         }
         lever.move(0); 
         pros::delay(500);
-        while(trackingLever.get_current_draw() < 1800)
+
+        while(trackingLever.get_current_draw() < 700)
         {
             lever.move(-40);
         }
