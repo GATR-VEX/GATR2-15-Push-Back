@@ -16,7 +16,8 @@ enum class Action {
     SNAPLEFT,
     SNAPRIGHT,
     SLOWBOT,
-    MAXLEVER
+    MAXLEVER,
+    SLOWLEVER
 };
 
 constexpr pros::controller_digital_e_t NO_BUTTON =

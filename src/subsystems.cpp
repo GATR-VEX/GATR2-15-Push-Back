@@ -97,6 +97,35 @@ void lever_Function(){
     }
 }
 
+void slow_lever_Function(){ 
+    lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    while(true)
+    {
+    if (master.get_digital(currentButtons(Action::SLOWLEVER)))
+    {
+        if(trackingLever.get_current_draw() < 1500)
+        {
+            lever.move(60);
+        }
+        else{
+            lever.move(0);
+        }
+    }
+    else
+    {
+            if(trackingLever.get_current_draw() < 700)
+            {
+                lever.move(-40); // gentle downward
+            }
+            else {
+                lever.move(0);
+            }
+ 
+        trackingLever.tare_position();
+    }
+    pros::delay(10);
+    }
+}
 
 
 

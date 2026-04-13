@@ -22,7 +22,8 @@ pros::controller_digital_e_t WillScheme(Action action){
         return pros::E_CONTROLLER_DIGITAL_DOWN;
     case Action::MAXLEVER:
         return pros::E_CONTROLLER_DIGITAL_RIGHT;
-    
+    case Action::SLOWLEVER:
+        return pros::E_CONTROLLER_DIGITAL_LEFT;
    
     default:
         return NO_BUTTON;
@@ -53,6 +54,8 @@ pros::controller_digital_e_t DavidScheme(Action action){
         return pros::E_CONTROLLER_DIGITAL_L1;
     case Action::MAXLEVER:
         return pros::E_CONTROLLER_DIGITAL_RIGHT;
+    case Action::SLOWLEVER:
+        return pros::E_CONTROLLER_DIGITAL_LEFT;
     default:
         return NO_BUTTON;
     //Only Run Lower Half Intake Reverse Down Arrow
