@@ -19,7 +19,9 @@ extern double slowTurnMultiplier;
 extern double slowDriveMultiplier;
 
 void lever_Function();
-void slow_lever_Function();
+void max_Lever_Function();
+void slow_Lever_Function();
+void reset_Lever();
 void testToggle();
 void testState(bool state);
 extern pros::adi::DigitalOut pistonTest;
