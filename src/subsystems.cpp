@@ -7,11 +7,13 @@ pros::adi::DigitalOut testPiston ('A');
 //Motor Definitions
 pros::MotorGroup intake({-9, 10}); //Left Intake Motor is 9, Right Intake Motor is 10
 pros::Motor trackingLever(11);
-pros::MotorGroup lever({11, -12}); //Lever Motor is 13
+pros::MotorGroup lever({11, -12}); 
 
 
 //Define Initial States
 bool testInitialState = false;
+int leverState = 0;
+
 
 //Multipliers for Slow Button
 double slowTurnMultiplier = 1.00;
@@ -66,68 +68,75 @@ void intakeControl(){
     {
         setIntakeSpeed(-intakeSpeed);
     }
-    else{
+    else if(leverState == 0){
         setIntakeSpeed(0);
     }
 }
 
 void lever_Function(){ 
-    lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    while(true)
+    while (true)
     {
+        max_Lever_Function();
+        slow_Lever_Function();
+        reset_Lever();
+        pros::delay(10);
+    }
+}
+
+void max_Lever_Function(){
+    lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
     if (master.get_digital_new_press(currentButtons(Action::MAXLEVER)))
     {
-        trackingLever.tare_position();
-        while(abs(trackingLever.get_position())<550 && trackingLever.get_current_draw() < 1800)
+        setIntakeSpeed(intakeSpeed);
+        leverState = 1;
+        while(trackingLever.get_current_draw() < 2100)
         {
             lever.move(127);
         }
         lever.move(0); 
-        pros::delay(500);
-
-        while(trackingLever.get_current_draw() < 700)
+        setIntakeSpeed(0);
+        while(master.get_digital(currentButtons(Action::MAXLEVER)))
         {
-            lever.move(-40);
+            //Empty on Purpose Trust Me
         }
 
-        lever.move(0); 
-        trackingLever.tare_position();
-    }
-    pros::delay(10);
+    
     }
 }
 
-void slow_lever_Function(){ 
+void slow_Lever_Function(){ 
     lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    while(true)
-    {
+
     if (master.get_digital(currentButtons(Action::SLOWLEVER)))
     {
-        if(trackingLever.get_current_draw() < 1500)
+        setIntakeSpeed(0);
+        leverState = 1;
+        if(trackingLever.get_current_draw() < 900)
         {
-            lever.move(60);
+            lever.move(50);
         }
-        else{
+       else
+       {
             lever.move(0);
-        }
-    }
-    else
-    {
-            if(trackingLever.get_current_draw() < 700)
-            {
-                lever.move(-40); // gentle downward
-            }
-            else {
-                lever.move(0);
-            }
- 
-        trackingLever.tare_position();
-    }
-    pros::delay(10);
+       }
     }
 }
 
-
+void reset_Lever(){
+    if((leverState == 1 || leverState == 2) && trackingLever.get_current_draw() < 1000 && !master.get_digital(currentButtons(Action::SLOWLEVER)))
+    {
+        lever.move(-30);
+        setIntakeSpeed(-intakeSpeed);
+        leverState = 2;
+    }
+    else if(leverState == 2)
+    {
+        leverState = 0;
+        lever.move(0);
+        setIntakeSpeed(0);
+    }
+}
 
 //Here Lies the Code from Before Worlds
 /*
