@@ -7,6 +7,10 @@ extern Drive chassis;
 extern pros::MotorGroup intake;
 extern pros::MotorGroup lever;
 extern pros::Motor trackingLever;
+extern pros::adi::DigitalOut outtakePiston;
+extern pros::adi::DigitalOut wingPiston;
+extern pros::adi::DigitalOut gatePiston;
+//extern pros::adi::DigitalOut outtakePiston;
 
 void resetPistons();
 void pistonControl();
@@ -19,9 +23,13 @@ extern double slowTurnMultiplier;
 extern double slowDriveMultiplier;
 
 void lever_Function();
-void max_Lever_Function();
 void slow_Lever_Function();
+void max_Lever_Function();
 void reset_Lever();
+void outtakeToggle();
+void wingToggle();
+void gateToggle();
+//void scraperToggle();
 void testToggle();
 void testState(bool state);
 extern pros::adi::DigitalOut pistonTest;

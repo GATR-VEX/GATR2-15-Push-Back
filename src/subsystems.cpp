@@ -3,17 +3,29 @@
 
 //Piston Port Definitions
 pros::adi::DigitalOut testPiston ('A');
+pros::adi::DigitalOut outtakePiston ('B');
+pros::adi::DigitalOut wingPiston ('C');
+pros::adi::DigitalOut gatePiston ('D');
+//pros::adi::DigitalOut scraperPiston ('E');
+
 
 //Motor Definitions
-pros::MotorGroup intake({-9, 10}); //Left Intake Motor is 9, Right Intake Motor is 10
-pros::Motor trackingLever(11);
-pros::MotorGroup lever({11, -12}); 
+pros::MotorGroup intake({-1, 2}); //Left Intake Motor is 9, Right Intake Motor is 10
+pros::Motor trackingLever(7);
+pros::MotorGroup lever({7, -8}); 
 
 
 //Define Initial States
 bool testInitialState = false;
+bool initialOuttake = false;
+bool initialWing = false;
+bool initialGate = false;
+//bool initialScraper = false;
 int leverState = 0;
-
+bool currentOuttake = initialOuttake;
+bool currentWing = initialWing;
+bool currentGate = initialGate;
+//bool currentScraper = initialScraper;
 
 //Multipliers for Slow Button
 double slowTurnMultiplier = 1.00;
@@ -50,10 +62,42 @@ testCurrent = state;
 }
 
 void pistonControl(){
-    if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)){
+    if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)){ //test piston
         testToggle();
     }
+    if(master.get_digital_new_press(currentButtons(Action::OUTTAKE))){
+        outtakeToggle();
+    }
+    if(master.get_digital_new_press(currentButtons(Action::WING))){
+        wingToggle();
+    }
+    if(master.get_digital_new_press(currentButtons(Action::FLAP))){
+        gateToggle();
+    }
+    //if(master.get_digital_new_press(currentButtons(Action::SCRAPER))){
+    //    scraperToggle();
+    //}
 }
+
+void outtakeToggle(){
+    currentOuttake = !currentOuttake;
+    outtakePiston.set_value(currentOuttake);
+}
+
+void wingToggle(){
+    currentWing = !currentWing;
+    wingPiston.set_value(currentWing);
+}
+
+void gateToggle(){
+    currentGate = !currentGate;
+    gatePiston.set_value(currentGate);
+}
+
+//void scraperToggle(){
+//    currentScraper = !currentScraper;
+//    scraperPiston.set_value(currentScraper);
+//}
 
 void setIntakeSpeed(int speed){
     intake.move(speed);
@@ -69,7 +113,7 @@ void intakeControl(){
         setIntakeSpeed(-intakeSpeed);
     }
     else if(leverState == 0){
-        setIntakeSpeed(0);
+       setIntakeSpeed(0);
     }
 }
 

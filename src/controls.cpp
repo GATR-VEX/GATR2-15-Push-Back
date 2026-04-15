@@ -2,29 +2,29 @@
 
 pros::controller_digital_e_t WillScheme(Action action){
     switch (action){
-    case Action::REVERSE:
-        return pros::E_CONTROLLER_DIGITAL_R2;
+    case Action::REVERSE: 
+        return pros::E_CONTROLLER_DIGITAL_R2; 
     case Action::FLAP:
         return pros::E_CONTROLLER_DIGITAL_A;
-    case Action::PIVOT:
+    case Action::OUTTAKE: 
         return pros::E_CONTROLLER_DIGITAL_L2;
-    case Action::SCRAPER:
+    case Action::SCRAPER: 
         return pros::E_CONTROLLER_DIGITAL_X;
-    case Action::INTAKE:
+    case Action::INTAKE: 
         return pros::E_CONTROLLER_DIGITAL_R1;
     case Action::WING:
         return pros::E_CONTROLLER_DIGITAL_L1;
-    case Action::PARK:
-        return pros::E_CONTROLLER_DIGITAL_B;
-    case Action::SNAPUP:
-        return pros::E_CONTROLLER_DIGITAL_UP;
-    case Action::SNAPDOWN:
-        return pros::E_CONTROLLER_DIGITAL_DOWN;
-    case Action::MAXLEVER:
+    //case Action::PARK:
+    //    return pros::E_CONTROLLER_DIGITAL_B;
+    //case Action::SNAPUP:
+    //    return pros::E_CONTROLLER_DIGITAL_UP;
+    //case Action::SNAPDOWN:
+    //    return pros::E_CONTROLLER_DIGITAL_DOWN;
+    case Action::MAXLEVER:  
         return pros::E_CONTROLLER_DIGITAL_RIGHT;
-    case Action::SLOWLEVER:
+    case Action::SLOWLEVER: 
         return pros::E_CONTROLLER_DIGITAL_LEFT;
-   
+   //no slow bot for will?
     default:
         return NO_BUTTON;
     }
@@ -36,7 +36,7 @@ pros::controller_digital_e_t DavidScheme(Action action){
         return pros::E_CONTROLLER_DIGITAL_L2;
     case Action::FLAP:
         return pros::E_CONTROLLER_DIGITAL_Y;
-    case Action::PIVOT:
+    case Action::OUTTAKE:
         return pros::E_CONTROLLER_DIGITAL_B;
     case Action::SCRAPER:
         return pros::E_CONTROLLER_DIGITAL_A;
@@ -44,12 +44,12 @@ pros::controller_digital_e_t DavidScheme(Action action){
         return pros::E_CONTROLLER_DIGITAL_R1;
     case Action::WING:
         return pros::E_CONTROLLER_DIGITAL_RIGHT;
-    case Action::PARK:
-        return pros::E_CONTROLLER_DIGITAL_UP;
-    case Action::SNAPUP:
-        return pros::E_CONTROLLER_DIGITAL_UP;
-    case Action::SNAPDOWN:
-        return pros::E_CONTROLLER_DIGITAL_DOWN;
+    //case Action::PARK:
+    //    return pros::E_CONTROLLER_DIGITAL_UP;
+    //case Action::SNAPUP:
+    //    return pros::E_CONTROLLER_DIGITAL_UP;
+    //case Action::SNAPDOWN:
+    //    return pros::E_CONTROLLER_DIGITAL_DOWN;
     case Action::SLOWBOT:
         return pros::E_CONTROLLER_DIGITAL_L1;
     case Action::MAXLEVER:
