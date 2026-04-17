@@ -155,16 +155,14 @@ void ez_screen_task() {
         // If we're on the first blank page...
         if (ez::as::page_blank_is_on(0)) {
           // Display X, Y, and Theta
-          ez::screen_print("x: " + util::to_string_with_precision(chassis.odom_x_get()) +
-                               "\ny: " + util::to_string_with_precision(chassis.odom_y_get()) +
-                               "\na: " + util::to_string_with_precision(chassis.odom_theta_get()),
+          ez::screen_print("x: " + util::to_string_with_precision(current_threshold),
                            1);  // Don't override the top Page line
 
           // Display all trackers that are being used
-          screen_print_tracker(chassis.odom_tracker_left, "l", 4);
-          screen_print_tracker(chassis.odom_tracker_right, "r", 5);
-          screen_print_tracker(chassis.odom_tracker_back, "b", 6);
-          screen_print_tracker(chassis.odom_tracker_front, "f", 7);
+         // screen_print_tracker(chassis.odom_tracker_left, "l", 4);
+          //screen_print_tracker(chassis.odom_tracker_right, "r", 5);
+          //screen_print_tracker(chassis.odom_tracker_back, "b", 6);
+          //screen_print_tracker(chassis.odom_tracker_front, "f", 7);
         }
       }
     }
@@ -242,6 +240,7 @@ void opcontrol() {
     pistonControl();
     slowButton();
     intakeControl();
+    incrementThreshold();
     
     // chassis.opcontrol_tank();  // Tank control
     chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade

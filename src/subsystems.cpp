@@ -1,6 +1,17 @@
 #include  "subsystems.hpp"
 #include  "controls.hpp"
 
+
+//Current Threshold for Lever
+int current_threshold = 2000;
+
+//Increment threshold when x is pressed
+void incrementThreshold(){ 
+    if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP))
+    {
+        current_threshold += 50;
+    }
+}
 //Piston Port Definitions
 pros::adi::DigitalOut testPiston ('A');
 pros::adi::DigitalOut outtakePiston ('B');
@@ -134,7 +145,7 @@ void max_Lever_Function(){
     {
         setIntakeSpeed(intakeSpeed);
         leverState = 1;
-        while(trackingLever.get_current_draw() < 2100)
+        while(trackingLever.get_current_draw() < current_threshold)
         {
             lever.move(127);
         }

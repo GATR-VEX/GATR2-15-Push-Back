@@ -10,10 +10,12 @@ extern pros::Motor trackingLever;
 extern pros::adi::DigitalOut outtakePiston;
 extern pros::adi::DigitalOut wingPiston;
 extern pros::adi::DigitalOut gatePiston;
+extern int current_threshold;
 //extern pros::adi::DigitalOut outtakePiston;
 
 void resetPistons();
 void pistonControl();
+void incrementThreshold();
 
 void intakeControl();
 void setIntakeSpeed(int speed);
