@@ -3,21 +3,17 @@
 #include <string>
 
 enum class Action {
-    OUTTAKE,
-    REVERSE,
-    FLAP,
+    REVERSEINTAKE,
     PIVOT,
     SCRAPER,
     INTAKE,
     WING,
-    PARK,
     SNAPUP,
     SNAPDOWN,
-    SNAPLEFT,
-    SNAPRIGHT,
     SLOWBOT,
     MAXLEVER,
-    SLOWLEVER
+    SLOWLEVER,
+    REVERSEBOT
 };
 
 constexpr pros::controller_digital_e_t NO_BUTTON =

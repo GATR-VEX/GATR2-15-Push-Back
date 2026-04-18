@@ -20,21 +20,24 @@ void incrementThreshold();
 void intakeControl();
 void setIntakeSpeed(int speed);
 
-void slowButton();
+void driveButtons();
 extern double slowTurnMultiplier;
 extern double slowDriveMultiplier;
+extern int flipVariable;
 
 void lever_Function();
 void slow_Lever_Function();
 void max_Lever_Function();
 void reset_Lever();
-void outtakeToggle();
+void pivotToggle();
 void wingToggle();
-void gateToggle();
-//void scraperToggle();
-void testToggle();
-void testState(bool state);
-extern pros::adi::DigitalOut pistonTest;
+void flapToggle();
+void scraperToggle();
+void pivotState(bool state);
+void wingState(bool state);
+void flapState(bool state);
+void scraperState(bool state);
+
 
 //Here Lies the Code from Before Worlds
 /*

@@ -335,14 +335,14 @@ void Drive::opcontrol_arcade_standard(e_type stick_type) {
   // Check arcade type (split vs single, normal vs flipped)
   if (stick_type == SPLIT) {
     // Put the joysticks through the curve function
-    fwd_stick = slowDriveMultiplier*opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)));
+    fwd_stick = flipVariable*slowDriveMultiplier*opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)));
     double turn_initial = opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)));
-    turn_stick = slowTurnMultiplier*turnMultiplier*turn_initial;
+    turn_stick = flipVariable*slowTurnMultiplier*turnMultiplier*turn_initial;
   } else if (stick_type == SINGLE) {
     // Put the joysticks through the curve function
-    fwd_stick = slowDriveMultiplier*opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)));
+    fwd_stick = flipVariable*slowDriveMultiplier*opcontrol_curve_left(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)));
     double turn_initial = opcontrol_curve_right(clipped_joystick(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)));
-    turn_stick = slowTurnMultiplier*turnMultiplier*turn_initial;
+    turn_stick = flipVariable*slowTurnMultiplier*turnMultiplier*turn_initial;
   }
 
   // Set robot to l_stick and r_stick, check joystick threshold, set active brake

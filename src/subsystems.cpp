@@ -13,11 +13,10 @@ void incrementThreshold(){
     }
 }
 //Piston Port Definitions
-pros::adi::DigitalOut testPiston ('A');
-pros::adi::DigitalOut outtakePiston ('B');
+pros::adi::DigitalOut pivotPiston ('B');
 pros::adi::DigitalOut wingPiston ('C');
-pros::adi::DigitalOut gatePiston ('D');
-//pros::adi::DigitalOut scraperPiston ('E');
+pros::adi::DigitalOut flapPiston ('D');
+pros::adi::DigitalOut scraperPiston ('E');
 
 
 //Motor Definitions
@@ -27,25 +26,29 @@ pros::MotorGroup lever({7, -8});
 
 
 //Define Initial States
-bool testInitialState = false;
-bool initialOuttake = false;
-bool initialWing = false;
-bool initialGate = false;
-//bool initialScraper = false;
+bool pivotInitialState = false;
+bool wingInitialState = true;
+bool flapInitialState = false;
+bool scraperInitialState = false;
+
 int leverState = 0;
-bool currentOuttake = initialOuttake;
-bool currentWing = initialWing;
-bool currentGate = initialGate;
-//bool currentScraper = initialScraper;
+
+//Set Current Variable to Initial State
+bool pivotCurrent = pivotInitialState;
+bool wingCurrent = wingInitialState;
+bool flapCurrent = flapInitialState;
+bool scraperCurrent = scraperInitialState;
 
 //Multipliers for Slow Button
 double slowTurnMultiplier = 1.00;
 double slowDriveMultiplier = 1.00;
+int flipVariable = 1;
 int intakeSpeed = 127;
+int startTime = pros::millis();
 
 //Ensure Piston Variables Start In Initial States
-bool testCurrent = testInitialState;
-void slowButton(){
+
+void driveButtons(){
     if (master.get_digital(currentButtons(Action::SLOWBOT)))
     {
         slowTurnMultiplier = .8;
@@ -56,59 +59,71 @@ void slowButton(){
         slowTurnMultiplier = 1.00;
         slowDriveMultiplier = 1.00;
     }
+
+    if (master.get_digital(currentButtons(Action::REVERSEBOT)))
+    {
+        flipVariable = flipVariable*-1;
+    }
 }
 
 void resetPistons(){
-    testState(testInitialState);
+    pivotState(pivotInitialState);
+    wingState(wingInitialState);
+    flapState(flapInitialState);
+    scraperState(scraperInitialState);
 }
 
-void testToggle(){
-    testCurrent = !testCurrent;
-    testState(testCurrent);
+//Functions that Purely Toggle the Current Piston State
+void pivotToggle(){
+    pivotCurrent = !pivotCurrent;
+    pivotState(pivotCurrent);
+}
+void wingToggle(){
+    wingCurrent = !wingCurrent;
+    wingState(wingCurrent);
+}
+void flapToggle(){
+    flapCurrent = !flapCurrent;
+    flapState(flapCurrent);
+}
+void scraperToggle(){
+    scraperCurrent = !scraperCurrent;
+    scraperState(scraperCurrent);
 }
 
-void testState(bool state){
-testPiston.set_value(state);
-testCurrent = state;
+//Functions that Set Piston to a Specified State
+void pivotState(bool state){
+    pivotPiston.set_value(state);
+    pivotCurrent = state;
+}
+void wingState(bool state){
+    wingPiston.set_value(state);
+    wingCurrent = state;
+}
+void flapState(bool state){
+    flapPiston.set_value(state);
+    flapCurrent = state;
+}
+void scraperState(bool state){
+    scraperPiston.set_value(state);
+    scraperCurrent = state;
 }
 
 void pistonControl(){
-    if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)){ //test piston
-        testToggle();
+    if(master.get_digital_new_press(currentButtons(Action::PIVOT))){
+        pivotToggle();
+        wingState(!pivotCurrent);
     }
-    if(master.get_digital_new_press(currentButtons(Action::OUTTAKE))){
-        outtakeToggle();
+    if(master.get_digital(currentButtons(Action::WING))){
+        wingState(pivotCurrent);
     }
-    if(master.get_digital_new_press(currentButtons(Action::WING))){
-        wingToggle();
+    else{
+        wingState(!pivotCurrent);
     }
-    if(master.get_digital_new_press(currentButtons(Action::FLAP))){
-        gateToggle();
+    if(master.get_digital_new_press(currentButtons(Action::SCRAPER))){
+        scraperToggle();
     }
-    //if(master.get_digital_new_press(currentButtons(Action::SCRAPER))){
-    //    scraperToggle();
-    //}
 }
-
-void outtakeToggle(){
-    currentOuttake = !currentOuttake;
-    outtakePiston.set_value(currentOuttake);
-}
-
-void wingToggle(){
-    currentWing = !currentWing;
-    wingPiston.set_value(currentWing);
-}
-
-void gateToggle(){
-    currentGate = !currentGate;
-    gatePiston.set_value(currentGate);
-}
-
-//void scraperToggle(){
-//    currentScraper = !currentScraper;
-//    scraperPiston.set_value(currentScraper);
-//}
 
 void setIntakeSpeed(int speed){
     intake.move(speed);
@@ -119,7 +134,7 @@ void intakeControl(){
     {
         setIntakeSpeed(intakeSpeed);
     }
-    else if(master.get_digital(currentButtons(Action::REVERSE))) //Reverse Intake
+    else if(master.get_digital(currentButtons(Action::REVERSEINTAKE))) //Reverse Intake
     {
         setIntakeSpeed(-intakeSpeed);
     }
@@ -140,9 +155,11 @@ void lever_Function(){
 
 void max_Lever_Function(){
     lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
+    
+    
     if (master.get_digital_new_press(currentButtons(Action::MAXLEVER)))
     {
+        flapState(true);
         setIntakeSpeed(intakeSpeed);
         leverState = 1;
         while(trackingLever.get_current_draw() < current_threshold)
@@ -156,15 +173,17 @@ void max_Lever_Function(){
             //Empty on Purpose Trust Me
         }
 
-    
+        startTime = pros::millis();
     }
 }
 
 void slow_Lever_Function(){ 
     lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    
 
     if (master.get_digital(currentButtons(Action::SLOWLEVER)))
     {
+        flapState(true);
         setIntakeSpeed(0);
         leverState = 1;
         if(trackingLever.get_current_draw() < 900)
@@ -175,11 +194,12 @@ void slow_Lever_Function(){
        {
             lever.move(0);
        }
+       startTime = pros::millis();
     }
 }
 
 void reset_Lever(){
-    if((leverState == 1 || leverState == 2) && trackingLever.get_current_draw() < 1000 && !master.get_digital(currentButtons(Action::SLOWLEVER)))
+    if((leverState == 1 || leverState == 2) && trackingLever.get_current_draw() < 1000 && !master.get_digital(currentButtons(Action::SLOWLEVER)) && pros::millis()-startTime < 2000)
     {
         lever.move(-30);
         setIntakeSpeed(-intakeSpeed);
@@ -187,6 +207,7 @@ void reset_Lever(){
     }
     else if(leverState == 2)
     {
+        flapState(false);
         leverState = 0;
         lever.move(0);
         setIntakeSpeed(0);
