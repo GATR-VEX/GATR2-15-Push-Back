@@ -44,6 +44,7 @@ double slowTurnMultiplier = 1.00;
 double slowDriveMultiplier = 1.00;
 int flipVariable = 1;
 int intakeSpeed = 127;
+int startTime = pros::millis();
 
 //Ensure Piston Variables Start In Initial States
 
@@ -155,9 +156,10 @@ void lever_Function(){
 void max_Lever_Function(){
     lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     
-    flapState(true);
+    
     if (master.get_digital_new_press(currentButtons(Action::MAXLEVER)))
     {
+        flapState(true);
         setIntakeSpeed(intakeSpeed);
         leverState = 1;
         while(trackingLever.get_current_draw() < current_threshold)
@@ -171,15 +173,17 @@ void max_Lever_Function(){
             //Empty on Purpose Trust Me
         }
 
-    
+        startTime = pros::millis();
     }
 }
 
 void slow_Lever_Function(){ 
     lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    flapState(true);
+    
+
     if (master.get_digital(currentButtons(Action::SLOWLEVER)))
     {
+        flapState(true);
         setIntakeSpeed(0);
         leverState = 1;
         if(trackingLever.get_current_draw() < 900)
@@ -190,11 +194,12 @@ void slow_Lever_Function(){
        {
             lever.move(0);
        }
+       startTime = pros::millis();
     }
 }
 
 void reset_Lever(){
-    if((leverState == 1 || leverState == 2) && trackingLever.get_current_draw() < 1000 && !master.get_digital(currentButtons(Action::SLOWLEVER)))
+    if((leverState == 1 || leverState == 2) && trackingLever.get_current_draw() < 1000 && !master.get_digital(currentButtons(Action::SLOWLEVER)) && pros::millis()-startTime < 2000)
     {
         lever.move(-30);
         setIntakeSpeed(-intakeSpeed);
