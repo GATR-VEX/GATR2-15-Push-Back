@@ -240,7 +240,7 @@ void opcontrol() {
     pistonControl();
     driveButtons();
     intakeControl();
-    incrementThreshold();
+    //incrementThreshold();
     
     // chassis.opcontrol_tank();  // Tank control
     chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
