@@ -27,7 +27,7 @@ pros::MotorGroup lever({7, -8});
 
 //Define Initial States
 bool pivotInitialState = false;
-bool wingInitialState = false;
+bool wingInitialState = true;
 bool flapInitialState = false;
 bool scraperInitialState = false;
 
@@ -58,7 +58,7 @@ void driveButtons(){
         slowTurnMultiplier = 1.00;
         slowDriveMultiplier = 1.00;
     }
-    
+
     if (master.get_digital(currentButtons(Action::REVERSEBOT)))
     {
         flipVariable = flipVariable*-1;
@@ -111,12 +111,13 @@ void scraperState(bool state){
 void pistonControl(){
     if(master.get_digital_new_press(currentButtons(Action::PIVOT))){
         pivotToggle();
+        wingState(!pivotCurrent);
     }
-    if(master.get_digital_new_press(currentButtons(Action::WING))){
-        wingToggle();
+    if(master.get_digital(currentButtons(Action::WING))){
+        wingState(pivotCurrent);
     }
-    if(master.get_digital_new_press(currentButtons(Action::FLAP))){
-        flapToggle();
+    else{
+        wingState(!pivotCurrent);
     }
     if(master.get_digital_new_press(currentButtons(Action::SCRAPER))){
         scraperToggle();
@@ -153,7 +154,8 @@ void lever_Function(){
 
 void max_Lever_Function(){
     lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
+    
+    flapState(true);
     if (master.get_digital_new_press(currentButtons(Action::MAXLEVER)))
     {
         setIntakeSpeed(intakeSpeed);
@@ -175,7 +177,7 @@ void max_Lever_Function(){
 
 void slow_Lever_Function(){ 
     lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
+    flapState(true);
     if (master.get_digital(currentButtons(Action::SLOWLEVER)))
     {
         setIntakeSpeed(0);
@@ -200,6 +202,7 @@ void reset_Lever(){
     }
     else if(leverState == 2)
     {
+        flapState(false);
         leverState = 0;
         lever.move(0);
         setIntakeSpeed(0);
