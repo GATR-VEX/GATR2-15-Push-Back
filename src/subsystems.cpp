@@ -16,7 +16,7 @@ void incrementThreshold(){
 pros::adi::DigitalOut pivotPiston ('B');
 pros::adi::DigitalOut wingPiston ('C');
 pros::adi::DigitalOut flapPiston ('D');
-pros::adi::DigitalOut scraperPiston ('E');
+pros::adi::DigitalOut scraperPiston ('H');
 
 
 //Motor Definitions
@@ -45,6 +45,7 @@ double slowDriveMultiplier = 1.00;
 int flipVariable = 1;
 int intakeSpeed = 127;
 int startTime = pros::millis();
+int maxStartTime = pros::millis();
 
 //Ensure Piston Variables Start In Initial States
 
@@ -162,9 +163,10 @@ void max_Lever_Function(){
         flapState(true);
         setIntakeSpeed(intakeSpeed);
         leverState = 1;
-        while(trackingLever.get_current_draw() < current_threshold)
+        maxStartTime = pros::millis();
+        while(trackingLever.get_current_draw() < current_threshold && pros::millis()-maxStartTime < 1000)
         {
-            lever.move(127);
+            lever.move(100);
         }
         lever.move(0); 
         setIntakeSpeed(0);
@@ -199,7 +201,7 @@ void slow_Lever_Function(){
 }
 
 void reset_Lever(){
-    if((leverState == 1 || leverState == 2) && trackingLever.get_current_draw() < 1000 && !master.get_digital(currentButtons(Action::SLOWLEVER)) && pros::millis()-startTime < 2000)
+    if((leverState == 1 || leverState == 2) && trackingLever.get_current_draw() < 1000 && !master.get_digital(currentButtons(Action::SLOWLEVER)) && pros::millis()-startTime < 1000)
     {
         lever.move(-30);
         setIntakeSpeed(-intakeSpeed);

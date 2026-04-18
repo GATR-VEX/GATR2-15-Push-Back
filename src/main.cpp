@@ -14,7 +14,7 @@ ez::Drive chassis(
     20,      // IMU Port
     3.1,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     600,  // Wheel RPM = cartridge * (motor gear / wheel gear)
-    (float) 0.95,
+    (float) 1.0,
     (float) 1.0);   
 
 // Uncomment the trackers you're using here!
@@ -60,7 +60,9 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"Quickly Test Auton\n 4 90 Degree Turns, Drive Forward and Drive Backwards", auton_test}
+      {"Quickly Test Auton\n 4 90 Degree Turns, Drive Forward and Drive Backwards", auton_test},
+      {"Only Turn Test", turn_example},
+      {"Only Drive Test", drive_and_turn}
   });
 
   // Initialize chassis and auton selector

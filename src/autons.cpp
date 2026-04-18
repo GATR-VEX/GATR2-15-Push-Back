@@ -92,12 +92,19 @@ void turn_example() {
 
   chassis.pid_turn_set(90_deg, TURN_SPEED);
   chassis.pid_wait();
+  pros::delay(250);
 
-  chassis.pid_turn_set(45_deg, TURN_SPEED);
+  chassis.pid_turn_set(180_deg, TURN_SPEED);
   chassis.pid_wait();
+  pros::delay(250);
 
-  chassis.pid_turn_set(0_deg, TURN_SPEED);
+  chassis.pid_turn_set(270_deg, TURN_SPEED);
   chassis.pid_wait();
+  pros::delay(250);
+
+  chassis.pid_turn_set(360_deg, TURN_SPEED);
+  chassis.pid_wait();
+  pros::delay(250);
 }
 
 ///
@@ -106,18 +113,11 @@ void turn_example() {
 void drive_and_turn() {
   chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
   chassis.pid_wait();
+  pros::delay(250);
 
-  chassis.pid_turn_set(45_deg, TURN_SPEED);
+  chassis.pid_drive_set(-24_in, DRIVE_SPEED);
   chassis.pid_wait();
-
-  chassis.pid_turn_set(-45_deg, TURN_SPEED);
-  chassis.pid_wait();
-
-  chassis.pid_turn_set(0_deg, TURN_SPEED);
-  chassis.pid_wait();
-
-  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
+  pros::delay(250);
 }
 
 ///
