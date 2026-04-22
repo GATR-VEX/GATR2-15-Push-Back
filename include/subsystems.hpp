@@ -25,6 +25,8 @@ extern double slowTurnMultiplier;
 extern double slowDriveMultiplier;
 extern int flipVariable;
 
+
+
 void lever_Function();
 void slow_Lever_Function();
 void max_Lever_Function();
@@ -37,6 +39,12 @@ void pivotState(bool state);
 void wingState(bool state);
 void flapState(bool state);
 void scraperState(bool state);
+
+void intakeToggle();
+void reverseIntakeToggle();
+
+void auton_lever();
+void auton_middle_lever();
 
 
 //Here Lies the Code from Before Worlds

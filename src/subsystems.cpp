@@ -16,6 +16,8 @@ void incrementThreshold(){
 pros::adi::DigitalOut pivotPiston ('B');
 pros::adi::DigitalOut wingPiston ('C');
 pros::adi::DigitalOut flapPiston ('D');
+
+//should be H but changed to G for PID testing because it was annoying
 pros::adi::DigitalOut scraperPiston ('H');
 
 
@@ -38,6 +40,8 @@ bool pivotCurrent = pivotInitialState;
 bool wingCurrent = wingInitialState;
 bool flapCurrent = flapInitialState;
 bool scraperCurrent = scraperInitialState;
+
+int intakeState = 0;
 
 //Multipliers for Slow Button
 double slowTurnMultiplier = 1.00;
@@ -130,6 +134,27 @@ void setIntakeSpeed(int speed){
     intake.move(speed);
 }
 
+void intakeToggle() {
+    if (intakeState == 0) {
+        intakeState = 1;
+        setIntakeSpeed(intakeSpeed);
+    } else {
+        intakeState = 0;
+        setIntakeSpeed(0);
+    }
+}
+
+void reverseIntakeToggle() {
+    if (intakeState == 0) {
+        intakeState = 1;
+        setIntakeSpeed(-intakeSpeed);
+    } else {
+        intakeState = 0;
+        setIntakeSpeed(0);
+    }
+
+}
+
 void intakeControl(){
     if(master.get_digital(currentButtons(Action::INTAKE))) //Intake Forward
     {
@@ -178,6 +203,40 @@ void max_Lever_Function(){
         startTime = pros::millis();
     }
 }
+
+void auton_lever() {
+
+    flapState(true);
+    setIntakeSpeed(0);
+    leverState = 1;
+    lever.move(80);
+    pros::delay(700); // VERY IMPORTANT
+    lever.move(0);
+    pros::delay(250);
+    lever.move(-50);
+    pros::delay(600);
+    lever.move(0);
+    flapState(false);
+
+    }
+
+
+    void auton_middle_lever() {
+
+    flapState(true);
+    setIntakeSpeed(0);
+    leverState = 1;
+    lever.move(45);
+    pros::delay(800); // VERY IMPORTANT
+    lever.move(0);
+    pros::delay(250);
+    lever.move(-100);
+    pros::delay(600);
+    lever.move(0);
+    flapState(false);
+
+    }
+
 
 void slow_Lever_Function(){ 
     lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);

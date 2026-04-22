@@ -8,7 +8,7 @@
 // These are out of 127
 const int MAX_DRIVE_SPEED = 127;
 const int DRIVE_SPEED = 110;
-const int TURN_SPEED = 90;
+const int TURN_SPEED = 65;
 const int SWING_SPEED = 110;
 
 ///
@@ -16,9 +16,16 @@ const int SWING_SPEED = 110;
 ///
 void default_constants() {
   // P, I, D, and Start I
+  //4, 0.05, 25.5
+  
+  //3.7 0.05 23.9 good fir 90 degrees
+  //3.7, 0.05, 26.5, 15.0
+
+
+
   chassis.pid_drive_constants_set(20.0, 0.0, 100.0);         // Fwd/rev constants, used for odom and non odom motions
-  chassis.pid_heading_constants_set(11.0, 0.0, 20.0);        // Holds the robot straight while going forward without odom
-  chassis.pid_turn_constants_set(3.0, 0.05, 20.0, 15.0);     // Turn in place constants
+  chassis.pid_heading_constants_set(10.0, 0.0, 0.0);        // Holds the robot straight while going forward without odom
+  chassis.pid_turn_constants_set(3.7, 0.00, 23.9, 8.0);     // Turn in place constants
   chassis.pid_swing_constants_set(6.0, 0.0, 65.0);           // Swing constants
   chassis.pid_odom_angular_constants_set(6.5, 0.0, 52.5);    // Angular control for odom motions
   chassis.pid_odom_boomerang_constants_set(5.8, 0.0, 32.5);  // Angular control for boomerang motions
@@ -52,35 +59,231 @@ void default_constants() {
 ///
 // Drive Example
 ///
-void auton_test() {
-  // The first parameter is target inches
-  // The second parameter is max speed the robot will drive at
-  // The third parameter is a boolean (true or false) for enabling/disabling a slew at the start of drive motions
-  // for slew, only enable it when the drive distance is greater than the slew distance + a few inches
 
-  chassis.pid_turn_set(90_deg, TURN_SPEED);
-  chassis.pid_wait();
-  pros::delay(250);
+void auton_Connor_right_match_GWP() {
+  //start in top right of post facing match loader
 
-  chassis.pid_turn_set(180_deg, TURN_SPEED);
+  //move towards laoder
+  //tuen towards loader
+
+  //take 6
+  // back up spit blues
+  // turn and then go score
+  //descore
+}
+
+void auton_Connor_left_match_max() {
+
+  
+  chassis.pid_drive_set(27.5_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   pros::delay(250);
 
   chassis.pid_turn_set(270_deg, TURN_SPEED);
   chassis.pid_wait();
   pros::delay(250);
+  
+  scraperToggle();
+  intakeToggle();
+  pros::delay(500);
+  
+  
 
-  chassis.pid_turn_set(360_deg, TURN_SPEED);
+  chassis.pid_drive_set(11_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(2000);
+  
+
+  chassis.pid_drive_set(-5_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   pros::delay(250);
 
-  chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
+  
+
+  chassis.pid_drive_set(5_in, DRIVE_SPEED, true);
   chassis.pid_wait();
+   pros::delay(250);
+
+  chassis.pid_drive_set(-9_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+   pros::delay(250);
+
+   intakeToggle();
+   
+   
+  reverseIntakeToggle();
+  pros::delay(100);
+  reverseIntakeToggle();
+
+chassis.pid_turn_set(315_deg, TURN_SPEED);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+scraperToggle();
+
+
+chassis.pid_drive_set(-48_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_drive_set(-9_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+intakeToggle();
+
+pros::delay(100);
+intakeToggle();
+
+pros::delay(100);
+auton_middle_lever();
+
+
+chassis.pid_drive_set(48_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_turn_set(270_deg, TURN_SPEED);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_drive_set(-5_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+
+scraperToggle();
+intakeToggle();
+pros::delay(250);
+
+
+
+
+
+chassis.pid_drive_set(15_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(3000);
+
+chassis.pid_drive_set(-8_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+
+pivotToggle();
+chassis.pid_drive_set(8_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+intakeToggle();
+
+chassis.pid_drive_set(-8_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+intakeToggle();
+chassis.pid_drive_set(8_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+intakeToggle();
+
+
+
+
+chassis.pid_drive_set(-30_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+auton_lever();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+void auton_test() {
+  // The first parameter is target inches
+  // The second parameter is max speed the robot will drive at
+  // The third parameter is a boolean (true or false) for enabling/disabling a slew at the start of drive motions
+  // for slew, only enable it when the drive distance is greater than the slew distance + a few inches
+
+  // chassis.pid_turn_set(180_deg, TURN_SPEED);
+  // chassis.pid_wait();
+  // pros::delay(250);
+
+
+  // chassis.pid_turn_set(180_deg, TURN_SPEED);
+  // chassis.pid_wait();
+  // pros::delay(250);
+
+  // chassis.pid_turn_set(360_deg, TURN_SPEED);
+  // chassis.pid_wait();
+  // pros::delay(250);
+
+
+
+  // chassis.pid_turn_set(180_deg, TURN_SPEED);
+  // chassis.pid_wait();
+  // pros::delay(250);
+
+  // // chassis.pid_turn_set(270_deg, TURN_SPEED);
+  // // chassis.pid_wait();
+  // // pros::delay(250);
+
+  // chassis.pid_turn_set(360_deg, TURN_SPEED);
+  // chassis.pid_wait();
+  // pros::delay(250);
+
+  // chassis.pid_drive_set(30_in, DRIVE_SPEED, true);
+  // chassis.pid_wait();
+  // pros::delay(250);
+
+  // chassis.pid_turn_set(90_deg, TURN_SPEED);
+  // chassis.pid_wait();
+  // pros::delay(250);
+  
+  // scraperToggle();
+  // intakeToggle();
+  // pros::delay(500);
+  
+
+  // chassis.pid_drive_set(11_in, DRIVE_SPEED, true);
+  // chassis.pid_wait();
+  // pros::delay(5000);
+
+  // chassis.pid_drive_set(-7_in, DRIVE_SPEED, true);
+  // chassis.pid_wait();
+  // pros::delay(250);
+
+  // pivotToggle();
+
+  // chassis.pid_drive_set(-22_in, DRIVE_SPEED, true);
+  // chassis.pid_wait();
+  // pros::delay(250);
+  
+  auton_lever();
   pros::delay(250);
 
-  chassis.pid_drive_set(-24_in, DRIVE_SPEED);
-  chassis.pid_wait();
-  pros::delay(250);
+  
+
+
+
+
+
+
+
+
 }
 
 ///
@@ -89,6 +292,7 @@ void auton_test() {
 void turn_example() {
   // The first parameter is the target in degrees
   // The second parameter is max speed the robot will drive at
+
 
   chassis.pid_turn_set(90_deg, TURN_SPEED);
   chassis.pid_wait();
