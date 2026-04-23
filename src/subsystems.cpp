@@ -48,6 +48,7 @@ double slowTurnMultiplier = 1.00;
 double slowDriveMultiplier = 1.00;
 int flipVariable = 1;
 int intakeSpeed = 127;
+int autonIntakeSpeed = 75;  //90 for really fast descore middle 
 int startTime = pros::millis();
 int maxStartTime = pros::millis();
 
@@ -148,6 +149,17 @@ void reverseIntakeToggle() {
     if (intakeState == 0) {
         intakeState = 1;
         setIntakeSpeed(-intakeSpeed);
+    } else {
+        intakeState = 0;
+        setIntakeSpeed(0);
+    }
+
+}
+
+void middleLowReverseIntakeToggle() {
+    if (intakeState == 0) {
+        intakeState = 1;
+        setIntakeSpeed(-autonIntakeSpeed);
     } else {
         intakeState = 0;
         setIntakeSpeed(0);
