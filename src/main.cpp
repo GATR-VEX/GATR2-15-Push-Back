@@ -72,6 +72,7 @@ void initialize() {
   master.rumble(chassis.drive_imu_calibrated() ? "." : "---");
 
   resetPistons(); //Set Pistons to Default State When Robot Turns On
+  lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD); // Make Lever Motor Hold
   pros::Task leverTask(lever_Function);
 }
 
