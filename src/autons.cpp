@@ -263,7 +263,7 @@ void auton_Vennela_right_match_max(){
   intakeToggle();
   pros::delay(500);
 
-  chassis.pid_drive_set(12_in, SLOWER_DRIVE, true);
+  chassis.pid_drive_set(12_in, slower_drive, true);
   chassis.pid_wait();
   pros::delay(2000);
   
@@ -339,7 +339,7 @@ scraperToggle();
   intakeToggle();
   pros::delay(500);
 
-  chassis.pid_drive_set(12_in, SLOWER_DRIVE, true);
+  chassis.pid_drive_set(12_in, slower_drive, true);
   chassis.pid_wait();
   pros::delay(2000);
   
