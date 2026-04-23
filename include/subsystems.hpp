@@ -42,6 +42,7 @@ void scraperState(bool state);
 
 void intakeToggle();
 void reverseIntakeToggle();
+void middleLowReverseIntakeToggle();
 
 void auton_lever();
 void auton_middle_lever();
