@@ -45,6 +45,7 @@ void reverseIntakeToggle();
 
 void auton_lever();
 void auton_middle_lever();
+void auton_lever_reset();
 
 
 //Here Lies the Code from Before Worlds

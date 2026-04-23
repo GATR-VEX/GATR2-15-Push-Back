@@ -10,6 +10,7 @@ const int MAX_DRIVE_SPEED = 127;
 const int DRIVE_SPEED = 110;
 const int TURN_SPEED = 65;
 const int SWING_SPEED = 110;
+const int slower_drive = 90;
 
 ///
 // Constants
@@ -75,6 +76,7 @@ void auton_Connor_right_match_GWP() {
 void auton_Connor_left_match_max() {
 
   
+  auton_lever_reset();
   chassis.pid_drive_set(27.5_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   pros::delay(250);
@@ -89,7 +91,7 @@ void auton_Connor_left_match_max() {
   
   
 
-  chassis.pid_drive_set(11_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(13_in, slower_drive, true);
   chassis.pid_wait();
   pros::delay(2000);
   
@@ -111,21 +113,26 @@ void auton_Connor_left_match_max() {
    intakeToggle();
    
    
-  reverseIntakeToggle();
-  pros::delay(100);
-  reverseIntakeToggle();
+  
 
 chassis.pid_turn_set(315_deg, TURN_SPEED);
 chassis.pid_wait();
 pros::delay(250);
 
-chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
-chassis.pid_wait();
-pros::delay(250);
+reverseIntakeToggle();
+  pros::delay(150);
+  reverseIntakeToggle();
 scraperToggle();
 
 
-chassis.pid_drive_set(-48_in, DRIVE_SPEED, true);
+
+chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+
+
+chassis.pid_drive_set(-48_in, slower_drive, true);
 chassis.pid_wait();
 pros::delay(250);
 
@@ -163,7 +170,7 @@ pros::delay(250);
 
 
 
-chassis.pid_drive_set(15_in, DRIVE_SPEED, true);
+chassis.pid_drive_set(15_in, slower_drive, true);
 chassis.pid_wait();
 pros::delay(3000);
 
@@ -189,12 +196,44 @@ intakeToggle();
 
 
 
-
+scraperToggle();
 chassis.pid_drive_set(-30_in, DRIVE_SPEED, true);
 chassis.pid_wait();
 pros::delay(250);
 
 auton_lever();
+ auton_lever_reset();
+ pros::delay(250);
+
+ chassis.pid_drive_set(15_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_turn_set(315_deg, TURN_SPEED);
+chassis.pid_wait();
+pros::delay(250);
+
+
+ chassis.pid_drive_set(-15_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+
+chassis.pid_turn_set(270_deg, TURN_SPEED);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_drive_set(-7_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_turn_set(315_deg, TURN_SPEED);
+chassis.pid_wait();
+pros::delay(250);
+
+
+
+
 
 
 
@@ -249,9 +288,21 @@ void auton_test() {
   // chassis.pid_wait();
   // pros::delay(250);
 
-  // chassis.pid_turn_set(90_deg, TURN_SPEED);
-  // chassis.pid_wait();
-  // pros::delay(250);
+  chassis.pid_turn_set(90_deg, TURN_SPEED);
+  chassis.pid_wait();
+  pros::delay(250);
+
+  chassis.pid_turn_set(180_deg, TURN_SPEED);
+  chassis.pid_wait();
+  pros::delay(250);
+
+  chassis.pid_turn_set(270_deg, TURN_SPEED);
+  chassis.pid_wait();
+  pros::delay(250);
+
+  chassis.pid_turn_set(360_deg, TURN_SPEED);
+  chassis.pid_wait();
+  pros::delay(250);
   
   // scraperToggle();
   // intakeToggle();
@@ -272,8 +323,6 @@ void auton_test() {
   // chassis.pid_wait();
   // pros::delay(250);
   
-  auton_lever();
-  pros::delay(250);
 
   
 

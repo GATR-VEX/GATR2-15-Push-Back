@@ -210,11 +210,11 @@ void auton_lever() {
     setIntakeSpeed(0);
     leverState = 1;
     lever.move(80);
-    pros::delay(700); // VERY IMPORTANT
+    pros::delay(800); // VERY IMPORTANT
     lever.move(0);
     pros::delay(250);
     lever.move(-50);
-    pros::delay(600);
+    pros::delay(1000);
     lever.move(0);
     flapState(false);
 
@@ -231,7 +231,7 @@ void auton_lever() {
     lever.move(0);
     pros::delay(250);
     lever.move(-100);
-    pros::delay(600);
+    pros::delay(1000);
     lever.move(0);
     flapState(false);
 
@@ -257,6 +257,18 @@ void slow_Lever_Function(){
        }
        startTime = pros::millis();
     }
+}
+
+void auton_lever_reset(){
+    startTime = pros::millis();
+    while (startTime <2000 && trackingLever.get_current_draw() < 1000){
+
+    lever.move(-50);
+
+    }
+    lever.move(0);
+
+
 }
 
 void reset_Lever(){

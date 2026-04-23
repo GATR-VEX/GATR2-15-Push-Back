@@ -61,7 +61,7 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
       {"Quickly Test Auton\n 4 90 Degree Turns, Drive Forward and Drive Backwards", auton_test},
-      {"Only Turn Test", turn_example},
+      {"Only Turn Test", auton_test},
       {"Only Drive Test", drive_and_turn},
       {"auton_Connor_left_match_max", auton_Connor_left_match_max}
   });
