@@ -66,7 +66,7 @@ void driveButtons(){
         slowDriveMultiplier = 1.00;
     }
 
-    if (master.get_digital(currentButtons(Action::REVERSEBOT)))
+    if (master.get_digital_new_press(currentButtons(Action::REVERSEBOT)))
     {
         flipVariable = flipVariable*-1;
     }
@@ -174,7 +174,7 @@ void intakeControl(){
     }
     else if(master.get_digital(currentButtons(Action::REVERSEINTAKE))) //Reverse Intake
     {
-        setIntakeSpeed(-intakeSpeed);
+        setIntakeSpeed(-105);
     }
     else if(leverState == 0){
        setIntakeSpeed(0);
@@ -192,25 +192,23 @@ void lever_Function(){
 }
 
 void max_Lever_Function(){
-    lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    
-    
-    if (master.get_digital_new_press(currentButtons(Action::MAXLEVER)))
+    if (master.get_digital(currentButtons(Action::MAXLEVER)))
     {
         flapState(true);
         setIntakeSpeed(intakeSpeed);
         leverState = 1;
         maxStartTime = pros::millis();
-        while(trackingLever.get_current_draw() < current_threshold && pros::millis()-maxStartTime < 1000)
+        while(abs(trackingLever.get_position()) < 640 && pros::millis()-maxStartTime < 1000)
         {
-            lever.move(100);
+            lever.move(80);
+            pros::delay(10);
         }
-        lever.move(0); 
-        setIntakeSpeed(0);
-        while(master.get_digital(currentButtons(Action::MAXLEVER)))
-        {
-            //Empty on Purpose Trust Me
-        }
+    // lever.move(0); 
+    // setIntakeSpeed(0);
+    // while(master.get_digital(currentButtons(Action::MAXLEVER)))
+    // {
+    //     //Empty on Purpose Trust Me
+    // }
 
         startTime = pros::millis();
     }
@@ -222,11 +220,11 @@ void auton_lever() {
     setIntakeSpeed(0);
     leverState = 1;
     lever.move(80);
-    pros::delay(700); // VERY IMPORTANT
+    pros::delay(800); // VERY IMPORTANT
     lever.move(0);
     pros::delay(250);
     lever.move(-50);
-    pros::delay(600);
+    pros::delay(1000);
     lever.move(0);
     flapState(false);
 
@@ -243,7 +241,7 @@ void auton_lever() {
     lever.move(0);
     pros::delay(250);
     lever.move(-100);
-    pros::delay(600);
+    pros::delay(1000);
     lever.move(0);
     flapState(false);
 
@@ -251,13 +249,11 @@ void auton_lever() {
 
 
 void slow_Lever_Function(){ 
-    lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    
 
     if (master.get_digital(currentButtons(Action::SLOWLEVER)))
     {
         flapState(true);
-        setIntakeSpeed(0);
+        setIntakeSpeed(intakeSpeed);
         leverState = 1;
         if(trackingLever.get_current_draw() < 900)
         {
@@ -271,10 +267,22 @@ void slow_Lever_Function(){
     }
 }
 
+void auton_lever_reset(){
+    startTime = pros::millis();
+    while (startTime <2000 && trackingLever.get_current_draw() < 1000){
+
+    lever.move(-50);
+
+    }
+    lever.move(0);
+
+
+}
+
 void reset_Lever(){
-    if((leverState == 1 || leverState == 2) && trackingLever.get_current_draw() < 1000 && !master.get_digital(currentButtons(Action::SLOWLEVER)) && pros::millis()-startTime < 1000)
+    if(!(abs(trackingLever.get_position()) < 5 && trackingLever.get_current_draw() > 700) && !master.get_digital(currentButtons(Action::SLOWLEVER)) && pros::millis()-startTime < 1000 && leverState!=0)
     {
-        lever.move(-30);
+        lever.move(-60);
         setIntakeSpeed(-intakeSpeed);
         leverState = 2;
     }
@@ -284,6 +292,7 @@ void reset_Lever(){
         leverState = 0;
         lever.move(0);
         setIntakeSpeed(0);
+        trackingLever.tare_position();
     }
 }
 
