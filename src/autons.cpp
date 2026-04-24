@@ -11,7 +11,7 @@ const int MAX_DRIVE_SPEED = 127;
 const int DRIVE_SPEED = 110;
 const int TURN_SPEED = 65;
 const int SWING_SPEED = 110;
-const int slower_drive = 90;
+const int slower_drive = 83;
 
 
 ///
@@ -126,7 +126,7 @@ currentButtons = WillScheme;
   
   
 
-  chassis.pid_drive_set(13_in, slower_drive, true);
+  chassis.pid_drive_set(14_in, slower_drive, true);
   chassis.pid_wait();
   pros::delay(2000);
   
@@ -179,7 +179,7 @@ intakeToggle();
 
 pros::delay(100);
 intakeToggle();
-
+intakeToggle();//fejfvhiefvjier
 pros::delay(100);
 auton_middle_lever();
 
@@ -205,7 +205,7 @@ pros::delay(250);
 
 
 
-chassis.pid_drive_set(15_in, slower_drive, true);
+chassis.pid_drive_set(16_in, slower_drive, true);
 chassis.pid_wait();
 pros::delay(3000);
 
@@ -232,7 +232,7 @@ intakeToggle();
 
 
 scraperToggle();
-chassis.pid_drive_set(-30_in, DRIVE_SPEED, true);
+chassis.pid_drive_set(-28_in, DRIVE_SPEED, true);
 chassis.pid_wait();
 pros::delay(250);
 
@@ -244,25 +244,21 @@ auton_lever();
 chassis.pid_wait();
 pros::delay(250);
 
-chassis.pid_turn_set(315_deg, TURN_SPEED);
+chassis.pid_turn_set(180_deg, TURN_SPEED);
 chassis.pid_wait();
 pros::delay(250);
 
-
- chassis.pid_drive_set(-15_in, DRIVE_SPEED, true);
+chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
 chassis.pid_wait();
 pros::delay(250);
 
-
-chassis.pid_turn_set(270_deg, TURN_SPEED);
+chassis.pid_turn_set(275_deg, TURN_SPEED); //turn 90
 chassis.pid_wait();
 pros::delay(250);
 
-chassis.pid_drive_set(-7_in, DRIVE_SPEED, true);
-chassis.pid_wait();
-pros::delay(250);
+wingToggle();
 
-chassis.pid_turn_set(315_deg, TURN_SPEED);
+chassis.pid_drive_set(-29_in, DRIVE_SPEED, true);
 chassis.pid_wait();
 pros::delay(250);
 
