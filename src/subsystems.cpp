@@ -48,7 +48,7 @@ double slowTurnMultiplier = 1.00;
 double slowDriveMultiplier = 1.00;
 int flipVariable = 1;
 int intakeSpeed = 127;
-int autonIntakeSpeed = 75;  //90 for really fast descore middle 
+int autonIntakeSpeed = 73;  //90 for really fast descore middle 
 int startTime = pros::millis();
 int maxStartTime = pros::millis();
 
@@ -145,6 +145,7 @@ void intakeToggle() {
     }
 }
 
+
 void reverseIntakeToggle() {
     if (intakeState == 0) {
         intakeState = 1;
@@ -219,7 +220,7 @@ void auton_lever() {
     flapState(true);
     setIntakeSpeed(0);
     leverState = 1;
-    lever.move(80);
+    lever.move(75);
     pros::delay(800); // VERY IMPORTANT
     lever.move(0);
     pros::delay(250);

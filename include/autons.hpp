@@ -1,7 +1,6 @@
 #pragma once
 
 void default_constants();
-void orange_constants();
 
 void auton_test();
 void turn_example();
