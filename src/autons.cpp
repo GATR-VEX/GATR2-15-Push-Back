@@ -27,7 +27,7 @@ void default_constants() {
 
 
   chassis.pid_drive_constants_set(20.0, 0.0, 100.0);         // Fwd/rev constants, used for odom and non odom motions
-  chassis.pid_heading_constants_set(10.0, 0.0, 0.0);        // Holds the robot straight while going forward without odom
+  chassis.pid_heading_constants_set(10.5, 0.0, 1.0);        // Holds the robot straight while going forward without odom
   chassis.pid_turn_constants_set(3.7, 0.00, 23.9, 8.0);     // Turn in place constants
   chassis.pid_swing_constants_set(6.0, 0.0, 65.0);           // Swing constants
   chassis.pid_odom_angular_constants_set(6.5, 0.0, 52.5);    // Angular control for odom motions
@@ -110,7 +110,7 @@ void orange_constants(){ //Right Routes
 
 
 void auton_Vennela_right_match_max(){
-  orange_constants();
+  default_constants();
   currentButtons = DavidScheme;
 
   chassis.pid_drive_set(28.5_in, DRIVE_SPEED, true); //move to match loader
