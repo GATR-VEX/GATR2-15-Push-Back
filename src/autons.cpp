@@ -315,7 +315,7 @@ auton_lever();
 chassis.pid_wait();
 pros::delay(250);
 
-scraperToggle();
+/**scraperToggle();
 
 chassis.pid_drive_set(15_in, slower_drive, true);
   chassis.pid_wait();
@@ -343,7 +343,7 @@ pros::delay(250);
 
 auton_lever();
  auton_lever_reset();
- pros::delay(250);
+ pros::delay(250); */
 
 chassis.pid_turn_set(180_deg, TURN_SPEED);  // descore stuff 
 chassis.pid_wait();
