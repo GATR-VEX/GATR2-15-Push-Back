@@ -59,6 +59,6 @@ pros::controller_digital_e_t DavidScheme(Action action){
 
                      
 //This is the Current Default Value
-pros::controller_digital_e_t (*currentButtons )(Action) = DavidScheme;
+pros::controller_digital_e_t (*currentButtons )(Action) = WillScheme;
 
 //When Determining Driver in Auton, use the sytnax currentButtons = DavidScheme or currentButtons = WillScheme
