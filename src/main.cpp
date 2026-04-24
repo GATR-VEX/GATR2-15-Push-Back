@@ -6,10 +6,12 @@
 /////
 
 // Chassis constructor
+
+// initializes using blueWiring but will change depending on the auton selected
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-16, -17, 18, -19},     // Left Chassis Ports (negative port will reverse it!)
-    {11, 12, -13, 15},  // Right Chassis Ports (negative port will reverse it!)
+    {-16, -17, 18, -19},
+  {11, 12, -13, 15},    // Right Chassis Ports (negative port will reverse it!)
 
     20,      // IMU Port
     3.1,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)

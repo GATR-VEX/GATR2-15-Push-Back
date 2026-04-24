@@ -49,6 +49,8 @@ void auton_selector_initialize() {
     ez::as::auton_selector.auton_page_current = 0;
     ez::as::auto_sd_update();
   }
+
+  
 }
 
 void print_page() {
