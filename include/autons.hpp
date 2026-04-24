@@ -2,7 +2,6 @@
 
 void default_constants();
 void blue_constants();
-void orange_constants();
 
 void auton_test();
 void turn_example();
@@ -19,4 +18,4 @@ void odom_boomerang_example();
 void odom_boomerang_injected_pure_pursuit_example();
 void measure_offsets();
 void auton_Connor_left_match_max();
-void auton_Vennela_right_match_max();
+
