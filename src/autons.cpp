@@ -1,4 +1,5 @@
 #include "main.h"
+#include "controls.hpp"
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
@@ -159,6 +160,7 @@ void auton_Connor_right_match_GWP() {
 
 void auton_Connor_left_match_max() {
 blue_constants();
+currentButtons = WillScheme;
   
   auton_lever_reset();
   chassis.pid_drive_set(27.5_in, DRIVE_SPEED, true);
@@ -336,6 +338,8 @@ pros::delay(250);
 
 void auton_Vennela_right_match_max(){
   orange_constants();
+  currentButtons = DavidScheme;
+
   chassis.pid_drive_set(28.5_in, DRIVE_SPEED, true); //move to match loader
   chassis.pid_wait();
   pros::delay(250);
@@ -579,6 +583,7 @@ void turn_example() {
 // Combining Turn + Drive
 ///
 void drive_and_turn() {
+  orange_constants();
   chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   pros::delay(250);

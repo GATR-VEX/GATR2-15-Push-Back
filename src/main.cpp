@@ -6,10 +6,27 @@
 /////
 
 // Chassis constructor
+
+struct RobotWiring {
+  std::vector<int> leftMotors;
+  std::vector<int> rightMotors;
+};
+
+const RobotWiring blueWiring = {
+  {-16, -17, 18, -19},
+  {11, 12, -13, 15}
+};
+
+const RobotWiring orangeWiring {
+  {-16, -17, 18, -19},
+  {11, 12, -14, 15}  
+};
+
+// initializes using blueWiring but will change depending on the auton selected
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-16, -17, 18, -19},     // Left Chassis Ports (negative port will reverse it!)
-    {11, 12, -13, 15},  // Right Chassis Ports (negative port will reverse it!)
+    blueWiring.leftMotors,     // Left Chassis Ports (negative port will reverse it!)
+    blueWiring.rightMotors,  // Right Chassis Ports (negative port will reverse it!)
 
     20,      // IMU Port
     3.1,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
