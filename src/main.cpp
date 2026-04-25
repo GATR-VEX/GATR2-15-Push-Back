@@ -74,7 +74,7 @@ void initialize() {
 
   resetPistons(); //Set Pistons to Default State When Robot Turns On
   lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD); // Make Lever Motor Hold
-  pros::Task leverTask(lever_Function);
+  
 }
 
 /**
@@ -238,6 +238,7 @@ void ez_template_extras() {
  */
 void opcontrol() {
   // This is preference to what you like to drive on
+  pros::Task leverTask(lever_Function);
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
 
 
