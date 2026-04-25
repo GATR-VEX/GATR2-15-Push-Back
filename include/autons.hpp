@@ -18,3 +18,4 @@ void odom_boomerang_injected_pure_pursuit_example();
 void measure_offsets();
 void auton_Vennela_right_match_max();
 void rush_auto_orange();
+void auton_right_skills();

@@ -11,7 +11,7 @@
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
     {-16, -17, 18, -19},
-  {11, 12, -13, 15},    // Right Chassis Ports (negative port will reverse it!)
+  {11, 12, -14, 15},    // Right Chassis Ports (negative port will reverse it!)
 
     20,      // IMU Port
     3.1,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -62,11 +62,9 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"Quickly Test Auton\n 4 90 Degree Turns, Drive Forward and Drive Backwards", auton_test},
-      {"Only Turn Test", auton_test},
-      {"Only Drive Test", drive_and_turn},
-      {"auton_Vennela_right_match_max", auton_Vennela_right_match_max},
-      {"rush_auto_orange", rush_auto_orange}
+      {"Orange Right Max Auto\n (David) Scores Max Points", auton_Vennela_right_match_max},
+      {"Orange Right Rush Auto\n (David) Scores 3 Quick and Descore Push", rush_auto_orange},
+      {"Orange Right Skills", auton_right_skills}
   });
 
   // Initialize chassis and auton selector
@@ -204,8 +202,8 @@ void ez_template_extras() {
     //  When enabled:
     //  * use A and Y to increment / decrement the constants
     //  * use the arrow keys to navigate the constants
-    if (master.get_digital_new_press(DIGITAL_X))
-      chassis.pid_tuner_toggle();
+    //if (master.get_digital_new_press(DIGITAL_X))
+      //chassis.pid_tuner_toggle();
 
     // Trigger the selected autonomous routine
     if (master.get_digital(DIGITAL_B) && master.get_digital(DIGITAL_DOWN)) {

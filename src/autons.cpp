@@ -211,6 +211,148 @@ pros::delay(250);
 
 }
 
+void auton_right_skills(){
+  default_constants();
+  currentButtons = DavidScheme;
+
+  chassis.pid_drive_set(28.5_in, DRIVE_SPEED, true); //move to match loader
+  chassis.pid_wait();
+  pros::delay(250);
+
+  chassis.pid_turn_set(90_deg, TURN_SPEED); //turn to face match loader
+  chassis.pid_wait();
+  pros::delay(250);
+  
+  scraperToggle();
+  intakeToggle();
+  pros::delay(500);
+
+  chassis.pid_drive_set(12_in, slower_drive, true);
+  chassis.pid_wait();
+  pros::delay(2000);
+
+  chassis.pid_drive_set(-5_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(250);
+
+  chassis.pid_drive_set(5_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+   pros::delay(250);
+
+  chassis.pid_drive_set(-9_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+   pros::delay(250);
+
+    intakeToggle();
+   
+   
+  reverseIntakeToggle();
+  pros::delay(100);
+  reverseIntakeToggle();
+
+chassis.pid_turn_set(45_deg, TURN_SPEED);
+chassis.pid_wait();
+pros::delay(250);
+
+reverseIntakeToggle();
+pros::delay(100);
+reverseIntakeToggle();
+
+chassis.pid_drive_set(10_in, DRIVE_SPEED, true); //outtake blue balls 
+chassis.pid_wait();
+pros::delay(250);
+scraperToggle(); 
+
+chassis.pid_drive_set(-10_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_turn_set(225_deg, TURN_SPEED); //turn 180
+chassis.pid_wait();
+pros::delay(250);
+
+
+chassis.pid_drive_set(52_in, MAX_DRIVE_SPEED, true); // drive to middle
+chassis.pid_wait();
+pros::delay(250);
+
+middleLowReverseIntakeToggle();
+pros::delay(2000);
+middleLowReverseIntakeToggle();
+
+chassis.pid_drive_set(-9_in, DRIVE_SPEED, true); //Back up
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_turn_set(45_deg, TURN_SPEED); //turn 180
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_drive_set(43_in, MAX_DRIVE_SPEED, true); //drive to match loader
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_turn_set(90_deg, TURN_SPEED); //turn into direction of the match loader
+chassis.pid_wait();
+pros::delay(250);
+
+scraperToggle();
+  intakeToggle();
+  pros::delay(500);
+
+  chassis.pid_drive_set(12_in, slower_drive, true);
+  chassis.pid_wait();
+  pros::delay(1000);
+
+  /**chassis.pid_drive_set(-5_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(250);
+
+  chassis.pid_drive_set(5_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+   pros::delay(250); */  
+  
+  chassis.pid_drive_set(-9_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+   pros::delay(250);
+
+    intakeToggle();
+
+
+pivotToggle();
+
+chassis.pid_drive_set(-32_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(200);
+
+scraperToggle();
+auton_lever();
+
+//Park Starts
+
+ chassis.pid_drive_set(25_in, DRIVE_SPEED, true);
+ chassis.pid_wait();
+ pros::delay(250);
+
+ chassis.pid_turn_set(135_deg, TURN_SPEED);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_drive_set(18_in, DRIVE_SPEED, true);
+ chassis.pid_wait();
+ pros::delay(250);
+
+ chassis.pid_turn_set(180_deg, TURN_SPEED);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_drive_set(25_in, DRIVE_SPEED, true);
+ chassis.pid_wait();
+ pros::delay(250);
+
+
+}
+
 void rush_auto_orange() {
   default_constants();
   currentButtons = DavidScheme;
