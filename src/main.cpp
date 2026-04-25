@@ -63,7 +63,8 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
       {"Blue Left Max Auto\n (Will) Scores Max Points", auton_Connor_left_match_max},
-      {"Blue Left Rush Auto\n (Will) Scores 3 Quick and Descore Push", rush_auto_blue}
+      {"Blue Left Rush Auto\n (Will) Scores 3 Quick and Descore Push", rush_auto_blue},
+      {"Blue Left Skills Route", auton_left_skills}
   });
 
   // Initialize chassis and auton selector
