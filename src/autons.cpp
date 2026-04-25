@@ -217,6 +217,158 @@ pros::delay(250);
 
 }
 
+void auton_left_skills() {
+default_constants();
+currentButtons = WillScheme;
+  
+
+  //drive to match loader
+  auton_lever_reset();
+  chassis.pid_drive_set(27.5_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(250);
+
+  chassis.pid_turn_set(270_deg, TURN_SPEED);
+  chassis.pid_wait();
+  pros::delay(250);
+  
+  scraperToggle();
+  intakeToggle();
+  pros::delay(500);
+  
+  //first match load
+  
+
+  chassis.pid_drive_set(14_in, slower_drive, true);
+  chassis.pid_wait();
+  pros::delay(2000);
+  
+//back and forth on match loader
+  chassis.pid_drive_set(-5_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(250);
+
+  
+
+  chassis.pid_drive_set(5_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+   pros::delay(250);
+
+  chassis.pid_drive_set(-9_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+   pros::delay(250);
+
+   intakeToggle();
+   
+   
+  
+//turn and get rid of bad balls
+chassis.pid_turn_set(315_deg, TURN_SPEED);
+chassis.pid_wait();
+pros::delay(250);
+
+reverseIntakeToggle();
+  pros::delay(130);
+  reverseIntakeToggle();
+scraperToggle();
+
+
+
+chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+
+//drive towards middle goal
+chassis.pid_drive_set(-48_in, slower_drive, true);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_drive_set(-9_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+intakeToggle();
+
+pros::delay(100);
+intakeToggle();
+intakeToggle();//fejfvhiefvjier
+pros::delay(100);
+auton_middle_lever();
+
+//drive back to match loader
+chassis.pid_drive_set(47_in, slower_drive, true);
+chassis.pid_wait();
+pros::delay(250); 
+
+chassis.pid_turn_set(270_deg, TURN_SPEED);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_drive_set(-5_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+
+scraperToggle();
+intakeToggle();
+pros::delay(250);
+
+
+
+//second match loader
+
+
+chassis.pid_drive_set(16_in, slower_drive, true);
+chassis.pid_wait();
+pros::delay(5000);
+
+// chassis.pid_drive_set(-8_in, DRIVE_SPEED, true);
+// chassis.pid_wait();
+// pros::delay(250);
+
+
+// pivotToggle();
+// chassis.pid_drive_set(8_in, DRIVE_SPEED, true);
+// chassis.pid_wait();
+// pros::delay(250);
+// intakeToggle();
+
+
+
+scraperToggle();
+chassis.pid_drive_set(-28_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+
+//score high
+auton_lever();
+ auton_lever_reset();
+ pros::delay(250);
+
+ chassis.pid_drive_set(25_in, DRIVE_SPEED, true);
+ chassis.pid_wait();
+ pros::delay(250);
+
+ chassis.pid_turn_set(270_deg, TURN_SPEED);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_drive_set(18_in, DRIVE_SPEED, true);
+ chassis.pid_wait();
+ pros::delay(250);
+
+ chassis.pid_turn_set(180_deg, TURN_SPEED);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_drive_set(25_in, DRIVE_SPEED, true);
+ chassis.pid_wait();
+ pros::delay(250);
+//Start here to park
+
+}
+
 void rush_auto_blue() {   //goes to match loader gets balls scores into highgoal gets more match load scores then wing descore
   default_constants();
   currentButtons = WillScheme;
@@ -390,17 +542,6 @@ void auton_test() {
   // chassis.pid_drive_set(-22_in, DRIVE_SPEED, true);
   // chassis.pid_wait();
   // pros::delay(250);
-  
-
-  
-
-
-
-
-
-
-
-
 }
 
 ///
@@ -432,7 +573,7 @@ void turn_example() {
 // Combining Turn + Drive
 ///
 void drive_and_turn() {
-  blue_constants();
+  default_constants();
   chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   pros::delay(250);

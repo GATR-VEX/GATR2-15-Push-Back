@@ -18,4 +18,5 @@ void odom_boomerang_injected_pure_pursuit_example();
 void measure_offsets();
 void auton_Connor_left_match_max();
 void rush_auto_blue();
+void auton_left_skills();
 

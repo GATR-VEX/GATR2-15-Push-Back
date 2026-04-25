@@ -218,7 +218,6 @@ void auton_lever() {
 
     flapState(true);
     setIntakeSpeed(0);
-    leverState = 1;
     lever.move(80);
     pros::delay(800); // VERY IMPORTANT
     lever.move(0);
@@ -227,7 +226,7 @@ void auton_lever() {
     pros::delay(1000);
     lever.move(0);
     flapState(false);
-
+    leverState = 0;
     }
 
 
@@ -235,7 +234,6 @@ void auton_lever() {
 
     flapState(true);
     setIntakeSpeed(0);
-    leverState = 1;
     lever.move(45);
     pros::delay(800); // VERY IMPORTANT
     lever.move(0);
@@ -244,7 +242,7 @@ void auton_lever() {
     pros::delay(1000);
     lever.move(0);
     flapState(false);
-
+    leverState = 0;
     }
 
 
