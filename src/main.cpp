@@ -65,9 +65,13 @@ void initialize() {
       {"Quickly Test Auton\n 4 90 Degree Turns, Drive Forward and Drive Backwards", auton_test},
       {"Only Turn Test", auton_test},
       {"Only Drive Test", drive_and_turn},
+<<<<<<< HEAD
       {"auton_Connor_left_match_max", auton_Connor_left_match_max},
       {"rush_auto_blue", rush_auto_blue}
   
+=======
+      {"auton_Connor_left_match_max", auton_Connor_left_match_max}
+>>>>>>> 1ae36fdbaecaa36148c71c867dbdbcd63d8e3bc4
   });
 
   // Initialize chassis and auton selector

@@ -108,9 +108,11 @@ void blue_constants(){ //Left Routes
 
 
 void auton_Connor_left_match_max() {
-blue_constants();
+default_constants();
 currentButtons = WillScheme;
   
+
+  //drive to match loader
   auton_lever_reset();
   chassis.pid_drive_set(27.5_in, DRIVE_SPEED, true);
   chassis.pid_wait();
@@ -124,13 +126,14 @@ currentButtons = WillScheme;
   intakeToggle();
   pros::delay(500);
   
+  //first match load
   
 
   chassis.pid_drive_set(14_in, slower_drive, true);
   chassis.pid_wait();
   pros::delay(2000);
   
-
+//back and forth on match loader
   chassis.pid_drive_set(-5_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   pros::delay(250);
@@ -149,13 +152,13 @@ currentButtons = WillScheme;
    
    
   
-
+//turn and get rid of bad balls
 chassis.pid_turn_set(315_deg, TURN_SPEED);
 chassis.pid_wait();
 pros::delay(250);
 
 reverseIntakeToggle();
-  pros::delay(150);
+  pros::delay(130);
   reverseIntakeToggle();
 scraperToggle();
 
@@ -166,7 +169,7 @@ chassis.pid_wait();
 pros::delay(250);
 
 
-
+//drive towards middle goal
 chassis.pid_drive_set(-48_in, slower_drive, true);
 chassis.pid_wait();
 pros::delay(250);
@@ -183,10 +186,10 @@ intakeToggle();//fejfvhiefvjier
 pros::delay(100);
 auton_middle_lever();
 
-
-chassis.pid_drive_set(48_in, DRIVE_SPEED, true);
+//drive back to match loader
+chassis.pid_drive_set(47_in, slower_drive, true);
 chassis.pid_wait();
-pros::delay(250);
+pros::delay(250); 
 
 chassis.pid_turn_set(270_deg, TURN_SPEED);
 chassis.pid_wait();
@@ -203,39 +206,40 @@ pros::delay(250);
 
 
 
+//second match loader
 
+<<<<<<< HEAD
 
 chassis.pid_drive_set(16_in, slower_drive, true);
+=======
+chassis.pid_drive_set(17_in, slower_drive, true);
+>>>>>>> 1ae36fdbaecaa36148c71c867dbdbcd63d8e3bc4
 chassis.pid_wait();
-pros::delay(3000);
+pros::delay(5000);
 
-chassis.pid_drive_set(-8_in, DRIVE_SPEED, true);
-chassis.pid_wait();
-pros::delay(250);
+// chassis.pid_drive_set(-8_in, DRIVE_SPEED, true);
+// chassis.pid_wait();
+// pros::delay(250);
 
 
-pivotToggle();
-chassis.pid_drive_set(8_in, DRIVE_SPEED, true);
-chassis.pid_wait();
-pros::delay(250);
-intakeToggle();
-
-chassis.pid_drive_set(-8_in, DRIVE_SPEED, true);
-chassis.pid_wait();
-pros::delay(250);
-intakeToggle();
-chassis.pid_drive_set(8_in, DRIVE_SPEED, true);
-chassis.pid_wait();
-pros::delay(250);
-intakeToggle();
+// pivotToggle();
+// chassis.pid_drive_set(8_in, DRIVE_SPEED, true);
+// chassis.pid_wait();
+// pros::delay(250);
+// intakeToggle();
 
 
 
 scraperToggle();
+<<<<<<< HEAD
 chassis.pid_drive_set(-28_in, DRIVE_SPEED, true);
+=======
+chassis.pid_drive_set(-32_in, slower_drive, true);
+>>>>>>> 1ae36fdbaecaa36148c71c867dbdbcd63d8e3bc4
 chassis.pid_wait();
 pros::delay(250);
 
+//score high
 auton_lever();
  auton_lever_reset();
  pros::delay(250);
@@ -244,7 +248,12 @@ auton_lever();
 chassis.pid_wait();
 pros::delay(250);
 
+<<<<<<< HEAD
 chassis.pid_turn_set(180_deg, TURN_SPEED);
+=======
+//descore wing stuff
+chassis.pid_turn_set(315_deg, TURN_SPEED);
+>>>>>>> 1ae36fdbaecaa36148c71c867dbdbcd63d8e3bc4
 chassis.pid_wait();
 pros::delay(250);
 
@@ -262,6 +271,7 @@ chassis.pid_drive_set(-29_in, DRIVE_SPEED, true);
 chassis.pid_wait();
 pros::delay(250);
 
+<<<<<<< HEAD
 }
 
 void rush_auto_blue() {   //goes to match loader gets balls scores into highgoal gets more match load scores then wing descore
@@ -363,6 +373,15 @@ chassis.pid_drive_set(-29_in, DRIVE_SPEED, true);
 chassis.pid_wait();
 pros::delay(250);
 
+=======
+chassis.pid_turn_set(240_deg, TURN_SPEED);
+chassis.pid_wait();
+pros::delay(250);
+
+chassis.pid_drive_set(-9_in, DRIVE_SPEED, true);
+chassis.pid_wait();
+pros::delay(250);
+>>>>>>> 1ae36fdbaecaa36148c71c867dbdbcd63d8e3bc4
 }
 
 
