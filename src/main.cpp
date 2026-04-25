@@ -62,16 +62,8 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"Quickly Test Auton\n 4 90 Degree Turns, Drive Forward and Drive Backwards", auton_test},
-      {"Only Turn Test", auton_test},
-      {"Only Drive Test", drive_and_turn},
-<<<<<<< HEAD
-      {"auton_Connor_left_match_max", auton_Connor_left_match_max},
-      {"rush_auto_blue", rush_auto_blue}
-  
-=======
-      {"auton_Connor_left_match_max", auton_Connor_left_match_max}
->>>>>>> 1ae36fdbaecaa36148c71c867dbdbcd63d8e3bc4
+      {"Blue Left Max Auto\n (Will) Scores Max Points", auton_Connor_left_match_max},
+      {"Blue Left Rush Auto\n (Will) Scores 3 Quick and Descore Push", rush_auto_blue}
   });
 
   // Initialize chassis and auton selector
@@ -209,8 +201,8 @@ void ez_template_extras() {
     //  When enabled:
     //  * use A and Y to increment / decrement the constants
     //  * use the arrow keys to navigate the constants
-    if (master.get_digital_new_press(DIGITAL_X))
-      chassis.pid_tuner_toggle();
+   // if (master.get_digital_new_press(DIGITAL_X))
+     // chassis.pid_tuner_toggle();
 
     // Trigger the selected autonomous routine
     if (master.get_digital(DIGITAL_B) && master.get_digital(DIGITAL_DOWN)) {
